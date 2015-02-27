@@ -1,0 +1,679 @@
+{
+  "name": "\u77b3",
+  "level": "36",
+  "exp": "105362",
+  "max_sword": "50",
+  "tutorial": "65535",
+  "secretary": "59",
+  "secretary_serial_id": "17043682",
+  "secretary_hp": "63",
+  "secretary_hp_max": "63",
+  "currency": {
+    "money": "18850"
+  },
+  "item": {
+    "5": {
+      "consumable_id": "5",
+      "num": "0"
+    },
+    "6": {
+      "consumable_id": "6",
+      "num": "0"
+    },
+    "7": {
+      "consumable_id": "7",
+      "num": "0"
+    },
+    "8": {
+      "consumable_id": "8",
+      "num": "16"
+    },
+    "13": {
+      "consumable_id": "13",
+      "num": "0"
+    },
+    "14": {
+      "consumable_id": "14",
+      "num": "1"
+    }
+  },
+  "resource": {
+    "bill": "5",
+    "charcoal": 2847,
+    "steel": 3469,
+    "coolant": 2069,
+    "file": 4032,
+    "max_resource": "11200",
+    "recovered_at": "2015-02-27 19:48:54"
+  },
+  "equip": {
+    "2451572": {
+      "serial_id": "2451572",
+      "equip_id": "10001",
+      "soldier": "0"
+    },
+    "3123860": {
+      "serial_id": "3123860",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "3399042": {
+      "serial_id": "3399042",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "3678380": {
+      "serial_id": "3678380",
+      "equip_id": "17",
+      "soldier": "8"
+    },
+    "3678422": {
+      "serial_id": "3678422",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "5012346": {
+      "serial_id": "5012346",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "5624937": {
+      "serial_id": "5624937",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "6168419": {
+      "serial_id": "6168419",
+      "equip_id": "18",
+      "soldier": "11"
+    },
+    "6168504": {
+      "serial_id": "6168504",
+      "equip_id": "17",
+      "soldier": "2"
+    },
+    "11421782": {
+      "serial_id": "11421782",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "11421809": {
+      "serial_id": "11421809",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "11441186": {
+      "serial_id": "11441186",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13061848": {
+      "serial_id": "13061848",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13061875": {
+      "serial_id": "13061875",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "13068602": {
+      "serial_id": "13068602",
+      "equip_id": "8",
+      "soldier": "8"
+    },
+    "13068658": {
+      "serial_id": "13068658",
+      "equip_id": "18",
+      "soldier": "11"
+    },
+    "13068757": {
+      "serial_id": "13068757",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "13074325": {
+      "serial_id": "13074325",
+      "equip_id": "9",
+      "soldier": "8"
+    },
+    "13074354": {
+      "serial_id": "13074354",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "13075164": {
+      "serial_id": "13075164",
+      "equip_id": "3",
+      "soldier": "10"
+    },
+    "13075195": {
+      "serial_id": "13075195",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "13083198": {
+      "serial_id": "13083198",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13083338": {
+      "serial_id": "13083338",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "13083362": {
+      "serial_id": "13083362",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "13244514": {
+      "serial_id": "13244514",
+      "equip_id": "10002",
+      "soldier": "0"
+    },
+    "13284351": {
+      "serial_id": "13284351",
+      "equip_id": "8",
+      "soldier": "7"
+    },
+    "13284397": {
+      "serial_id": "13284397",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "13286649": {
+      "serial_id": "13286649",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13286746": {
+      "serial_id": "13286746",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13380087": {
+      "serial_id": "13380087",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13387749": {
+      "serial_id": "13387749",
+      "equip_id": "10003",
+      "soldier": "0"
+    },
+    "13447180": {
+      "serial_id": "13447180",
+      "equip_id": "27",
+      "soldier": "8"
+    },
+    "13464836": {
+      "serial_id": "13464836",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "13541009": {
+      "serial_id": "13541009",
+      "equip_id": "10004",
+      "soldier": "0"
+    },
+    "13797072": {
+      "serial_id": "13797072",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13797137": {
+      "serial_id": "13797137",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13797159": {
+      "serial_id": "13797159",
+      "equip_id": "8",
+      "soldier": "6"
+    },
+    "13800014": {
+      "serial_id": "13800014",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13800040": {
+      "serial_id": "13800040",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13828229": {
+      "serial_id": "13828229",
+      "equip_id": "10005",
+      "soldier": "0"
+    },
+    "13828253": {
+      "serial_id": "13828253",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "13828286": {
+      "serial_id": "13828286",
+      "equip_id": "8",
+      "soldier": "7"
+    },
+    "13828314": {
+      "serial_id": "13828314",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "13828341": {
+      "serial_id": "13828341",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "13828401": {
+      "serial_id": "13828401",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "14140172": {
+      "serial_id": "14140172",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "14140224": {
+      "serial_id": "14140224",
+      "equip_id": "17",
+      "soldier": "5"
+    },
+    "14140277": {
+      "serial_id": "14140277",
+      "equip_id": "7",
+      "soldier": "6"
+    },
+    "14334028": {
+      "serial_id": "14334028",
+      "equip_id": "10006",
+      "soldier": "0"
+    },
+    "14457255": {
+      "serial_id": "14457255",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "14457291": {
+      "serial_id": "14457291",
+      "equip_id": "9",
+      "soldier": "8"
+    },
+    "14931576": {
+      "serial_id": "14931576",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "15184442": {
+      "serial_id": "15184442",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "15184514": {
+      "serial_id": "15184514",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "15531874": {
+      "serial_id": "15531874",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "15775705": {
+      "serial_id": "15775705",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "15775774": {
+      "serial_id": "15775774",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "15775884": {
+      "serial_id": "15775884",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "16173314": {
+      "serial_id": "16173314",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "16173347": {
+      "serial_id": "16173347",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "16173376": {
+      "serial_id": "16173376",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "16312641": {
+      "serial_id": "16312641",
+      "equip_id": "9",
+      "soldier": "10"
+    },
+    "16312669": {
+      "serial_id": "16312669",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "16312694": {
+      "serial_id": "16312694",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "16541535": {
+      "serial_id": "16541535",
+      "equip_id": "9",
+      "soldier": "10"
+    },
+    "16541563": {
+      "serial_id": "16541563",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "16541591": {
+      "serial_id": "16541591",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "16545530": {
+      "serial_id": "16545530",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "16545603": {
+      "serial_id": "16545603",
+      "equip_id": "9",
+      "soldier": "9"
+    },
+    "16774620": {
+      "serial_id": "16774620",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "16774643": {
+      "serial_id": "16774643",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "16774664": {
+      "serial_id": "16774664",
+      "equip_id": "9",
+      "soldier": "10"
+    },
+    "17035055": {
+      "serial_id": "17035055",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "17035074": {
+      "serial_id": "17035074",
+      "equip_id": "18",
+      "soldier": "10"
+    },
+    "17035092": {
+      "serial_id": "17035092",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "17047455": {
+      "serial_id": "17047455",
+      "equip_id": "16",
+      "soldier": "9"
+    },
+    "17047467": {
+      "serial_id": "17047467",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "17047476": {
+      "serial_id": "17047476",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "17047486": {
+      "serial_id": "17047486",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "17047500": {
+      "serial_id": "17047500",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "17047526": {
+      "serial_id": "17047526",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "17047544": {
+      "serial_id": "17047544",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "17047568": {
+      "serial_id": "17047568",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "17048140": {
+      "serial_id": "17048140",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "17050283": {
+      "serial_id": "17050283",
+      "equip_id": "8",
+      "soldier": "9"
+    },
+    "17050306": {
+      "serial_id": "17050306",
+      "equip_id": "9",
+      "soldier": "10"
+    },
+    "17224527": {
+      "serial_id": "17224527",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "17224550": {
+      "serial_id": "17224550",
+      "equip_id": "21",
+      "soldier": "13"
+    },
+    "17224568": {
+      "serial_id": "17224568",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "17224595": {
+      "serial_id": "17224595",
+      "equip_id": "21",
+      "soldier": "12"
+    },
+    "17381825": {
+      "serial_id": "17381825",
+      "equip_id": "20",
+      "soldier": "12"
+    },
+    "17381926": {
+      "serial_id": "17381926",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "17453527": {
+      "serial_id": "17453527",
+      "equip_id": "7",
+      "soldier": "8"
+    },
+    "17453531": {
+      "serial_id": "17453531",
+      "equip_id": "9",
+      "soldier": "10"
+    },
+    "17508359": {
+      "serial_id": "17508359",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "17508377": {
+      "serial_id": "17508377",
+      "equip_id": "18",
+      "soldier": "12"
+    },
+    "17508396": {
+      "serial_id": "17508396",
+      "equip_id": "19",
+      "soldier": "11"
+    },
+    "17728841": {
+      "serial_id": "17728841",
+      "equip_id": "17",
+      "soldier": "10"
+    },
+    "17728933": {
+      "serial_id": "17728933",
+      "equip_id": "16",
+      "soldier": "9"
+    }
+  },
+  "max_party": "3",
+  "forge_slot": "2",
+  "repair_slot": "2",
+  "furniture": {
+    "1": {
+      "furniture_id": "1",
+      "is_set": "1"
+    }
+  },
+  "party": {
+    "1": {
+      "party_no": "1",
+      "status": "1",
+      "party_name": "\u7b2c1\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "17043682"
+        },
+        "2": {
+          "serial_id": "3294091"
+        },
+        "3": {
+          "serial_id": "14236910"
+        },
+        "4": {
+          "serial_id": "2793128"
+        },
+        "5": {
+          "serial_id": "6478040"
+        },
+        "6": {
+          "serial_id": "17841650"
+        }
+      }
+    },
+    "2": {
+      "party_no": "2",
+      "status": "1",
+      "party_name": "\u7b2c2\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "5700142"
+        },
+        "2": {
+          "serial_id": "25348610"
+        },
+        "3": {
+          "serial_id": "1575114"
+        },
+        "4": {
+          "serial_id": "1391072"
+        },
+        "5": {
+          "serial_id": "2816969"
+        },
+        "6": {
+          "serial_id": "1656817"
+        }
+      }
+    },
+    "3": {
+      "party_no": "3",
+      "status": "1",
+      "party_name": "\u7b2c3\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "1394113"
+        },
+        "2": {
+          "serial_id": "2229867"
+        },
+        "3": {
+          "serial_id": "3291094"
+        },
+        "4": {
+          "serial_id": "1498312"
+        },
+        "5": {
+          "serial_id": "2792947"
+        },
+        "6": {
+          "serial_id": null
+        }
+      }
+    },
+    "4": {
+      "party_no": 4,
+      "party_name": "\u7b2c4\u90e8\u968a",
+      "status": 0,
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": null
+        },
+        "2": {
+          "serial_id": null
+        },
+        "3": {
+          "serial_id": null
+        },
+        "4": {
+          "serial_id": null
+        },
+        "5": {
+          "serial_id": null
+        },
+        "6": {
+          "serial_id": null
+        }
+      }
+    }
+  },
+  "duty": [],
+  "leave": [],
+  "back": [],
+  "news": [{
+    "news_id": "4",
+    "title": "\u5c0f\u5224\u5897\u91cf\u30ad\u30e3\u30f3\u30da\u30fc\u30f3",
+    "news": "",
+    "news_date": "2015-02-17 16:00:00",
+    "image": "event\/20150217_1.png"
+  }, {
+    "news_id": "5",
+    "title": "\u4e8c\u632f\u306e\u864e\u9244",
+    "news": "",
+    "news_date": "2015-02-17 16:00:00",
+    "image": "event\/20150217_2.png"
+  }],
+  "status": 0,
+  "now": "2015-02-27 19:49:23"
+}

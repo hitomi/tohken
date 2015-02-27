@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/main.css">
+</head>
+<body id="app">
+  <div class="base-info">
+    <ul class="player">
+      <li>審神者<span v-show="player.name">{{player.name}}</span></li>
+      <li v-show="player.level">LV<span>{{player.level}}</span></li>
+      <li v-show="player.next_exp">(Next<span>{{player.next_exp}}</span>)</li>
+    </ul>
+    <ul class="resource">
+      <li v-show="resource.charcoal">木炭<span>{{resource.charcoal}}</span></li>
+      <li v-show="resource.steel">玉刚<span>{{resource.steel}}</span></li>
+      <li v-show="resource.coolant">冷却材<span>{{resource.coolant}}</span></li>
+      <li v-show="resource.file">砥石<span>{{resource.file}}</span></li>
+      <li v-show="resource.bill">依頼札<span>{{resource.bill}}</span></li>
+      <li v-show="player.bonemeal">手伝い札<span>{{player.bonemeal}}</span></li>
+    </ul>
+  </div>
+  <ul class="nav">
+    <li class="overview active">总览</li>
+    <li class="party">队伍</li>
+    <li class="forge">锻造</li>
+    <li class="about">关于</li>
+  </ul>
+  <div class="container">
+    <div class="panel panel-party" v-show="party['1']">
+      <div class="debug">
+
+      </div>
+      <div class="team-name">
+        {{party['1']['party_name']}}
+      </div>
+      <ul class="party">
+        <li class="sword" v-repeat="party['1']['slot']">
+          <ul>
+            <li class="name">
+              {{sword[serial_id].sword_id | i2n}}
+            </li>
+            <li class="level">
+              LV <span>{{sword[serial_id].level}}</span>
+            </li>
+            <li class="hp">
+              HP {{sword[serial_id].hp}} / {{sword[serial_id].hp_max}}
+            </li>
+            <li class="fatigue">
+              疲劳 {{sword[serial_id].fatigue}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="gaming"
+       v-show="!gaming">
+    无法获取游戏数据，如果您已经进入游戏请进入游戏中的任意页面<br>
+    {{gaming}}
+  </div>
+  <script src="../Lib/lodash.js"></script>
+  <script src="../Lib/jquery.js"></script>
+  <script src="../Lib/vue.js"></script>
+  <script src="helper.js"></script>
+</body>
+</html>
