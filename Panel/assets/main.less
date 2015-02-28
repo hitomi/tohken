@@ -1,6 +1,7 @@
 * {
   color: #ddd;
   font-family: Ubuntu, "Helvetica Neue", Helvetica, "Nimbus Sans L", "Open Sans", "Roboto", "Segoe WP", "Segoe UI", arial, "Liberation Sans", freesans, clean, "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans CJK JP", "Source Han Sans JP", "Noto Sans CJK", "Source Han Sans", "Microsoft YaHei UI", "Microsoft YaHei", DengXian, "Wenquanyi Micro Hei", "ST Heiti", "Droid Sans Fallback", "Microsoft JhengHei", SimSun, sans-serif;
+  font-size: 14px;
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -94,12 +95,50 @@ body {
     margin: 0;
     padding: 0;
     li.sword {
+      .l2 {
+        font-size: 12px;
+      }
       ul {
         list-style: none;
         margin: 0;
         padding: 0;
         li {
+          font-size: 14px;
+          line-height: 18px;
           display: inline-block;
+          b {
+            color: #fff;
+            font-weight: normal;
+            font-size: 16px;
+          }
+          &:not(:last-child) {
+            margin-right: 8px;
+          }
+          &.name {
+            color: #fff;
+            width: 140px;
+          }
+          &.hp {
+            .square {
+              float: left;
+              display: inline-block;
+              height: 12px;
+              width: 12px;
+              margin: 5px;
+              margin-left: 0;
+              margin-right: 6px;
+              background-color: #ddd;
+              &.r {
+                background-color: #bf2424;
+              }
+              &.y {
+                background-color: #b48813;
+              }
+              &.p {
+                background-color: #dd22eb;
+              }
+            }
+          }
         }
       }
     }

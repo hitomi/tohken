@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="assets/main.css">
+  <script src="../Lib/livereload.js"></script>
 </head>
 <body id="app">
   <div class="base-info">
@@ -38,16 +39,15 @@
         <li class="sword" v-repeat="party['1']['slot']">
           <ul>
             <li class="name">
-              {{sword[serial_id].sword_id | i2n}}
-            </li>
-            <li class="level">
-              LV <span>{{sword[serial_id].level}}</span>
+              <b>{{sword[serial_id].sword_id | i2n}}</b>
+              <div class="l2">LV <b>{{sword[serial_id].level}}</b> (next <b>{{serial_id | exp2next }}</b>)</div>
             </li>
             <li class="hp">
-              HP {{sword[serial_id].hp}} / {{sword[serial_id].hp_max}}
-            </li>
-            <li class="fatigue">
-              疲劳 {{sword[serial_id].fatigue}}
+              HP <b>{{sword[serial_id].hp}} / {{sword[serial_id].hp_max}}</b>
+              <div class="l2">
+                <span class="square p"></span>
+                疲劳 <b>{{sword[serial_id].fatigue}}</b>
+              </div>
             </li>
           </ul>
         </li>
@@ -55,7 +55,7 @@
     </div>
   </div>
   <div class="gaming"
-       v-show="!gaming">
+       v-show="false">
     无法获取游戏数据，如果您已经进入游戏请进入游戏中的任意页面<br>
     {{gaming}}
   </div>
