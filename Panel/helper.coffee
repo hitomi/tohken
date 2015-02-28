@@ -60,6 +60,7 @@ control = new Vue {
       "max_sword": ""
       "next_exp": ""
     }
+    tab: 0
     resource: {}
     sword: {}
     forge: {}
@@ -83,7 +84,6 @@ control = new Vue {
     i2n: (i)->
       SID[i]
     exp2next: (i)->
-      console.log @sword[i]
       SEXP[parseInt(@sword[i].level, 10)-1]
       SEXP[parseInt(@sword[i].level, 10)-1] - parseInt(@sword[i].exp, 10)
 

@@ -90,6 +90,10 @@ body {
 .panel {
   margin: 8px;
 }
+.panel-party .party-list {
+  float: left;
+  margin: 16px;
+}
 .panel-party ul.party {
   list-style: none;
   margin: 0;
@@ -138,6 +142,12 @@ body {
 }
 .panel-party ul.party li.sword ul li.hp .square.p {
   background-color: #dd22eb;
+}
+.panel-forge .watch b {
+  display: none;
+}
+.panel-forge .watch:hover b {
+  display: inline-block;
 }
 .gaming {
   position: fixed;

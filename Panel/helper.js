@@ -62,6 +62,7 @@
         "max_sword": "",
         "next_exp": ""
       },
+      tab: 0,
       resource: {},
       sword: {},
       forge: {},
@@ -88,7 +89,6 @@
         return SID[i];
       },
       exp2next: function(i) {
-        console.log(this.sword[i]);
         SEXP[parseInt(this.sword[i].level, 10) - 1];
         return SEXP[parseInt(this.sword[i].level, 10) - 1] - parseInt(this.sword[i].exp, 10);
       }
