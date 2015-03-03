@@ -40,6 +40,7 @@ control = new Vue {
     i2n: (i)->
       SID[i]
     exp2next: (i)->
+      return 0 if parseInt(@sword[i].level, 10) == 99
       SEXP[parseInt(@sword[i].level, 10)-1]
       SEXP[parseInt(@sword[i].level, 10)-1] - parseInt(@sword[i].exp, 10)
 
