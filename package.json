@@ -25,5 +25,8 @@
     "gulp-less": "^3.0.1",
     "gulp-livereload": "^3.8.0",
     "gulp-notify": "^2.2.0"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.4"
   }
 }

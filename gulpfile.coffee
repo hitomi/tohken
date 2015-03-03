@@ -5,16 +5,19 @@ less        = require 'gulp-less'
 notify      = require 'gulp-notify'
 livereload  = require 'gulp-livereload'
 del         = require 'del'
+gutil       = require 'gulp-util'
 # task
 gulp.task 'coffee', ->
   gulp.src './src/**/*.coffee'
     .pipe coffee()
+    .on   'error', gutil.log
     .pipe gulp.dest './build'
     .pipe notify { message: "coffee complate" }
     .pipe livereload()
 gulp.task 'less', ->
   gulp.src './src/**/*.less'
     .pipe less()
+    .on   'error', gutil.log
     .pipe gulp.dest './build'
     .pipe notify { message: "less complate" }
     .pipe livereload()
