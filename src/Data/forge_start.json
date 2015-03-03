@@ -1,0 +1,17 @@
+{
+  "slot_no": "1",
+  "finished_at": "2015-02-28 02:54:29",
+  "resource": {
+    "bill": 3,
+    "charcoal": 591,
+    "steel": 1478,
+    "coolant": 0,
+    "file": 1649,
+    "max_resource": "11200",
+    "recovered_at": "2015-02-28 01:21:54"
+  },
+  "sword_id": null,
+  "serial_id": null,
+  "status": 0,
+  "now": "2015-02-28 01:24:29"
+}
