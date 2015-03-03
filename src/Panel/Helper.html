@@ -32,10 +32,12 @@
       <div v-if="!party['1']">
         尚未获得队伍数据，请进入结成或锻刀页面
       </div>
+      <div>* 关于疲劳值，根据观察只有在战斗返回之后才能监视到疲劳值数据的变化。就算刷新游戏页面也不会更新的。</div>
       <div v-repeat="party">
         <div class="party-list">
           <div class="team-name">
             {{party[party_no]['party_name']}}
+            <span v-if="party[party_no]['finished_at']!=null">[远征中]</span>
           </div>
           <ul class="party">
             <li class="sword" v-repeat="party[party_no]['slot']">
@@ -69,6 +71,7 @@
     </div>
     <div class="panel panel-forge" v-if="tab==1">
       <div>
+        <div>* 关于锻刀，请在锻刀开始之后进入其他页面再返回以便刷新数据。</div>
         <ul class="forge">
           <li
             v-repeat="forge">
@@ -83,12 +86,18 @@
     <div class="panel panel-about" v-if="tab==2">
       等级对应所需经验和疲劳值数据来自 http://wikiwiki.jp/toulove/<br>
       目前这个版本还没啥功能，不过咱应该会更新下去的…喜欢的话记得关注咱的微博@毫无存在感的凌，有什么情报都会写过去的<br>
-      至于会不会封号…我没有主动去抓取数据，只是监听的Chrome的devtools自身提供的onRequestFinished事件，我觉得不会有问题<br>
+      至于会不会封号…我没有主动去抓取数据，只是监听的Chrome的devtools自身提供的onRequestFinished事件，我觉得不会有问题…但我不敢保证…<br>
       还有会不会窃取什么数据…反正你从我手里拿到的版本应该是不会有问题的，信不着的话自己拿源码打包好了，至于其他人基于这个的修改版我不敢保证会不会有问题<br>
       Github： https://github.com/hitomi/tohken<br>
-      另外，欢迎一起来贡献代码让这个工具变得更好（因为时间略紧所以代码略乱，而且咱水平也很渣，有时间考虑重构一下）<br>
-      * 下个版本预计更新远征提醒功能，发布时间未定，最近要开学了所以先放出来这个版本给大家尝尝XD<br>
-      除了自动跑图之类的外挂功能【我是不会去实现的】其他的有什么想法就扔我私信就好了
+      另外，欢迎一起来贡献代码让这个工具变得更好<br>
+      * 下个版本预计更新<br>
+      <ul>
+        <li>界面优化和总览界面</li>
+        <li>手入提醒</li>
+        <li>快速启动游戏的图标以及窗口大小自适应</li>
+        <li>战斗过程刀装损坏提醒（未定）</li>
+      </ul>
+      其他的有什么想法就扔我私信就好了
     </div>
   </div>
   <div class="gaming"
