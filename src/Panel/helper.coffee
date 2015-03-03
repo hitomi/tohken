@@ -71,6 +71,10 @@ control = new Vue {
               type: 'conquest'
               msg:  @party
             }
+        # 更新结成数据
+        when 'party/setsword'
+          @parser request, (data)=>
+            @party = data
         # 启动
         when 'login/start'
           @parser request, (data)=>
@@ -88,7 +92,29 @@ control = new Vue {
               type: 'conquest'
               msg:  @party
             }
-
+        # 出阵报告
+        # TODO: 战斗报告解析，以便了解刀装破碎情况
+        when 'battle/battle'
+          @parser request, (data)=>
+            result = data.result
+            console.log result
+            _.forEach result.player.party.slot, (v, k)=>
+              # 经验值
+              console.log v.serial_id
+              @sword[v.serial_id]['exp'] = v.exp
+              @sword[v.serial_id]['level'] = v.level
+              # HP更新
+              @sword[v.serial_id]['hp'] = v.hp
+              if parseInt(v.hp, 10) < parseInt(@sword[v.serial_id]['hp_max'], 10)
+                # 损坏提醒
+                @sendMessage {
+                  type: 'notify'
+                  msg: {
+                    title: "小心！"
+                    message: "#{SID[v.sword_id]}已经受到了伤害！"
+                    contextMessage: "请谨慎行动"
+                  }
+                }
     # Parse data to json
     parser: (request, callback)->
       request.getContent (content, encoding)->
