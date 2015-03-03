@@ -25,5 +25,7 @@ chrome.runtime.onMessage.addListener (message)->
         notify("#{n.party_name}远征开始！", "归还时间：#{n.finished_at}", "将在远征结束两分钟前提醒")
         alarmIt n.party_name, n.finished_at
         # chrome.alarms.create("#{n.party_name}#{n.finished_at}", Date.parse(n.finished_at))
-
+    when 'notify'
+      msg = message.msg
+      notify msg.title, msg.message, msg.contextMessage
 
