@@ -11,9 +11,13 @@ alarmIt = (name, finished_at)->
   console.log chrome, chrome.alarms
   chrome.alarms.get "#{name}|#{finished_at}", (alarm)->
     if !alarm
-      chrome.alarms.create "#{name}|#{finished_at}", Date.parse(finished_at)-120000
+      chrome.alarms.create "#{name}|#{finished_at}", { when: Date.parse(finished_at) - 120000 }
+      notify("#{name}远征开始！", "归还时间：#{finished_at}", "将在远征结束两分钟前提醒")
 chrome.alarms.onAlarm.addListener (alarm)->
-  console.log alarm
+  data = alarm.name.split('|')
+  name = data[0]
+  time = data[1]
+  notify("#{name}远征即将结束！", "归还时间：#{finished_at}", "请注意查收远征结果")
 chrome.runtime.onMessage.addListener (message)->
   #notify("Get", message)
   console.log message
@@ -22,7 +26,6 @@ chrome.runtime.onMessage.addListener (message)->
     when 'conquest'
       _.forEach message.msg, (n, key)->
         return if n.finished_at == null
-        notify("#{n.party_name}远征开始！", "归还时间：#{n.finished_at}", "将在远征结束两分钟前提醒")
         alarmIt n.party_name, n.finished_at
         # chrome.alarms.create("#{n.party_name}#{n.finished_at}", Date.parse(n.finished_at))
     when 'notify'
