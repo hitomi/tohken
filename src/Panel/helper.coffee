@@ -84,6 +84,11 @@ control = new Vue {
             @player.level = data.level
             @player.max_sword = data.max_sword
         # 修复
+        # 出阵
+        when 'sally'
+          @parser request, (data)=>
+            @party = data.party
+            @sword = data.sword
         # 远征
         when 'conquest/start'
           @parser request, (data)=>
