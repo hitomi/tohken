@@ -12,6 +12,9 @@
   "background": {
     "scripts": ["Lib/lodash.js", "inject.js"]
   },
+  "icons": {
+    "128": "Panel/assets/icon_128.png"
+  },
   "permissions": [
     "notifications",
     "http://*/*",
