@@ -25,7 +25,8 @@
   <ul class="nav">
     <li class="party" v-on="click: tab=0" v-class="active: tab==0">队伍</li>
     <li class="forge" v-on="click: tab=1" v-class="active: tab==1">锻造</li>
-    <li class="about" v-on="click: tab=2" v-class="active: tab==2">关于</li>
+    <li class="setting" v-on="click: tab=99" v-class="active: tab==99">设置</li>
+    <li class="about" v-on="click: tab=100" v-class="active: tab==100">关于</li>
   </ul>
   <div class="container">
     <div class="panel panel-party" v-if="tab==0">
@@ -83,7 +84,35 @@
 
       </div>
     </div>
-    <div class="panel panel-about" v-if="tab==2">
+    <div class="panel panel-config" v-if="tab==99">
+      <div class="title">
+        提醒
+      </div>
+      <ul class="config-list">
+        <li>
+          <span id="config_cn" class="switcher"
+              v-class="on: config['conquest_notify']"
+              v-on="click: applyConfig('conquest_notify', config['conquest_notify']?0:1)"
+              ></span>
+          远征提醒<b>[{{config['conquest_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+        <li>
+          <span id="config_bobn" class="switcher"
+            v-class="on: config['broken_on_battle_notify']"
+            v-on="click: applyConfig('broken_on_battle_notify', config['broken_on_battle_notify']?0:1)"
+            ></span>
+          战斗时的受伤提醒<b>[{{config['broken_on_battle_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+        <li>
+          <span id="config_bgnsn" class="switcher"
+            v-class="on: config['battle_new_notify']"
+            v-on="click: applyConfig('battle_new_notify', config['battle_new_notify']?0:1)"
+          ></span>
+          战斗时获得新刀的提醒<b>[{{config['battle_new_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+      </ul>
+    </div>
+    <div class="panel panel-about" v-if="tab==100">
       等级对应所需经验和疲劳值数据来自 http://wikiwiki.jp/toulove/<br>
       目前这个版本还没啥功能，不过咱应该会更新下去的…喜欢的话记得关注咱的微博@毫无存在感的凌，有什么情报都会写过去的<br>
       至于会不会封号…我没有主动去抓取数据，只是监听的Chrome的devtools自身提供的onRequestFinished事件，我觉得不会有问题…但我不敢保证…<br>
@@ -98,6 +127,21 @@
         <li>战斗过程刀装损坏提醒（未定）</li>
       </ul>
       其他的有什么想法就扔我私信就好了
+      <div>
+        <p>更新记录</p>
+        <div>v0.1.1 150304</div>
+        <ul>
+          <li>
+            修正了99级时的显示问题(来自贴吧@catofsickle)
+          </li>
+          <li>
+            追加设置页面，可以开启和关闭部分提醒功能
+          </li>
+          <li>
+            增加战斗过程中的爆刀剧透功能，请在设置页面中手工开启(来自微博@天見禎芽-目指立派前野厨)
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="gaming"

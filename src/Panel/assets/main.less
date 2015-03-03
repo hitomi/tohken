@@ -171,3 +171,31 @@ body {
   text-align: center;
   z-index: 10000;
 }
+.switcher {
+  display: inline-block;
+  width: 16px;
+  height: 10px;
+  border: 2px #ccc solid;
+  border-left-width: 16px;
+  transition: .5s all;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.switcher.on {
+  border-left-width: 2px;
+  border-right-width: 16px;
+}
+
+
+.panel-config {
+  .title {
+    font-size: 20px;
+    padding-left: 16px;
+  }
+  .config-list {
+    list-style: none;
+    li {
+      line-height: 32px;
+    }
+  }
+}

@@ -23,9 +23,22 @@ control = new Vue {
     equip: {}
     party: {}
     repair: []
+    config: {
+      "conquest_notify": 1
+      "broken_on_battle_notify": 1
+      "battle_new_notify": 0
+    }
   }
 
   ready: ->
+    # Config
+    if typeof(localStorage["conquest_notify"]) != "undefined"
+      @config["conquest_notify"] = parseInt(localStorage["conquest_notify"], 10)
+    if typeof(localStorage["broken_on_battle_notify"]) != "undefined"
+      @config["broken_on_battle_notify"] = parseInt(localStorage["broken_on_battle_notify"], 10)
+    if typeof(localStorage["battle_new_notify"]) != "undefined"
+      @config["battle_new_notify"] = parseInt(localStorage["battle_new_notify"], 10)
+    console.log @config
     # Listen the network request
     chrome.devtools.network.onRequestFinished.addListener (request)=>
       # filter
@@ -68,6 +81,7 @@ control = new Vue {
             @sword    = data.sword
             @equip    = data.equip
             @party    = data.party
+            return if @config["conquest_notify"]
             @sendMessage {
               type: 'conquest'
               msg:  @party
@@ -94,6 +108,7 @@ control = new Vue {
         when 'conquest/start'
           @parser request, (data)=>
             @party = data.party
+            return if @config["conquest_notify"]
             @sendMessage {
               type: 'conquest'
               msg:  @party
@@ -103,7 +118,6 @@ control = new Vue {
         when 'battle/battle'
           @parser request, (data)=>
             result = data.result
-            console.log result
             _.forEach result.player.party.slot, (v, k)=>
               # 经验值
               console.log v.serial_id
@@ -113,6 +127,7 @@ control = new Vue {
               @sword[v.serial_id]['hp'] = v.hp
               if parseInt(v.hp, 10) < parseInt(@sword[v.serial_id]['hp_max'], 10)
                 # 损坏提醒
+                return if @config["broken_on_battle_notify"]
                 @sendMessage {
                   type: 'notify'
                   msg: {
@@ -121,6 +136,19 @@ control = new Vue {
                     contextMessage: "请谨慎行动"
                   }
                 }
+            console.log parseInt(result.get_sword_id, 10)
+            return if !@config["battle_new_notify"]
+            return if parseInt(result.get_sword_id, 10) == 0
+            # 新刀提醒
+            @sendMessage {
+              type: 'notify'
+              msg: {
+                title: "发现了一只新刀！"
+                message: "#{SID[result.get_sword_id]}"
+                contextMessage: "可以在设置里关闭提醒"
+              }
+            }
+
     # Parse data to json
     parser: (request, callback)->
       request.getContent (content, encoding)->
@@ -130,8 +158,13 @@ control = new Vue {
     output: (obj)->
       document.write(obj + "<br>")
 
+    # Apply Config
+    applyConfig: (key, value)->
+      localStorage[key] = value
+      @config[key] = value
+
+    # Send Message to background page
     sendMessage: (msg)->
       chrome.runtime.sendMessage(msg)
   }
 }
-
