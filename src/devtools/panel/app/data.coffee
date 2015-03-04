@@ -97,6 +97,11 @@
       "file":         null
       # 最大资源储量
       "max_resource": null
+      # 模拟数据叠加
+      "vcharcoal":    null
+      "vsteel":       null
+      "vcoolant":     null
+      "vfile":        null
     }
     # 刀剑
     sword: {
@@ -149,6 +154,8 @@
         "loyalties": null
         # 疲劳
         "fatigue": null
+        # 模拟疲劳叠加
+        "vfatigue": null
         # 刀装位
         "equip_serial_id1": null
         "equip_serial_id2": null
@@ -247,6 +254,13 @@
       }
       # 数据填充位置
       "data": {}
+    }
+    # 状态
+    status: {
+      # 模拟数据更新
+      "virtualization": false
+      # 是否在战斗状态
+      "in_battle": false
     }
   }
 )(window)
