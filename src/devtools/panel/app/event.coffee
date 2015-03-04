@@ -4,7 +4,7 @@
   exports.tohken.event.handle = null
   # 启动
   exports.tohken.event.start = (environment)->
-    # 按分钟更新的定时器
+    # 按三分钟更新的定时器
     exports.tohken.event.handle = setInterval(function() {
       exports.tohken.event.action.call(environment)
     }, 180000)
