@@ -1,9 +1,10 @@
+# 背景页注入
 notify = (title, msg, cm)->
   opt = {
     type: "basic"
     title: title
     message: msg
-    iconUrl: "Panel/assets/icon.png"
+    iconUrl: "assets/icon.png"
     contextMessage: cm
   }
   chrome.notifications.create "trh-#{Date.now()}", opt, (notificationId)->

@@ -1,6 +1,7 @@
 # 基础数据模型
 # 不再直接使用游戏数据，以提升程序的稳定性
 ((exports)->
+  exports.tohken = {} if !exports.tohken
   exports.tohken.data = {
     # 玩家信息
     player: {
@@ -19,8 +20,6 @@
       "equip_max": null
       # 当前刀装持有量
       "equip_now": null
-      # 小判
-      "money": null
       # 秘书刀
       "secretary": null
       # 秘书刀的SID
@@ -97,6 +96,8 @@
       "file":         null
       # 最大资源储量
       "max_resource": null
+      # 小判
+      "money": null
       # 模拟数据叠加
       "vcharcoal":    null
       "vsteel":       null
@@ -126,7 +127,7 @@
         "hp": null
         # HP 上限
         "hp_max": null
-        # 打撃        範囲
+        # 打撃
         "atk": null
         # 統率
         "def": null

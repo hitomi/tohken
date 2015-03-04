@@ -1,5 +1,7 @@
 # 游戏数据
 ((exports)->
+  exports.tohken = {} if !exports.tohken
+  exports.tohken.define = {} if !exports.tohken.define
   exports.tohken.define.type = {
     "1": "大太刀"
     "2": "太刀"

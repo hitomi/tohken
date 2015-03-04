@@ -1,13 +1,15 @@
 # 事件控制器
 ((exports)->
+  exports.tohken = {} if !exports.tohken
+  exports.tohken.event = {} if !exports.tohken.event
   # 用来模拟数据的恢复
   exports.tohken.event.handle = null
   # 启动
   exports.tohken.event.start = (environment)->
     # 按三分钟更新的定时器
-    exports.tohken.event.handle = setInterval(function() {
+    exports.tohken.event.handle = setInterval( ->
       exports.tohken.event.action.call(environment)
-    }, 180000)
+    , 180000)
   # 终止
   exports.tohken.event.stop = ->
     return if exports.tohken.event.handle == null
