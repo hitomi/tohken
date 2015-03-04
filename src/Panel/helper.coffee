@@ -81,7 +81,7 @@ control = new Vue {
             @sword    = data.sword
             @equip    = data.equip
             @party    = data.party
-            return if @config["conquest_notify"]
+            return if !@config["conquest_notify"]
             @sendMessage {
               type: 'conquest'
               msg:  @party
@@ -108,7 +108,7 @@ control = new Vue {
         when 'conquest/start'
           @parser request, (data)=>
             @party = data.party
-            return if @config["conquest_notify"]
+            return if !@config["conquest_notify"]
             @sendMessage {
               type: 'conquest'
               msg:  @party
@@ -127,7 +127,7 @@ control = new Vue {
               @sword[v.serial_id]['hp'] = v.hp
               if parseInt(v.hp, 10) < parseInt(@sword[v.serial_id]['hp_max'], 10)
                 # 损坏提醒
-                return if @config["broken_on_battle_notify"]
+                return if !@config["broken_on_battle_notify"]
                 @sendMessage {
                   type: 'notify'
                   msg: {
