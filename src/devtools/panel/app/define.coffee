@@ -1,4 +1,4 @@
-# 静态数据以及数据查询功能
+# 游戏数据
 ((exports)->
   exports.tohken.type = {
     "1": "大太刀"
@@ -23,6 +23,11 @@
     "11": "長船"
     "12": "青江"
   }
+  exports.tohken.area = {
+    "1": "狭"
+    "2": "広"
+    "3": "横"
+  }
   exports.tohken.tohkens = {
     "3": {
       "name": "三日月宗近"
@@ -31,6 +36,7 @@
       "type": 2
       "group": 2
       "equip": 3
+      "area": 1
       "upgrade": 25
     }
     "5": {
@@ -40,6 +46,7 @@
       "type": 2
       "group": 2
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "7": {
@@ -67,15 +74,17 @@
       "type": 7
       "group": 2
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "19": {
-      "name": "にっかり12"
+      "name": "にっかり青江"
       "id": 19
       "rare": 2
       "type": 4
       "group": 12
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "23": {
@@ -85,6 +94,7 @@
       "type": 5
       "group": 9
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "25": {
@@ -94,6 +104,7 @@
       "type": 2
       "group": 9
       "equip": 3
+      "area": 1
       "upgrade": 25
     }
     "27": {
@@ -103,6 +114,7 @@
       "type": 4
       "group": 9
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "29": {
@@ -112,6 +124,7 @@
       "type": 4
       "group": 9
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "31": {
@@ -121,6 +134,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "33": {
@@ -130,6 +144,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "39": {
@@ -139,6 +154,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "41": {
@@ -148,6 +164,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "45": {
@@ -157,6 +174,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "47": {
@@ -166,6 +184,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "49": {
@@ -175,6 +194,7 @@
       "type": 7
       "group": 9
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "55": {
@@ -184,6 +204,7 @@
       "type": 2
       "group": 4
       "equip": 3
+      "area": 1
       "upgrade": 25
     }
     "59": {
@@ -202,6 +223,7 @@
       "type": 7
       "group": 8
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "65": {
@@ -211,6 +233,7 @@
       "type": 6
       "group": 7
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "73": {
@@ -220,33 +243,37 @@
       "type": 2
       "group": 11
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "79": {
-      "name": "江雪6"
+      "name": "江雪左文字"
       "id": 79
       "rare": 4
       "type": 2
       "group": 6
       "equip": 3
+      "area": 1
       "upgrade": 25
     }
     "81": {
-      "name": "宗三6"
+      "name": "宗三左文字"
       "id": 81
       "rare": 2
       "type": 5
       "group": 6
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "83": {
-      "name": "小夜6"
+      "name": "小夜左文字"
       "id": 83
       "rare": 1
       "type": 7
       "group": 6
       "equip": 1
+      "area": 1
       "upgrade": 20
     }
     "85": {
@@ -256,6 +283,7 @@
       "type": 5
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "87": {
@@ -265,24 +293,27 @@
       "type": 5
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "89": {
-      "name": "歌仙3"
+      "name": "歌仙兼定"
       "id": 89
       "rare": 2
       "type": 5
       "group": 3
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "91": {
-      "name": "和泉守3"
+      "name": "和泉守兼定"
       "id": 91
       "rare": 3
       "type": 2
       "group": 3
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "93": {
@@ -292,6 +323,7 @@
       "type": 5
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "95": {
@@ -301,6 +333,7 @@
       "type": 5
       "group": 5
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "97": {
@@ -310,24 +343,27 @@
       "type": 2
       "group": 5
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "99": {
-      "name": "5国広"
+      "name": "堀川国広"
       "id": 99
       "rare": 2
       "type": 4
       "group": 5
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "101": {
-      "name": "蜂須賀10"
+      "name": "蜂須賀虎徹"
       "id": 101
       "rare": 2
       "type": 5
       "group": 10
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "116": {
@@ -337,6 +373,7 @@
       "type": 2
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 20
     }
     "118": {
@@ -346,6 +383,7 @@
       "type": 5
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "122": {
@@ -355,6 +393,7 @@
       "type": 2
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "128": {
@@ -364,6 +403,7 @@
       "type": 2
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
     "130": {
@@ -373,10 +413,11 @@
       "type": 2
       "group": 1
       "equip": 3
+      "area": 1
       "upgrade": 25
     }
     "132": {
-      "name": "太郎2"
+      "name": "太郎太刀"
       "id": 132
       "rare": 3
       "type": 1
@@ -385,7 +426,7 @@
       "upgrade": 25
     }
     "134": {
-      "name": "次郎2"
+      "name": "次郎太刀"
       "id": 134
       "rare": 3
       "type": 1
@@ -400,6 +441,7 @@
       "type": 6
       "group": 1
       "equip": 2
+      "area": 1
       "upgrade": 25
     }
   }
