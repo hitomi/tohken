@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/main.css">
+  <script src="../Lib/livereload.js"></script>
+</head>
+<body id="app">
+  <div class="base-info">
+    <ul class="player">
+      <li>審神者<span v-show="player.name">{{player.name}}</span></li>
+      <li v-show="player.level">LV<span>{{player.level}}</span></li>
+      <li v-show="player.next_exp">(Next<span>{{player.next_exp}}</span>)</li>
+    </ul>
+    <ul class="resource">
+      <li v-show="!resource.charcoal">尚未获得资源数据，请进入本丸或锻刀页面</li>
+      <li v-show="resource.charcoal">木炭<span>{{resource.charcoal}}</span></li>
+      <li v-show="resource.steel">玉刚<span>{{resource.steel}}</span></li>
+      <li v-show="resource.coolant">冷却材<span>{{resource.coolant}}</span></li>
+      <li v-show="resource.file">砥石<span>{{resource.file}}</span></li>
+      <li v-show="resource.bill">依頼札<span>{{resource.bill}}</span></li>
+      <li v-show="player.bonemeal">手伝い札<span>{{player.bonemeal}}</span></li>
+    </ul>
+  </div>
+  <ul class="nav">
+    <li class="party" v-on="click: tab=0" v-class="active: tab==0">队伍</li>
+    <li class="forge" v-on="click: tab=1" v-class="active: tab==1">锻造</li>
+    <li class="setting" v-on="click: tab=99" v-class="active: tab==99">设置</li>
+    <li class="about" v-on="click: tab=100" v-class="active: tab==100">关于</li>
+  </ul>
+  <div class="container">
+    <div class="panel panel-party" v-if="tab==0">
+      <div v-if="!party['1']">
+        尚未获得队伍数据，请进入结成或锻刀页面
+      </div>
+      <div>* 关于疲劳值，根据观察只有在战斗返回之后才能监视到疲劳值数据的变化。就算刷新游戏页面也不会更新的。</div>
+      <div v-repeat="party">
+        <div class="party-list">
+          <div class="team-name">
+            {{party[party_no]['party_name']}}
+            <span class="alv">[平均 LV.{{party[party_no] | p2alv}}<span class="showamount"> 合计 LV.{{party[party_no] | p2lva}}</span>]</span>
+            <span v-if="party[party_no]['finished_at']!=null">[远征中]</span>
+          </div>
+          <ul class="party">
+            <li class="sword" v-repeat="party[party_no]['slot']">
+              <ul v-if="sword[serial_id]">
+                <li class="name">
+                  <b>{{sword[serial_id].sword_id | i2n}}</b>
+                  <div class="l2">LV <b>{{sword[serial_id].level}}</b> (next <b>{{serial_id | exp2next }}</b>)</div>
+                </li>
+                <li class="hp">
+                  HP <b>{{sword[serial_id].hp}} / {{sword[serial_id].hp_max}}</b>
+                  <div class="l2">
+                    <span class="square" v-class="
+                      r: sword[serial_id].fatigue < 6,
+                      y: sword[serial_id].fatigue >= 6 && sword[serial_id].fatigue < 20,
+                      p: sword[serial_id].fatigue >= 50
+                    "></span>
+                    <span v-show="sword[serial_id].fatigue >= 50">桜吹雪</span>
+                    <span v-show="sword[serial_id].fatigue < 50 && sword[serial_id].fatigue >= 20">通常</span>
+                    <span v-show="sword[serial_id].fatigue < 20">疲労</span>
+                    <b>{{sword[serial_id].fatigue}}</b>
+                    <span v-show="sword[serial_id].fatigue >= 50">(+20%)</span>
+                    <span v-show="sword[serial_id].fatigue >= 6 && sword[serial_id].fatigue < 20">(-20%)</span>
+                    <span v-show="sword[serial_id].fatigue < 6">(-40%)</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-forge" v-if="tab==1">
+      <div>
+        <div>* 关于锻刀，请在锻刀开始之后进入其他页面再返回以便刷新数据。</div>
+        <ul class="forge">
+          <li
+            v-repeat="forge">
+            位置：<b>{{slot_no}}</b>
+            <span class="watch">鼠标悬停获得剧透<b>：{{sword_id | i2n}}</b></span>
+            完成时间：<b>{{finished_at}}</b>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="panel panel-config" v-if="tab==99">
+      <div class="title">
+        提醒
+      </div>
+      <ul class="config-list">
+        <li>
+          <span id="config_cn" class="switcher"
+              v-class="on: config['conquest_notify']"
+              v-on="click: applyConfig('conquest_notify', config['conquest_notify']?0:1)"
+              ></span>
+          远征提醒<b>[{{config['conquest_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+        <li>
+          <span id="config_bobn" class="switcher"
+            v-class="on: config['broken_on_battle_notify']"
+            v-on="click: applyConfig('broken_on_battle_notify', config['broken_on_battle_notify']?0:1)"
+            ></span>
+          战斗时的受伤提醒<b>[{{config['broken_on_battle_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+        <li>
+          <span id="config_bgnsn" class="switcher"
+            v-class="on: config['battle_new_notify']"
+            v-on="click: applyConfig('battle_new_notify', config['battle_new_notify']?0:1)"
+          ></span>
+          战斗时获得新刀的提醒<b>[{{config['battle_new_notify']?'已开启':'已关闭'}}]</b>
+        </li>
+      </ul>
+    </div>
+    <div class="panel panel-about" v-if="tab==100">
+      等级对应所需经验和疲劳值数据来自 http://wikiwiki.jp/toulove/<br>
+      目前这个版本还没啥功能，不过咱应该会更新下去的…喜欢的话记得关注咱的微博@毫无存在感的凌，有什么情报都会写过去的<br>
+      至于会不会封号…我没有主动去抓取数据，只是监听的Chrome的devtools自身提供的onRequestFinished事件，我觉得不会有问题…但我不敢保证…<br>
+      还有会不会窃取什么数据…反正你从我手里拿到的版本应该是不会有问题的，信不着的话自己拿源码打包好了，至于其他人基于这个的修改版我不敢保证会不会有问题<br>
+      Github： https://github.com/hitomi/tohken<br>
+      另外，欢迎一起来贡献代码让这个工具变得更好<br>
+      * 下个大版本预计更新<br>
+      <ul>
+        <li>界面优化</li>
+        <li>手入提醒</li>
+        <li>快速启动游戏的图标以及窗口大小自适应</li>
+        <li>战斗过程刀装损坏提醒（未定）</li>
+      </ul>
+      其他的有什么想法就扔我私信就好了
+      <div>
+        <p>更新记录</p>
+        <div>v0.1.3 150304</div>
+        <ul>
+          <li>
+            更完善的修复了提醒失效问题(感谢微博@茈予-安详地舔舔舔提供的错误报告截图，感谢@常暗_PETY亚洲善待山姥切国広组进行测试汇报)
+          </li>
+          <li>
+            追加平均等级和等级总和的显示功能，等级总和在鼠标悬停在平均等级上时会出现(来着微博@1tuka)
+          </li>
+        </ul>
+        <div>v0.1.2 150304</div>
+        <ul>
+          <li>
+            紧急修复提醒失效问题(来着微博@茈予-安详地舔舔舔)
+          </li>
+        </ul>
+        <div>v0.1.1 150304</div>
+        <ul>
+          <li>
+            修正了99级时的显示问题(来自贴吧@catofsickle)
+          </li>
+          <li>
+            追加设置页面，可以开启和关闭部分提醒功能
+          </li>
+          <li>
+            增加战斗过程中的爆刀剧透功能，请在设置页面中手工开启(来自微博@天見禎芽-目指立派前野厨)
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="gaming"
+       v-show="!gaming">
+    无法获取游戏数据，如果您已经进入游戏请进入游戏中的任意页面<br>
+    {{gaming}}
+  </div>
+  <script src="../Lib/lodash.js"></script>
+  <script src="../Lib/jquery.js"></script>
+  <script src="../Lib/vue.js"></script>
+  <script src="helper.js"></script>
+</body>
+</html>

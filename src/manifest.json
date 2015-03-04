@@ -1,0 +1,40 @@
+{
+  "name": "Tohken Ranbu Helper",
+  "manifest_version": 2,
+  "version": "0.1.3",
+  "minimum_chrome_version": "10.0",
+  "devtools_page": "devtools.html",
+  "content_security_policy": "default-src 'self'  chrome-extension-resource: ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';  connect-src *; frame-src *;",
+  "web_accessible_resources":
+  [
+    "*"
+  ],
+  "background": {
+    "scripts": ["Lib/lodash.js", "inject.js"]
+  },
+  "browser_action": {
+    "default_icon": "Panel/assets/icon_128.png",
+    "default_popup": "Popup/popup.html"
+  },
+  "content_scripts": [ {
+    "all_frames": true,
+    "js": [ "Lib/jquery.js", "/Popup/resize.js" ],
+    "matches": [ "*://*.dmm.com/netgame/social/-/gadgets/=/825012/*" ]
+  }, {
+    "all_frames": true,
+    "js": [ "Lib/jquery.js", "/Popup/resize.js" ],
+    "matches": [ "*://osapi.dmm.com/gadgets/ifr?*" ]
+  }],
+  "icons": {
+    "128": "Panel/assets/icon_128.png"
+  },
+  "permissions": [
+    "notifications",
+    "http://*/*",
+    "alarms",
+    "tabs"
+  ],
+  "web_accessible_resources": [
+    "Panel/assets/icon.png"
+  ]
+}
