@@ -102,6 +102,8 @@
       "vsteel":       null
       "vcoolant":     null
       "vfile":        null
+      # 上次更新时间
+      "last_update": null
     }
     # 刀剑
     sword: {
@@ -176,6 +178,8 @@
       }
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 刀装
     equip: {
@@ -190,6 +194,8 @@
       }
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 队伍
     party: {
@@ -228,6 +234,8 @@
       }
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 锻造
     forge: {
@@ -236,6 +244,8 @@
       "open": null
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 手入
     repair: {
@@ -244,6 +254,8 @@
       "open": null
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 远征
     conquest: {
@@ -254,6 +266,8 @@
       }
       # 数据填充位置
       "data": {}
+      # 上次更新时间
+      "last_update": null
     }
     # 状态
     status: {
