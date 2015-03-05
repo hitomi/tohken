@@ -9,7 +9,7 @@
     # 按三分钟更新的定时器
     exports.tohken.event.handle = setInterval( ->
       exports.tohken.event.action.call(environment)
-    , 180000)
+    , 1000)
   # 终止
   exports.tohken.event.stop = ->
     return if exports.tohken.event.handle == null
@@ -37,8 +37,18 @@
       if v['finished_at'] != null
         _.forEach v['slot'], (vi, ki)=>
           conquest_list.push vi['serial_id'] if vi['serial_id'] != null
+      'done'
     # 开始循环增加
     _.forEach @data['sword']['data'], (v, k)=>
       if _.findIndex v['serial_id'] == -1
-        @data['sword']['data'][k]['vfatigue'] +3 if @data['sword']['data'][k]['fatigue'] + @data['sword']['data'][k]['vfatigue'] <= 49
+        if parseInt(@data['sword']['data'][k]['fatigue'], 10) + parseInt(@data['sword']['data'][k]['vfatigue'], 10) + 3 < 49
+          @data['sword']['data'][k]['vfatigue'] = parseInt(@data['sword']['data'][k]['vfatigue'], 10) + 3
+        else if Math.abs(49 - (parseInt(@data['sword']['data'][k]['fatigue'], 10) + parseInt(@data['sword']['data'][k]['vfatigue'], 10))) <= 3
+          @data['sword']['data'][k]['vfatigue'] = parseInt(@data['sword']['data'][k]['vfatigue'], 10) + (49 - (parseInt(@data['sword']['data'][k]['fatigue'], 10) + parseInt(@data['sword']['data'][k]['vfatigue'], 10)))
+
+      'done'
+    # 更新视图数据
+    exports.tohken.parse.view.call this, 'resource'
+    exports.tohken.parse.view.call this, 'party'
+    'done'
 )(window)

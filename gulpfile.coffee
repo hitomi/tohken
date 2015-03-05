@@ -24,7 +24,7 @@ gulp.task 'coffee', ->
     .pipe notify { message: "coffee complate" }
     .pipe livereload()
 gulp.task 'less', ->
-  gulp.src './src/**/*.less'
+  gulp.src './src/**/main.less'
     .pipe less()
     .on   'error', gutil.log
     .pipe gulp.dest './build'

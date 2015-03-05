@@ -11,6 +11,8 @@
         @parser request, (data)=>
           # 更新资源信息
           parse.resource.call this, data['resource']
+          exports.tohken.parse.view.call this, 'resource'
+          # exports.tohken.event.start this if exports.tohken.event.handle == null
       # 锻刀
       when 'forge'
         @parser request, (data)=>
@@ -19,6 +21,7 @@
           parse.sword.call    this, data['sword']
           parse.party.call    this, data['party']
           parse.forge.call    this, data['forge']
+          exports.tohken.parse.view.call this, 'resource'
       # 结成
       when 'party/list'
         @parser request, (data)=>
@@ -53,11 +56,14 @@
           # 更新锻刀和手入位置数
           @data['forge']['open']                  = data['forge_slot']
           @data['repair']['open']                 = data['repair_slot']
+          exports.tohken.parse.view.call this, 'player'
+          exports.tohken.parse.view.call this, 'resource'
       # 修复
       when 'repair/repair'
         @parser request, (data)=>
           parse.resource.call this, data['resource']
           @data['repair']['data'] = data['repair']
+          exports.tohken.parse.view.call this, 'resource'
       # 出阵
       when 'sally'
         @parser request, (data)=>
