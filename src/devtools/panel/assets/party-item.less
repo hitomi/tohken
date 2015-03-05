@@ -1,0 +1,118 @@
+.party-item {
+  padding: 4px;
+  .name {
+    font-size: 16px;
+    color: #000;
+    .status {
+      color: inherit;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+  .amounts {
+    span {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+  .swords {
+    margin-top: 8px;
+    li.ss {
+      position: relative;
+      height: 60px;
+      padding-left: 60px;
+      width: 280px;
+      margin-bottom: 8px;
+      .simg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 52px;
+        width: 52px;
+      }
+      .c {
+        width: 140px;
+        float: left;
+      }
+      .c2 {
+        width: 280px;
+        float: left;
+      }
+      .sname, .shp {
+        height: 20px;
+        font-size: 16px;
+        line-height: 20px;
+      }
+      .slv, .sf {
+        height: 16px;
+        line-height: 16px;
+      }
+      .sfico {
+        float: left;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin: 2px;
+        margin-left: 0;
+        margin-right: 4px;
+        background-color: #666;
+        &.r {
+          background-color: #bf2424;
+        }
+        &.y {
+          background-color: #b48813;
+        }
+        &.p {
+          background-color: #c93ab3;
+        }
+      }
+      .sequ {
+        height: 16px;
+        span {
+          color: rgb(16, 93, 65);
+          font-weight: bold;
+          margin-right: 4px;
+          &.r {
+            color: rgb(56, 56, 56);
+          }
+          &.ur {
+            color: rgb(128, 113, 0);
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width:310px) {
+  li.ss {
+    height: 60px;
+    padding-left: 0px !important;
+    width: 280px;
+    .simg {
+      display: none;
+    }
+  }
+}
+@media (max-width:270px) {
+  li.ss {
+    padding-left: 0px !important;
+    width: 150px !important;
+    .simg {
+      display: none;
+    }
+    .c2 {
+      width: 80px !important;
+    }
+  }
+}
+@media (min-width: 560px) {
+  .party-item {
+    .swords {
+      max-width: 1024px;
+      li.ss {
+        display: inline-block;
+        float: left;
+      }
+    }
+  }
+}
