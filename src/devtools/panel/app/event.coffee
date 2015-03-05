@@ -24,12 +24,6 @@
     @data['resource']['vfile']     += 3 if @data['resource']['file']     + @data['resource']['vfile']     + 3 <= max
     # 自然恢复，每分钟+3，上限为49，在出阵和远征时不进行回复
     # 因为战斗后会返回新的数据所以跳过
-    # 出阵时 -10
-    # 开始战斗 -3
-    # MVP +10
-    # 胜利时队长+3，失败不增加
-    # S时+4(不含MVP)  A时+3  B时+2  C时+1，败北不增加
-    # 待验证
     return if @data['status']['in_battle']
     conquest_list = []
     # 检定远征
