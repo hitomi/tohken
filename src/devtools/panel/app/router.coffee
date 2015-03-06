@@ -33,6 +33,9 @@
       when 'party/setsword'
         @parser request, (data)=>
           parse.party.call    this, data
+      when 'party/removesword'
+        @parser request, (data)=>
+          parse.party.call    this, data
       # 启动
       when 'login/start'
         @parser request, (data)=>
@@ -70,9 +73,20 @@
           parse.equip.call this, data['equip']
           parse.sword.call this, data['sword']
           parse.party.call this, data['party']
+      # 出阵确认
+      when 'sally/sally'
+        partyno = request['request']['postData']['text'].match(/no=(\d)/)[1]
+        _.forEach @data['party']['data'][partyno]['slot'], (v, k)=>
+          return if v['serial_id'] == null
+          v['fatigue'] = parseInt(v['fatigue'], 10) - 10
+          @data['party']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['party']['data'][v['serial_id']]['vfatigue'], 10) - 10
       # 远征
       when 'conquest/start'
         @parser request, (data)=>
           parse.party.call this, data['party']
           # TODO：远征提醒
+      # 远征
+      when 'battle/battle'
+        @parser request, (data)=>
+          parse.battle.call this, data
 )(window)

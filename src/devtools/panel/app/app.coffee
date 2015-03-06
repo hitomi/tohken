@@ -28,6 +28,11 @@
       route: (request, action)->
         exports.tohken.router.call this, request, action
 
+      # Parse data to json
+      parser: (request, callback)->
+        request.getContent (content, encoding)->
+          callback JSON.parse(content)
+
       # Apply Config
       applyConfig: (key, value)->
         localStorage[key] = value

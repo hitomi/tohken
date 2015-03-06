@@ -170,7 +170,7 @@
         # 写保护
         "protect": null
         # 状态
-        # 0：正常，1：手入，2：軽傷，3：中傷，4：重傷
+        # 0：正常，1：手入，3：远征
         "status": null
         # * 尚不明确
         "recovered_at": null
