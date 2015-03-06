@@ -170,9 +170,9 @@
         # 写保护
         "protect": null
         # 状态
-        # 0：正常，1：手入，3：远征
+        # 0：正常，1：手入，3：远征 暂未发现其他情况…
         "status": null
-        # * 尚不明确
+        # 上次战斗时间
         "recovered_at": null
         # 获得时间
         "created_at": null

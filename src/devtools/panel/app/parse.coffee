@@ -203,7 +203,8 @@
       sword['equip_serial_id2'] = party[v['serial_id']]['equip_serial_id2']
       sword['equip_serial_id3'] = party[v['serial_id']]['equip_serial_id3']
       # 更新演算疲劳
-      sword['fatigue'] = parseInt(sword['fatigue'], 10) + parseInt(party[v['serial_id']]['vfatigue'], 10)
+      fatigue = parseInt(sword['fatigue'], 10) + parseInt(party[v['serial_id']]['vfatigue'], 10)
+      sword['fatigue'] = if fatigue > 100 then 100 else fatigue
       # 更新刀装数据
       if party[v['serial_id']]['equip_serial_id1'] != null
         sword['equip_1']['soldier_now'] = party[v['serial_id']]['soldier1']
@@ -273,7 +274,8 @@
                   # 向刀装中追加现存兵力和名称的字段
                   slot[ki]['equip_1']['name']         = exports.tohken.define['equip'][slot[ki]['equip_1']['equip_id']]['name']
                   slot[ki]['equip_1']['sname']        = exports.tohken.define.equiptype_s[exports.tohken.define['equip'][slot[ki]['equip_1']['equip_id']]['type']]
-                  slot[ki]['equip_1']['soldier_now']  = slot[ki]['equip_1']['soldier']
+                  slot[ki]['equip_1']['soldier_now']  = exports.tohken.define['equip'][slot[ki]['equip_1']['equip_id']]['soldier']
+                  slot[ki]['equip_1']['soldier_max']  = exports.tohken.define['equip'][slot[ki]['equip_1']['equip_id']]['soldier']
                   slot[ki]['equip_1']['level']        = parseInt(slot[ki]['equip_1']['equip_id'], 10) % 3
                   soldiers                           += parseInt slot[ki]['equip_1']['soldier'], 10
                 else
@@ -284,7 +286,8 @@
                   # 向刀装中追加现存兵力和名称的字段
                   slot[ki]['equip_2']['name']         = exports.tohken.define['equip'][slot[ki]['equip_2']['equip_id']]
                   slot[ki]['equip_2']['sname']        = exports.tohken.define.equiptype_s[exports.tohken.define['equip'][slot[ki]['equip_2']['equip_id']]['type']]
-                  slot[ki]['equip_2']['soldier_now']  = slot[ki]['equip_2']['soldier']
+                  slot[ki]['equip_2']['soldier_now']  = exports.tohken.define['equip'][slot[ki]['equip_2']['equip_id']]['soldier']
+                  slot[ki]['equip_2']['soldier_max']  = exports.tohken.define['equip'][slot[ki]['equip_2']['equip_id']]['soldier']
                   slot[ki]['equip_2']['level']        = parseInt(slot[ki]['equip_2']['equip_id'], 10) % 3
                   soldiers                           += parseInt slot[ki]['equip_2']['soldier'], 10
                 else
@@ -295,7 +298,8 @@
                   # 向刀装中追加现存兵力和名称的字段
                   slot[ki]['equip_3']['name']         = exports.tohken.define['equip'][slot[ki]['equip_3']['equip_id']]
                   slot[ki]['equip_3']['sname']        = exports.tohken.define.equiptype_s[exports.tohken.define['equip'][slot[ki]['equip_3']['equip_id']]['type']]
-                  slot[ki]['equip_3']['soldier_now']  = slot[ki]['equip_3']['soldier']
+                  slot[ki]['equip_3']['soldier_now']  = exports.tohken.define['equip'][slot[ki]['equip_3']['equip_id']]['soldier']
+                  slot[ki]['equip_3']['soldier_max']  = exports.tohken.define['equip'][slot[ki]['equip_3']['equip_id']]['soldier']
                   slot[ki]['equip_3']['level']        = parseInt(slot[ki]['equip_3']['equip_id'], 10) % 3
                   soldiers                           += parseInt slot[ki]['equip_3']['soldier'], 10
                 else

@@ -12,7 +12,8 @@
           # 更新资源信息
           parse.resource.call this, data['resource']
           exports.tohken.parse.view.call this, 'resource'
-          # exports.tohken.event.start this if exports.tohken.event.handle == null
+          @data['status']['in_battle'] = false
+          exports.tohken.event.start this if exports.tohken.event.handle == null
       # 锻刀
       when 'forge'
         @parser request, (data)=>
@@ -76,10 +77,12 @@
       # 出阵确认
       when 'sally/sally'
         partyno = request['request']['postData']['text'].match(/no=(\d)/)[1]
+        exports.tohken.event.fatigue.call this
         _.forEach @data['party']['data'][partyno]['slot'], (v, k)=>
           return if v['serial_id'] == null
           v['fatigue'] = parseInt(v['fatigue'], 10) - 10
           @data['party']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['party']['data'][v['serial_id']]['vfatigue'], 10) - 10
+          @data['status']['in_battle'] = true
       # 远征
       when 'conquest/start'
         @parser request, (data)=>

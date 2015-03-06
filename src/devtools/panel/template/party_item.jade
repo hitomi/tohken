@@ -83,15 +83,15 @@ div(
           .c2
             .sequ
               span(v-if="equip_serial_id1!=null", v-class="r: equip_1['level'] == 2, ur: equip_1['level'] == 0, b: equip_1['soldier_now'] == 0")
-                | [{{equip_1['sname']}} {{equip_1['soldier_now']}}/{{equip_1['soldier']}}]
+                | [{{equip_1['sname']}} {{equip_1['soldier_now']}}/{{equip_1['soldier_max']}}]
               span(v-if="equip_serial_id1==null&&max_equip>=1")
                 | [空]
               span(v-if="equip_serial_id2!=null", v-class="r: equip_2['level'] == 2, ur: equip_2['level'] == 0, b: equip_2['soldier_now'] == 0")
-                | [{{equip_2['sname']}} {{equip_2['soldier_now']}}/{{equip_2['soldier']}}]
+                | [{{equip_2['sname']}} {{equip_2['soldier_now']}}/{{equip_2['soldier_max']}}]
               span(v-if="equip_serial_id2==null&&max_equip>=2")
                 | [空]
               span(v-if="equip_serial_id3!=null", v-class="r: equip_3['level'] == 2, ur: equip_3['level'] == 0, b: equip_3['soldier_now'] == 0")
-                | [{{equip_3['sname']}} {{equip_3['soldier_now']}}/{{equip_3['soldier']}}]
+                | [{{equip_3['sname']}} {{equip_3['soldier_now']}}/{{equip_3['soldier_max']}}]
               span(v-if="equip_serial_id3==null&&max_equip>=3")
                 | [空]
     .clear
