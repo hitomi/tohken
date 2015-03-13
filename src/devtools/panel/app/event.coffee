@@ -10,28 +10,25 @@
     # 按三分钟更新的定时器
     exports.tohken.event.handle = setInterval( ->
       exports.tohken.event.action.call(environment)
-    , 30000)
+    , 1000)
   # 终止
   exports.tohken.event.stop = ->
     return if exports.tohken.event.handle == null
     clearInterval(exports.tohken.event.handle)
   # 进程
   exports.tohken.event.action = ->
-    # 资源每三分钟增加三点
-    max = @data['resource']['max_resource']
-    @data['resource']['vcharcoal'] += 3 if @data['resource']['charcoal'] + @data['resource']['vcharcoal'] + 3 <= max
-    @data['resource']['vsteel']    += 3 if @data['resource']['steel']    + @data['resource']['vsteel']    + 3 <= max
-    @data['resource']['vcoolant']  += 3 if @data['resource']['coolant']  + @data['resource']['vcoolant']  + 3 <= max
-    @data['resource']['vfile']     += 3 if @data['resource']['file']     + @data['resource']['vfile']     + 3 <= max
-    # 更新视图数据
-    exports.tohken.parse.view.call this, 'resource'
-    # 自然恢复，每分钟+3，上限为49，在出阵和远征时不进行回复
-    # 因为战斗后会返回新的数据所以跳过
     exports.tohken.event.fatigue.call this
     'done'
   # 疲劳演算
   exports.tohken.event.fatigue = ->
-    return if @data['status']['in_battle']
+    # 自然恢复，每分钟+3，上限为49，在出阵和远征时不进行回复
+    # 因为战斗后会返回新的数据所以跳过
+    return if @status['in_battle']
+    return if @status['last_router'] == 'battle/battle'
+    return if @status['last_router'] == 'sally/forward'
+    if @config['cadOffList'] == 1
+      return if @status['router'] == 'party/list'
+    change = false
     # 开始循环增加
     _.forEach @data['sword']['data'], (v, k)=>
       # 换一种科学的计算方式…
@@ -43,12 +40,21 @@
       last    = Date.parse "#{sword['recovered_at']} GMT+0900"
       now     = Date.now()
       time    = now - last
-      console.log last, now, time
       vfatigue = Math.floor(time / 60000)
       if (fatigue + vfatigue) >= 49
         vfatigue = 49 - fatigue
       # 合并数据
-      sword['vfatigue'] = vfatigue
+      if parseInt(sword['vfatigue'], 10) != parseInt(vfatigue, 10)
+        #三分钟三点
+        vfix = vfatigue - (vfatigue % 3)
+        # 合并数据
+        if (fatigue + vfatigue) >= 49
+          change = true
+          sword['vfatigue'] = vfatigue
+        else
+          change = true
+          sword['vfatigue'] = vfix
       'done'
-    exports.tohken.parse.view.call this, 'party'
+    if change
+      exports.tohken.parse.view.call this, 'party'
 )(window)

@@ -5,6 +5,8 @@
     parse = exports.tohken.parse
     # 如果不处于游戏状态终止路由
     @gaming = true if !@gaming
+    @status['last_router'] = @status['router']
+    @status['router'] = action
     switch action
       # 本丸
       when 'home'
@@ -12,7 +14,8 @@
           # 更新资源信息
           parse.resource.call this, data['resource']
           exports.tohken.parse.view.call this, 'resource'
-          @data['status']['in_battle'] = false
+          @status['in_battle'] = false
+          exports.tohken.event.fatigue.call this
           exports.tohken.event.start this if exports.tohken.event.handle == null
       # 锻刀
       when 'forge'
@@ -78,18 +81,24 @@
       when 'sally/sally'
         partyno = request['request']['postData']['text'].match(/no=(\d)/)[1]
         exports.tohken.event.fatigue.call this
+        @status['in_battle'] = true
         _.forEach @data['party']['data'][partyno]['slot'], (v, k)=>
           return if v['serial_id'] == null
           v['fatigue'] = parseInt(v['fatigue'], 10) - 10
-          @data['party']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['party']['data'][v['serial_id']]['vfatigue'], 10) - 10
-          @data['status']['in_battle'] = true
+          @data['sword']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['sword']['data'][v['serial_id']]['vfatigue'], 10) - 10
+      # 出阵确认
+      when 'sally/forward'
+        @parser request, (data)=>
+          @square_id = data.square_id
       # 远征
       when 'conquest/start'
         @parser request, (data)=>
           parse.party.call this, data['party']
           # TODO：远征提醒
+
       # 远征
       when 'battle/battle'
         @parser request, (data)=>
           parse.battle.call this, data
+
 )(window)

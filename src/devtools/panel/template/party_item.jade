@@ -1,97 +1,103 @@
 // 队伍列表
 div(
   v-if="!view['party']['set']"
+  v-show="tab==1"
 )
-  暂未取得队伍数据，请进入结成页面
-.party(
+  | 暂未取得队伍数据，请进入结成页面
+// 队伍列表
+div(
   v-if="view['party']['set']"
+  v-show="tab==1"
 )
-  .party-item(
-    v-repeat="view['party']['data']"
+  .party(
+    v-if="view['party']['set']"
   )
-    // 队伍和状态标注
-    .name
-      | {{party_name}}
-      span.status(
-        v-show="status==2"
-      )
-        | [远征中]
-    // 等级和兵力标注
-    .amounts
-      span.alv
-        | Average Lv.
-        b {{avearge_lv}}
-      span.lva
-        | Total Lv.
-        b {{amount_lv}}
-    // 列表
-    ul.swords
-      li.ss(
-        v-repeat="slot"
-      )
-        .item(v-if="serial_id==null")
-          img.simg(src="../../assets/sword/0.jpg")
-          .c
-            .sname
-              | 空
-            .slv
-              | Lv.0 (next 0)
-          .c
-            .shp
-              | HP 0 / 0
-            .sf
-              span.sfico
-              | 0
-          .c2
-            .sequ
-              span
-                | [空]
-        .item(v-if="serial_id!=null")
-          img.simg(v-attr="src: '../../assets/sword/' + sword_id + '.jpg'")
-          .c
-            .sname
-              | {{name}}
-              span.ssta(v-show="status==1")
-                | [手入]
-              span.ssta.y(v-show="hp/hp_max<=0.9 && hp/hp_max>0.65 && status!=1")
-                | [軽傷]
-              span.ssta.o(v-show="hp/hp_max<=0.65 && hp/hp_max>0.3 && status!=1")
-                | [中傷]
-              span.ssta.r(v-show="hp/hp_max<=0.3&&status!=1")
-                | [重傷]
-            .slv
-              | Lv.{{level}}(next {{exp}})
-          .c
-            .shp
-              | HP {{hp}} / {{hp_max}}
-            .sf
-              span.sfico(v-class="r: fatigue < 6,y: fatigue >= 6 && fatigue < 20,p: fatigue >= 50")
-              span(v-show="fatigue >= 50")
-                | 桜吹雪
-              span(v-show="fatigue < 50 && fatigue >= 20")
-                | 通常
-              span(v-show="fatigue < 20")
-                | 疲労
-              span
-                | {{fatigue}}
-              span(v-show="fatigue >= 50")
-                | (+20%)
-              span(v-show="fatigue >= 6 && fatigue < 20")
-                | (-20%)
-              span(v-show="fatigue < 6")
-                | (-40%)
-          .c2
-            .sequ
-              span(v-if="equip_serial_id1!=null", v-class="r: equip_1['level'] == 2, ur: equip_1['level'] == 0, b: equip_1['soldier_now'] == 0")
-                | [{{equip_1['sname']}} {{equip_1['soldier_now']}}/{{equip_1['soldier_max']}}]
-              span(v-if="equip_serial_id1==null&&max_equip>=1")
-                | [空]
-              span(v-if="equip_serial_id2!=null", v-class="r: equip_2['level'] == 2, ur: equip_2['level'] == 0, b: equip_2['soldier_now'] == 0")
-                | [{{equip_2['sname']}} {{equip_2['soldier_now']}}/{{equip_2['soldier_max']}}]
-              span(v-if="equip_serial_id2==null&&max_equip>=2")
-                | [空]
-              span(v-if="equip_serial_id3!=null", v-class="r: equip_3['level'] == 2, ur: equip_3['level'] == 0, b: equip_3['soldier_now'] == 0")
-                | [{{equip_3['sname']}} {{equip_3['soldier_now']}}/{{equip_3['soldier_max']}}]
-              span(v-if="equip_serial_id3==null&&max_equip>=3")
-                | [空]
-    .clear
+    .party-item(
+      v-repeat="view['party']['data']"
+    )
+      // 队伍和状态标注
+      .name
+        | {{party_name}}
+        span.status(
+          v-show="status==2"
+        )
+          | [远征中]
+      // 等级和兵力标注
+      .amounts
+        span.alv
+          | Average Lv.
+          b {{avearge_lv}}
+        span.lva
+          | Total Lv.
+          b {{amount_lv}}
+      // 列表
+      ul.swords
+        li.ss(
+          v-repeat="slot"
+        )
+          .item(v-if="serial_id==null")
+            img.simg(src="../../assets/sword/0.jpg")
+            .c
+              .sname
+                | 空
+              .slv
+                | Lv.0 (next 0)
+            .c
+              .shp
+                | HP 0 / 0
+              .sf
+                span.sfico
+                | 0
+            .c2
+              .sequ
+                span
+                  | [空]
+          .item(v-if="serial_id!=null")
+            img.simg(v-attr="src: '../../assets/sword/' + sword_id + '.jpg'")
+            .c
+              .sname
+                | {{name}}
+                span.ssta(v-show="status==1")
+                  | [手入]
+                span.ssta.y(v-show="hp/hp_max<=0.9 && hp/hp_max>0.65 && status!=1")
+                  | [軽傷]
+                span.ssta.o(v-show="hp/hp_max<=0.65 && hp/hp_max>0.3 && status!=1")
+                  | [中傷]
+                span.ssta.r(v-show="hp/hp_max<=0.3&&status!=1")
+                  | [重傷]
+              .slv
+                | Lv.{{level}}(next {{next_exp}})
+            .c
+              .shp
+                | HP {{hp}} / {{hp_max}}
+              .sf
+                span.sfico(v-class="r: fatigue < 6,y: fatigue >= 6 && fatigue < 20,p: fatigue >= 50")
+                span(v-show="fatigue >= 50")
+                  | 桜吹雪
+                span(v-show="fatigue < 50 && fatigue >= 20")
+                  | 通常
+                span(v-show="fatigue < 20")
+                  | 疲労
+                span
+                  | {{fatigue}}
+                span(v-show="fatigue >= 50")
+                  | (+20%)
+                span(v-show="fatigue >= 6 && fatigue < 20")
+                  | (-20%)
+                span(v-show="fatigue < 6")
+                  | (-40%)
+            .c2
+              .sequ
+                span(v-if="equip_serial_id1!=null", v-class="r: equip_1['level'] == 2, ur: equip_1['level'] == 0, b: equip_1['soldier_now'] == 0")
+                  | [{{equip_1['sname']}} {{equip_1['soldier_now']}}/{{equip_1['soldier_max']}}]
+                span(v-if="equip_serial_id1==null&&max_equip>=1")
+                  | [空]
+                span(v-if="equip_serial_id2!=null", v-class="r: equip_2['level'] == 2, ur: equip_2['level'] == 0, b: equip_2['soldier_now'] == 0")
+                  | [{{equip_2['sname']}} {{equip_2['soldier_now']}}/{{equip_2['soldier_max']}}]
+                span(v-if="equip_serial_id2==null&&max_equip>=2")
+                  | [空]
+                span(v-if="equip_serial_id3!=null", v-class="r: equip_3['level'] == 2, ur: equip_3['level'] == 0, b: equip_3['soldier_now'] == 0")
+                  | [{{equip_3['sname']}} {{equip_3['soldier_now']}}/{{equip_3['soldier_max']}}]
+                span(v-if="equip_serial_id3==null&&max_equip>=3")
+                  | [空]
+      .clear

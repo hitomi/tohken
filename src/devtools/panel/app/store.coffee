@@ -1,7 +1,7 @@
 # 存储控制器
 ((exports)->
   exports.tohken = {} if !exports.tohken
-  class store
+  exports.tohken.store = {
     get: (key, pre, json = false)->
       data = localStorage.getItem(key)
       if data != null
@@ -10,7 +10,9 @@
         return pre
     set: (key, value)->
       localStorage.setItem(key, value)
+    removeItem: (key)->
+      localStorage.removeItem(key)
     reset: ->
       localStorage.clear()
-  exports.tohken.store = store
+  }
 )(window)

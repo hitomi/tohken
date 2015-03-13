@@ -121,6 +121,8 @@
         "level": null
         # 累计经验
         "exp": null
+        # 下一级经验
+        "next_exp": null
         # 进阶次数
         "evol_num": null
         # HP
@@ -165,7 +167,7 @@
         "equip_serial_id3": null
         # 马
         "horse_serial_id": null
-        # 氪金道具
+        # 氪金道具 1 普通 2 极
         "item_id": null
         # 写保护
         "protect": null
@@ -269,13 +271,6 @@
       "data": {}
       # 上次更新时间
       "last_update": null
-    }
-    # 状态
-    status: {
-      # 模拟数据更新
-      "virtualization": false
-      # 是否在战斗状态
-      "in_battle": false
     }
   }
 )(window)

@@ -29,13 +29,15 @@
       # 判断数据是否已经存在
       pre = if @data['sword']['data'][k] then _.clone(@data['sword']['data'][k]) else _.clone(exports.tohken.data['sword']['template'])
       # 填充数据
-      _.forEach pre, (vi, ki)->
+      _.forEach pre, (vi, ki)=>
         # 向目标合并数据
         if _.has(v, ki)
           pre[ki] = v[ki]
-        # 清空模拟数据
+          # 清空模拟数据
         if ki == 'vfatigue'
           pre[ki] = 0
+        if ki == 'next_exp'
+          pre[ki] = exports.tohken.define.upexp[parseInt(pre['level'], 10)] - parseInt(pre['exp'], 10)
       # 向分支合并数据
       branch[k] = pre
     # 用分支替换主线
@@ -313,8 +315,10 @@
               lvs += parseInt slot[ki]['level'], 10
               eqs += soldiers
               # 合并虚拟疲劳
-              slot[ki]['fatigue'] = parseInt(slot[ki]['fatigue'], 10) + parseInt(slot[ki]['vfatigue'],10)
-
+              if @config["cad"]
+                slot[ki]['fatigue'] = parseInt(slot[ki]['fatigue'], 10) + parseInt(slot[ki]['vfatigue'],10)
+              else
+                slot[ki]['fatigue'] = slot[ki]['fatigue']
           # 合并数据
           target[k]['slot']       = slot
           target[k]['amount_lv']  = lvs
@@ -322,7 +326,42 @@
           target[k]['soldiers']   = eqs
         @view['party']['set']   = true
         @view['party']['data']  = target
-    @$log @data
+  # 远征检查
+  exports.tohken.parse.conquest = (party)->
+    _.forEach party, (v, k)=>
+      f = v['finished_at']
+      if f != null
+        finish  = Date.parse "#{f} GMT+0900"
+        earlier = 0
+        title = "#{v['party_name']}远征结束"
+        message = "结束时间 #{finish.getHours()}:#{finish.getMinutes()}:#{finish.getSeconds()}"
+        context = "请注意查收远征成果"
+        switch @config['notify_conquest']
+          when 0
+            return
+          when 1
+            title = "#{v['party_name']}远征还有五分钟结束"
+            earlier = 5 * 60 * 1000
+          when 2
+            title = "#{v['party_name']}远征还有两分钟结束"
+            earlier = 2 * 60 * 1000
+          when 3
+            title = "#{v['party_name']}远征还有半分钟结束"
+            earlier = 0.5 * 60 * 1000
+        @sendMessage {
+          'alarm': {
+            'time':　finish - earlier
+            'id': "conquest-#{v['party_no']}-#{finish}"
+          }
+          'message': {
+            'title': title
+            'message': message
+            'context': context
+          }
+        }
+    'done'
+  # 手入检查
+  # 锻造检查
   # 数据填充工具
   exports.tohken.parse.fill = (target, source)->
     _.forEach target, (vi, ki)->
