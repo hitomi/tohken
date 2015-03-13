@@ -32,6 +32,7 @@
           parse.equip.call    this, data['equip']
           parse.sword.call    this, data['sword']
           parse.party.call    this, data['party']
+          parse.conquest.call this, data['party']
           # TODO：远征提醒
       # 更新结成数据
       when 'party/setsword'
@@ -47,7 +48,6 @@
           parse.equip.call    this, data['equip']
           parse.party.call    this, data['party']
           # 更新玩家数据
-          # data.item["8"]["num"] if data.item["8"]
           @data['player']['name']                 = data['name']
           @data['player']['level']                = data['level']
           @data['player']['exp']                  = data['exp']
@@ -65,6 +65,7 @@
           @data['repair']['open']                 = data['repair_slot']
           exports.tohken.parse.view.call this, 'player'
           exports.tohken.parse.view.call this, 'resource'
+          parse.conquest.call this, data['party']
       # 修复
       when 'repair/repair'
         @parser request, (data)=>
@@ -94,8 +95,8 @@
       when 'conquest/start'
         @parser request, (data)=>
           parse.party.call this, data['party']
+          parse.conquest.call this, data['party']
           # TODO：远征提醒
-
       # 远征
       when 'battle/battle'
         @parser request, (data)=>

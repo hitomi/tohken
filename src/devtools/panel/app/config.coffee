@@ -1,4 +1,5 @@
 ((exports)->
+  exports.tohken = {} if !exports.tohken
   exports.tohken.config = {
     "cad": 0
     "cadOffList": 0

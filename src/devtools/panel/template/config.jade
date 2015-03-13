@@ -169,12 +169,12 @@ div(
             v-class="on: config.notify_broken == 1"
             v-on="click: applyConfig('notify_broken', 1)"
           )
-            | 刀装
+            | 重伤
           span(
             v-class="on: config.notify_broken == 2"
             v-on="click: applyConfig('notify_broken', 2)"
           )
-            | 掉血
+            | 中伤
           span(
             v-class="on: config.notify_broken == 3"
             v-on="click: applyConfig('notify_broken', 3)"
@@ -184,14 +184,16 @@ div(
             v-class="on: config.notify_broken == 4"
             v-on="click: applyConfig('notify_broken', 4)"
           )
-            | 中伤
+            | 掉血
           span(
             v-class="on: config.notify_broken == 5"
             v-on="click: applyConfig('notify_broken', 5)"
           )
-            | 重伤
+            | 刀装
         .desc
           | 战斗损失提醒。
+        .desc
+          | 提醒级别会向下包含，如选择刀装时，掉血或轻伤等状态都会弹出提醒。
       li
         .act
           | 战斗掉落提醒
@@ -218,7 +220,7 @@ div(
         .desc
           | 战斗掉落提醒。
         .desc
-          | 亚洲刀包括枪、岩融、大太刀和四花太。
+          | 亚洲刀包括枪、岩融、大太刀和四花太以及欧洲刀。
         .desc
           | 欧洲刀包括两把欧短、狐球和爷爷。
       li

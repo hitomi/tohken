@@ -170,13 +170,13 @@
       notify.push {
         sword: v['sword_id']
         type: 'broken'
-        value: 1
-      } if v['hp'] < v['hp_max']
+        value: 0
+      } if v['hp'] < v['hp_max'] && v['status'] == 0
       # 小破提醒
       notify.push {
         sword: v['sword_id']
         type: 'broken'
-        value: v['status'] + 1
+        value: v['status']
       } if v['status'] != 0
     # 获得新刀提醒
     notify.push {
@@ -184,8 +184,81 @@
       type: 'get'
       value: result['get_sword_id']
     } if result['get_sword_id'] != 0
-    console.log 'notify', notify
+    asia = [3, 5, 7, 9, 25, 31, 33, 55, 59, 65, 79, 103, 132, 134, 138]
+    europe = [3, 5, 31, 33]
     # 推送提醒
+    _.forEach notify, (n)=>
+      switch n['type']
+        when 'equip'
+          # 刀装提醒
+          return if @config['notify_broken'] < 5
+          @sendMessage {
+            type: 'notify'
+            message: {
+              title: "#{exports.tohken.define.tohkens[n['sword']]['name']}刀装破碎！"
+              message: "请注意损失情况避免碎刀情况发生！"
+              context: "可以在设置中调整提醒等级"
+            }
+          }
+        when 'broken'
+          # 受伤提醒
+          switch n['value']
+            when 0
+              return if @config['notify_broken'] < 4
+              @sendMessage {
+                type: 'notify'
+                message: {
+                  title: "#{exports.tohken.define.tohkens[n['sword']]['name']}已经受到了伤害！"
+                  message: "请注意损失情况避免碎刀情况发生！"
+                  context: "可以在设置中调整提醒等级"
+                }
+              }
+            when 1
+              return if @config['notify_broken'] < 3
+              @sendMessage {
+                type: 'notify'
+                message: {
+                  title: "#{exports.tohken.define.tohkens[n['sword']]['name']}已经轻伤！"
+                  message: "请注意损失情况避免碎刀情况发生！"
+                  context: "可以在设置中调整提醒等级"
+                }
+              }
+            when 2
+              return if @config['notify_broken'] < 2
+              @sendMessage {
+                type: 'notify'
+                message: {
+                  title: "#{exports.tohken.define.tohkens[n['sword']]['name']}已经中伤！"
+                  message: "请注意损失情况避免碎刀情况发生！"
+                  context: "可以在设置中调整提醒等级"
+                }
+              }
+            when 3
+              return if @config['notify_broken'] < 1
+              @sendMessage {
+                type: 'notify'
+                message: {
+                  title: "#{exports.tohken.define.tohkens[n['sword']]['name']}已经重伤！"
+                  message: "请注意损失情况避免碎刀情况发生！"
+                  context: "可以在设置中调整提醒等级"
+                }
+              }
+        when 'get'
+          return if @config['notify_getnew'] == 0
+          if @config['notify_getnew'] == 1
+            has = _.findIndex asia, (i)-> return true if i==parseInt(n['sword'])
+            return if has == -1
+          if @config['notify_getnew'] == 2
+            has = _.findIndex europe, (i)-> return true if i==parseInt(n['sword'])
+            return if has == -1
+          @sendMessage {
+            type: 'notify'
+            message: {
+              title: "你捞到了一把新刀！"
+              message: "#{exports.tohken.define.tohkens[n['sword']]['name']}"
+              context: "可以在设置中调整提醒等级"
+            }
+          }
     # TODO: 提醒推送模块
     # 更新视图
     # 更新玩家信息
@@ -332,33 +405,47 @@
       f = v['finished_at']
       if f != null
         finish  = Date.parse "#{f} GMT+0900"
+        fd = new Date()
+        fd.setTime(finish)
         earlier = 0
         title = "#{v['party_name']}远征结束"
-        message = "结束时间 #{finish.getHours()}:#{finish.getMinutes()}:#{finish.getSeconds()}"
+        message = "结束时间 #{fd.getHours()}:#{fd.getMinutes()}:#{fd.getSeconds()}"
         context = "请注意查收远征成果"
+        cmsg  = "将在结束时提醒"
+        console.log 'join'
+
         switch @config['notify_conquest']
           when 0
             return
           when 1
             title = "#{v['party_name']}远征还有五分钟结束"
+            cmsg  = "将在结束五分钟前提醒"
             earlier = 5 * 60 * 1000
           when 2
             title = "#{v['party_name']}远征还有两分钟结束"
+            cmsg  = "将在结束两分钟前提醒"
             earlier = 2 * 60 * 1000
           when 3
             title = "#{v['party_name']}远征还有半分钟结束"
+            cmsg  = "将在结束半分钟前提醒"
             earlier = 0.5 * 60 * 1000
+        console.log 'join2'
         @sendMessage {
-          'alarm': {
-            'time':　finish - earlier
-            'id': "conquest-#{v['party_no']}-#{finish}"
-          }
+          'type': 'alarm'
+          'time':　finish - earlier
+          'id': "conquest-#{v['party_no']}-#{finish}"
           'message': {
             'title': title
             'message': message
             'context': context
           }
+          'startmsg': {
+            'title': "#{v['party_name']}远征开始"
+            'message': message
+            'context': cmsg
+          }
         }
+        console.log 'alarm done'
     'done'
   # 手入检查
   # 锻造检查
