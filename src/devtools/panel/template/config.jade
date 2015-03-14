@@ -206,17 +206,17 @@ div(
             v-class="on: config.notify_getnew == 1"
             v-on="click: applyConfig('notify_getnew', 1)"
           )
-            | 全部
+            | 只提醒亚欧刀
           span(
             v-class="on: config.notify_getnew == 2"
             v-on="click: applyConfig('notify_getnew', 2)"
           )
-            | 只提醒亚洲刀
+            | 只提醒欧洲刀
           span(
             v-class="on: config.notify_getnew == 3"
             v-on="click: applyConfig('notify_getnew', 3)"
           )
-            | 只提醒欧洲刀
+            | 全部
         .desc
           | 战斗掉落提醒。
         .desc
