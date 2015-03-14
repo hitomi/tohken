@@ -22,6 +22,10 @@ div(
           v-show="status==2"
         )
           | [远征中]
+        span.status(
+          v-show="status==2"
+        )
+          | [{{finished_at | conquest_time}}]
       // 等级和兵力标注
       .amounts
         span.alv

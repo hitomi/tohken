@@ -36,6 +36,12 @@
           @route(request, tohken[2])
       # loadData
       @loadData()
+    filters: {
+      conquest_time: (finished_at)->
+        d = new Date()
+        d.setTime(Date.parse("#{finished_at} GMT+0900"))
+        d.toTimeString().slice(0, 8)
+    }
 
     methods: {
       # Route the request
