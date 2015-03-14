@@ -1,0 +1,275 @@
+// 设置
+div(
+  v-show="tab==-1"
+)
+  .panel-config
+    .t 数据
+    ul.sl
+      li
+        .act
+          | 开启疲劳演算
+          span(
+            v-class="on: config.cad == 0"
+            v-on="click: applyConfig('cad', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.cad == 1"
+            v-on="click: applyConfig('cad', 1)"
+          )
+            | 开启
+        .desc
+          | 因为从游戏数据中只能拿到【休息和战斗时就算刷新游戏也没有变化的】疲劳数据。开启该功能后会根据toulove上的说明进行模拟演算。
+        .desc
+          | 恢复时间为每三分钟恢复三点。
+        .desc
+          | 但是你要是不开启这个功能的话就算你退游戏一晚上起来虽然体力值都应该恢复到49了但是数据上还是会维持疲劳状态。
+        .desc
+          | 目前尚未发现获得完全准确数据的方法。
+      li
+        .act
+          | 在结成界面显示真实疲劳数据
+          span(
+            v-class="on: config.cadOffList == 0"
+            v-on="click: applyConfig('cadOffList', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.cadOffList == 1"
+            v-on="click: applyConfig('cadOffList', 1)"
+          )
+            | 开启
+        .desc
+          | 其实没什么用，不建议开启。因为这种纯净的数据反而不能反应真实情况。
+        .desc
+          | 这个选项被留下的目的是为了方便调试。
+      li
+        .act
+          | 储存游戏数据
+          span(
+            v-class="on: config.dataCache == 0"
+            v-on="click: applyConfig('dataCache', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.dataCache == 1"
+            v-on="click: applyConfig('dataCache', 1)"
+          )
+            | 开启
+        .desc
+          | 将游戏数据储存在本地，方便离线时查阅
+        .desc(
+          v-show="dataExist"
+          v-on="click: applyConfig('dataCache', -1)"
+          style="cursor: pointer;"
+        )
+          | < ** 清除数据 ** >
+  .panel-config
+    .t 提醒
+    ul.sl
+      li
+        .act
+          | 远征时间提醒
+          span(
+            v-class="on: config.notify_conquest == 0"
+            v-on="click: applyConfig('notify_conquest', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_conquest == 1"
+            v-on="click: applyConfig('notify_conquest', 1)"
+          )
+            | 五分钟前
+          span(
+            v-class="on: config.notify_conquest == 2"
+            v-on="click: applyConfig('notify_conquest', 2)"
+          )
+            | 两分钟前
+          span(
+            v-class="on: config.notify_conquest == 3"
+            v-on="click: applyConfig('notify_conquest', 3)"
+          )
+            | 半分钟前
+          span(
+            v-class="on: config.notify_conquest == 4"
+            v-on="click: applyConfig('notify_conquest', 4)"
+          )
+            | 结束时
+        .desc
+          | 远征结束提醒。
+      li
+        .act
+          | 手入时间提醒
+          span(
+            v-class="on: config.notify_repair == 0"
+            v-on="click: applyConfig('notify_repair', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_repair == 1"
+            v-on="click: applyConfig('notify_repair', 1)"
+          )
+            | 五分钟前
+          span(
+            v-class="on: config.notify_repair == 2"
+            v-on="click: applyConfig('notify_repair', 2)"
+          )
+            | 两分钟前
+          span(
+            v-class="on: config.notify_repair == 3"
+            v-on="click: applyConfig('notify_repair', 3)"
+          )
+            | 半分钟前
+          span(
+            v-class="on: config.notify_repair == 4"
+            v-on="click: applyConfig('notify_repair', 4)"
+          )
+            | 结束时
+        .desc
+          | 手入结束提醒。
+      li
+        .act
+          | 锻刀时间提醒
+          span(
+            v-class="on: config.notify_forge == 0"
+            v-on="click: applyConfig('notify_forge', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_forge == 1"
+            v-on="click: applyConfig('notify_forge', 1)"
+          )
+            | 五分钟前
+          span(
+            v-class="on: config.notify_forge == 2"
+            v-on="click: applyConfig('notify_forge', 2)"
+          )
+            | 两分钟前
+          span(
+            v-class="on: config.notify_forge == 3"
+            v-on="click: applyConfig('notify_forge', 3)"
+          )
+            | 半分钟前
+          span(
+            v-class="on: config.notify_forge == 4"
+            v-on="click: applyConfig('notify_forge', 4)"
+          )
+            | 结束时
+        .desc
+          | 锻刀结束提醒。
+      li
+        .act
+          | 战斗损失提醒
+          span(
+            v-class="on: config.notify_broken == 0"
+            v-on="click: applyConfig('notify_broken', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_broken == 1"
+            v-on="click: applyConfig('notify_broken', 1)"
+          )
+            | 重伤
+          span(
+            v-class="on: config.notify_broken == 2"
+            v-on="click: applyConfig('notify_broken', 2)"
+          )
+            | 中伤
+          span(
+            v-class="on: config.notify_broken == 3"
+            v-on="click: applyConfig('notify_broken', 3)"
+          )
+            | 轻伤
+          span(
+            v-class="on: config.notify_broken == 4"
+            v-on="click: applyConfig('notify_broken', 4)"
+          )
+            | 掉血
+          span(
+            v-class="on: config.notify_broken == 5"
+            v-on="click: applyConfig('notify_broken', 5)"
+          )
+            | 刀装
+        .desc
+          | 战斗损失提醒。
+        .desc
+          | 提醒级别会向下包含，如选择刀装时，掉血或轻伤等状态都会弹出提醒。
+      li
+        .act
+          | 战斗掉落提醒
+          span(
+            v-class="on: config.notify_getnew == 0"
+            v-on="click: applyConfig('notify_getnew', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_getnew == 1"
+            v-on="click: applyConfig('notify_getnew', 1)"
+          )
+            | 全部
+          span(
+            v-class="on: config.notify_getnew == 2"
+            v-on="click: applyConfig('notify_getnew', 2)"
+          )
+            | 只提醒亚洲刀
+          span(
+            v-class="on: config.notify_getnew == 3"
+            v-on="click: applyConfig('notify_getnew', 3)"
+          )
+            | 只提醒欧洲刀
+        .desc
+          | 战斗掉落提醒。
+        .desc
+          | 亚洲刀包括枪、岩融、大太刀和四花太以及欧洲刀。
+        .desc
+          | 欧洲刀包括两把欧短、狐球和爷爷。
+      li
+        .act
+          | 疲劳状态提醒
+          span(
+            v-class="on: config.notify_fatigue == 0"
+            v-on="click: applyConfig('notify_fatigue', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_fatigue == 1"
+            v-on="click: applyConfig('notify_fatigue', 1)"
+          )
+            | 脸黄
+          span(
+            v-class="on: config.notify_fatigue == 2"
+            v-on="click: applyConfig('notify_fatigue', 2)"
+          )
+            | 脸红
+        .desc
+          | 疲劳状态提醒，需要开启疲劳演算功能。
+      li
+        .act
+          | 疲劳恢复提醒
+          span(
+            v-class="on: config.notify_frecover == 0"
+            v-on="click: applyConfig('notify_frecover', 0)"
+          )
+            | 关闭
+          span(
+            v-class="on: config.notify_frecover == 1"
+            v-on="click: applyConfig('notify_frecover', 1)"
+          )
+            | 解除疲劳状态
+          span(
+            v-class="on: config.notify_frecover == 2"
+            v-on="click: applyConfig('notify_frecover', 2)"
+          )
+            | 30点
+          span(
+            v-class="on: config.notify_frecover == 3"
+            v-on="click: applyConfig('notify_frecover', 3)"
+          )
+            | 40点
+          span(
+            v-class="on: config.notify_frecover == 4"
+            v-on="click: applyConfig('notify_frecover', 4)"
+          )
+            | 49点
+        .desc
+          | 疲劳恢复提醒，需要开启疲劳演算功能。

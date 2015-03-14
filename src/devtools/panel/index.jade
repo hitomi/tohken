@@ -1,0 +1,72 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    link(rel="stylesheet", href="assets/main.css")
+    script(src="../../thirdparty/livereload.js")
+  body#app
+    ul.top
+      li
+        | 图块ID
+        b {{square_id}}
+      li
+        | 審神者
+        b(v-if="view.player.name!=null")
+          | {{view.player.name}}
+      li(v-if="view.player.level!=null")
+        | Lv.
+        b {{view.player.level}}
+      li(v-if="!view.resource.set")
+        | 暂未获取到资源数据，请进入本丸或锻刀页面
+      li(v-if="view.resource.charcoal!=null")
+        | 木炭
+        b {{Math.floor(view.resource.charcoal)}}
+      li(v-if="view.resource.steel!=null")
+        | 玉鋼
+        b {{Math.floor(view.resource.steel)}}
+      li(v-if="view.resource.coolant!=null")
+        | 冷却材
+        b {{Math.floor(view.resource.coolant)}}
+      li(v-if="view.resource.file!=null")
+        | 砥石
+        b {{Math.floor(view.resource.file)}}
+      li(v-if="view.resource.bill!=null")
+        | 依頼札
+        b {{Math.floor(view.resource.bill)}}
+      li(v-if="view.resource.bonemeal!=null")
+        | 手伝い札
+        b {{Math.floor(view.resource.bonemeal)}}
+      li(v-if="view.resource.money!=null")
+        | 小判
+        b {{Math.floor(view.resource.money)}}
+    ul.nav
+      li(v-class="active: tab == 1", v-on="click: tab = 1")
+        | 总览
+      li(v-class="active: tab == 2", v-on="click: tab = 2")
+        | 战斗
+      li(v-class="active: tab == 3", v-on="click: tab = 3")
+        | 队伍
+      li(v-class="active: tab == 4", v-on="click: tab = 4")
+        | 刀装
+      li(v-class="active: tab == 5", v-on="click: tab = 5")
+        | 锻刀
+      li(v-class="active: tab == -1", v-on="click: tab = -1")
+        | 设置
+      li(v-class="active: tab == -2", v-on="click: tab = -2")
+        | 关于
+    .container
+      include ./template/party_item.jade
+      include ./template/config.jade
+      include ./template/about.jade
+    script(src="../../thirdparty/lodash.js")
+    script(src="../../thirdparty/jquery.js")
+    script(src="../../thirdparty/vue.js")
+    script(src="./app/define.js")
+    script(src="./app/data.js")
+    script(src="./app/config.js")
+    script(src="./app/store.js")
+    script(src="./app/event.js")
+    script(src="./app/parse.js")
+    script(src="./app/router.js")
+    script(src="./app/view.js")
+    script(src="./app/app.js")

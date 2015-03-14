@@ -1,0 +1,61 @@
+@import 'base';
+@import 'index';
+@import 'party-item';
+
+.equip-list, .forge-rep {
+  padding: 4px;
+  .name {
+    font-size: 16px;
+    color: #000;
+  }
+  .amounts {
+    margin: 4px 0;
+    span {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+}
+
+.panel-config, .panel-about{
+  padding: 6px;
+  .t {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: bold;
+    background-image: url(../../../assets/sakura.png);
+    background-repeat: no-repeat;
+    padding-left: 28px;
+  }
+  .sl {
+    margin-left: 16px;
+    .act {
+      line-height: 24px;
+      font-size: 16px;
+      span {
+        margin: 0 4px;
+        color: #444;
+        cursor: pointer;
+        &.on {
+          color: #a30b0b;
+          font-weight: bold;
+          &:before {
+            content: '[';
+            margin-right: 2px;
+          }
+          &:after {
+            content: ']';
+            margin-left: 2px;
+          }
+        }
+        &:hover {
+          color: #8e6a00;
+        }
+      }
+    }
+    .desc{
+      color: #444;
+      margin-left: 6px;
+    }
+  }
+}
