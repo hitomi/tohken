@@ -1,13 +1,13 @@
 // 队伍列表
 div(
   v-if="!view['party']['set']"
-  v-show="tab==1"
+  v-show="tab==2"
 )
   | 暂未取得队伍数据，请进入结成页面
 // 队伍列表
 div(
   v-if="view['party']['set']"
-  v-show="tab==1"
+  v-show="tab==2"
 )
   .party(
     v-if="view['party']['set']"
@@ -18,6 +18,10 @@ div(
       // 队伍和状态标注
       .name
         | {{party_name}}
+        span.status(
+          v-show="in_battle(party_no)"
+        )
+          | [战斗中]
         span.status(
           v-show="status==2"
         )
@@ -105,3 +109,7 @@ div(
                 span(v-if="equip_serial_id3==null&&max_equip>=3")
                   | [空]
       .clear
+      div(v-show="grouter('conquest')")
+        | 远征选择，这里以后会有自动判断是否可以成功的，数据已经录完了就差写了
+      div(v-show="grouter('sally')")
+        | 出阵选择，这里以后会有自动判断是否有经验的，数据已经录完了就差写了

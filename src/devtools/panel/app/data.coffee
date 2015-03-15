@@ -272,5 +272,10 @@
       # 上次更新时间
       "last_update": null
     }
+    logs: {
+      "forge": {}
+      "battle": {}
+      "error": {}
+    }
   }
 )(window)

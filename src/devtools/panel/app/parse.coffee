@@ -38,8 +38,10 @@
           pre[ki] = 0
         if ki == 'next_exp'
           pre[ki] = exports.tohken.define.upexp[parseInt(pre['level'], 10)] - parseInt(pre['exp'], 10)
+          pre[ki] = 0 if parseInt(v['level'], 10) == 99
       # 向分支合并数据
       branch[k] = pre
+      'done'
     # 用分支替换主线
     @data['sword']['data']          = branch
     # 记录更新时间
@@ -61,13 +63,37 @@
     # 记录更新时间
     @data['equip']['last_update']   = Date.now()
     exports.tohken.parse.view.call this, 'party'
+    exports.tohken.parse.view.call this, 'equip'
     'done'
   # 处理锻造信息
   exports.tohken.parse.forge = (forge)->
     @data['forge']['filling']       = true unless @data['forge']['filling']
-    @data['forge']['data']          = forge
+    # 填充数据
+    @data['forge']['data'] = forge
+    # 记录
+    _.forEach forge, (v, k)=>
+      time = Date.parse "#{v['finished_at']} GMT+0900"
+      id = "#{v['slot_no']}-#{time}"
+      has = _.has @data['logs']['forge'], id
+      @data['logs']['forge'][id] = {} if !has
+      @data['logs']['forge'][id]['slot_no']   = v['slot_no']
+      @data['logs']['forge'][id]['finish_at'] = time
+      @data['logs']['forge'][id]['sword_id']  = v['sword_id']
+      @data['logs']['forge'][id]['resource']  = _.has @data['logs']['forge'][id], 'charcoal'
+      if @config['dataCache'] == 1
+        exports.tohken.store.set "TRH_DataCache", JSON.stringify(@data)
+        exports.tohken.store.set "TRH_Logs", JSON.stringify(@data['logs'])
+      'done'
     # 记录更新时间
-    @data['forge']['last_update']   = Date.now()
+    @data['forge']['last_update'] = Date.now()
+    console.log JSON.stringify(@data['logs']['forge'])
+    'done'
+  exports.tohken.parse.repair = (repair)->
+    @data['repair']['filling'] = true unless @data['repair']['filling']
+    # 填充数据
+    @data['repair']['data'] = repair
+    # 记录更新时间
+    @data['repair']['last_update'] = Date.now()
     'done'
   # 处理战斗数据
   exports.tohken.parse.battle = (battle)->
@@ -90,8 +116,14 @@
       sword['soldier3']         = v['soldier3']
       party[v['serial_id']]     = sword
       leader = v['serial_id'] if leader == null
+      'done'
     # 解析战斗结果
     result                      = {}
+    # 地图信息
+    result['battle_episode']    = @status['battle_episode']
+    result['battle_field']      = @status['battle_field']
+    result['battle_pos']        = @status['battle_pos']
+    result['battle_party']      = @status['battle_id']
     # 新刀，MVP，Rank
     result['get_sword_id']      = battle.result['get_sword_id']
     result['mvp']               = battle.result['mvp']
@@ -102,6 +134,9 @@
     result['soldier']           = battle.result.player['soldier']
     result['soldier_max']       = battle.result.player['soldier_max']
     result['get_exp']           = battle.result.player['get_exp']
+    result['time']              = Date.parse "#{battle['now']} GMT+0900"
+    # ID
+    result['id']                = "#{result['battle_party']}-#{result['battle_episode']}-#{result['battle_field']}-#{result['battle_pos']}-#{result['time']}"
     # 更新玩家数据
     player                      = {}
     player['level']             = battle.result.player['level']
@@ -115,6 +150,7 @@
       party[v['serial_id']]['level']    = v['level']
       party[v['serial_id']]['mvp']      = if result['mvp'] == v['serial_id'] then true else false
       party[v['serial_id']]['get_exp']  = v['get_exp']
+      'done'
     # 刀剑情况
     result['party'] = party
     # 疲劳值演算
@@ -122,6 +158,7 @@
     # 开始战斗 -3
     _.forEach party, (v, k)->
       party[k]['vfatigue'] = -3
+      'done'
     # S时+4  A时+3  B时+2  C时+1，败北不增加
     party[result['mvp']]['vfatigue'] += 10 if parseInt(result['mvp'], 10) != 0
     # rank: 2-s 3-a 4-b 5-c
@@ -130,22 +167,18 @@
         _.forEach party, (v, k)->
           party[k]['vfatigue'] += 4
           party[k]['vfatigue'] += 3 if leader == k
-          console.log "#{k}:vfatigue", party[k]['vfatigue']
       when 3
         _.forEach party, (v, k)->
           party[k]['vfatigue'] += 3
           party[k]['vfatigue'] += 3 if leader == k
-          console.log "#{k}:vfatigue", party[k]['vfatigue']
       when 4
         _.forEach party, (v, k)->
           party[k]['vfatigue'] += 2
           party[k]['vfatigue'] += 3 if leader == k
-          console.log "#{k}:vfatigue", party[k]['vfatigue']
       when 5
         _.forEach party, (v, k)->
           party[k]['vfatigue'] += 1
           party[k]['vfatigue'] += 3 if leader == k
-          console.log "#{k}:vfatigue", party[k]['vfatigue']
     # 胜利时队长+3，失败不增加
     # 以上结果待验证
     notify = []
@@ -178,6 +211,7 @@
         type: 'broken'
         value: v['status']
       } if v['status'] != 0
+      'done'
     # 获得新刀提醒
     notify.push {
       sword: result['get_sword_id']
@@ -259,6 +293,7 @@
               context: "可以在设置中调整提醒等级"
             }
           }
+      'done'
     # TODO: 提醒推送模块
     # 更新视图
     # 更新玩家信息
@@ -279,7 +314,7 @@
       sword['equip_serial_id3'] = party[v['serial_id']]['equip_serial_id3']
       # 更新演算疲劳
       fatigue = parseInt(sword['fatigue'], 10) + parseInt(party[v['serial_id']]['vfatigue'], 10)
-      sword['fatigue'] = if fatigue > 100 then 100 else fatigue
+      sword['fatigue'] = if fatigue > 100 || fatigue < 0 then 100 else fatigue
       # 更新刀装数据
       if party[v['serial_id']]['equip_serial_id1'] != null
         sword['equip_1']['soldier_now'] = party[v['serial_id']]['soldier1']
@@ -287,7 +322,7 @@
         sword['equip_2']['soldier_now'] = party[v['serial_id']]['soldier2']
       if party[v['serial_id']]['equip_serial_id3'] != null
         sword['equip_3']['soldier_now'] = party[v['serial_id']]['soldier3']
-      console.log sword['fatigue']
+      'done'
     # 向数据库中合并数据
     # 更新队伍信息
     _.forEach party, (v, k)=>
@@ -301,6 +336,14 @@
       sword['equip_serial_id3'] = v['equip_serial_id3']
       # 更新演算疲劳
       sword['vfatigue']        += v['vfatigue']
+      'done'
+    # 记录日志
+    @data['logs']['battle'][result['id']] = result
+    console.log @data['logs']['battle']
+    if @config['dataCache'] == 1
+      exports.tohken.store.set "TRH_DataCache", JSON.stringify(@data)
+      exports.tohken.store.set "TRH_Logs", JSON.stringify(@data['logs'])
+    'done'
   # TODO：推送战斗报告
   exports.tohken.parse.view = (type)->
     switch type
@@ -321,6 +364,14 @@
         target['file']      = target['file']     + source['vfile']
         # 返回设置状态
         target['set'] = true
+      when 'equip'
+        return if @data['equip']['filling'] == false
+        # 刀装整理
+        # "type": "amount"
+        equ = _.groupBy @data['equip']['data'], (n)-> n['equip_id']
+        equ = _.mapValues equ, (n)-> n.length
+        @view['equips']['data'] = equ
+        @view['equips']['set'] = true
       when 'party'
         return if @data['equip']['filling'] == false
         return if @data['sword']['filling'] == false
@@ -397,10 +448,13 @@
           target[k]['amount_lv']  = lvs
           target[k]['avearge_lv'] = if lvs then (lvs / ths).toFixed(2) else 0
           target[k]['soldiers']   = eqs
+          'done'
         @view['party']['set']   = true
         @view['party']['data']  = target
+    'done'
   # 远征检查
   exports.tohken.parse.conquest = (party)->
+    return if @config['notify_conquest'] == 0
     _.forEach party, (v, k)=>
       f = v['finished_at']
       if f != null
@@ -412,8 +466,6 @@
         message = "结束时间 #{fd.getHours()}:#{fd.getMinutes()}:#{fd.getSeconds()}"
         context = "请注意查收远征成果"
         cmsg  = "将在结束时提醒"
-        console.log 'join'
-
         switch @config['notify_conquest']
           when 0
             return
@@ -429,7 +481,6 @@
             title = "#{v['party_name']}远征还有半分钟结束"
             cmsg  = "将在结束半分钟前提醒"
             earlier = 0.5 * 60 * 1000
-        console.log 'join2'
         @sendMessage {
           'type': 'alarm'
           'time':　finish - earlier
@@ -445,14 +496,61 @@
             'context': cmsg
           }
         }
-        console.log 'alarm done'
+      'done'
     'done'
   # 手入检查
-  # 锻造检查
+  exports.tohken.parse.check_repair = (repair)->
+    return if @config['notify_repair'] == 0
+    _.forEach repair, (v, k)=>
+      console.log v
+      f = v['finished_at']
+      if f != null
+        finish  = Date.parse "#{f} GMT+0900"
+        fd = new Date()
+        fd.setTime(finish)
+        earlier = 0
+        title = "#{exports.tohken.define.tohkens[@data['sword']['data'][v['sword_serial_id']]['sword_id']]['name']}手入结束"
+        message = "结束时间 #{@t2t(fd)}"
+        context = "快去取刀吧！"
+        cmsg  = "将在结束时提醒"
+        switch @config['notify_conquest']
+          when 0
+            return
+          when 1
+            title = "#{v['party_name']}手入还有五分钟结束"
+            cmsg  = "将在结束五分钟前提醒"
+            earlier = 5 * 60 * 1000
+          when 2
+            title = "#{v['party_name']}手入还有两分钟结束"
+            cmsg  = "将在结束两分钟前提醒"
+            earlier = 2 * 60 * 1000
+          when 3
+            title = "#{v['party_name']}手入还有半分钟结束"
+            cmsg  = "将在结束半分钟前提醒"
+            earlier = 0.5 * 60 * 1000
+        @sendMessage {
+          'type': 'alarm'
+          'time':　finish - earlier
+          'id': "conquest-#{v['party_no']}-#{finish}"
+          'message': {
+            'title': title
+            'message': message
+            'context': context
+          }
+          'startmsg': {
+            'title': "#{exports.tohken.define.tohkens[@data['sword']['data'][v['sword_serial_id']]['sword_id']]['name']}手入开始"
+            'message': message
+            'context': cmsg
+          }
+        }
+      'done'
+    'done'
   # 数据填充工具
   exports.tohken.parse.fill = (target, source)->
     _.forEach target, (vi, ki)->
       # 向目标合并数据
       if _.has(source, ki)
         target[ki] = source[ki]
+      'done'
+    'done'
 )(window)

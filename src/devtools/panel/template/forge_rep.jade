@@ -1,31 +1,54 @@
 .forge-rep(
-  v-if = "tab==5"
+  v-if = "tab==3"
 )
-  .name
-    | 锻造
-  .amounts
-    span.alv
-      | 工坊
-      b 2
-    span.lva
-      | 使用中
-      b 1
-  ul.equ
-    li
-      | [3:00] ???
-    li
-      | [3:00] ???
-  .name
-    | 手入
-  .amounts
-    span.alv
-      | 工坊
-      b 2
-    span.lva
-      | 使用中
-      b 1
-  ul.equ
-    li
-      | [3:00] 歌仙兼定
-    li
-      | [3:00] 歌仙兼定
+  .panel.fr
+    .t
+      | 刀装・马
+    .amounts(
+      v-show="!view['equips']['set']"
+    )
+      | 暂未获得数据，请进入结成页面
+    ul.equ(
+      v-if="view['equips']['set']"
+    )
+      li(
+        v-repeat="view['equips']['data']"
+      )
+        | [{{$key | e2n}}] 持有 {{$value}}
+
+  .panel.fr
+    .t
+      | 锻刀
+      span.alv(
+        style="cursor: pointer;"
+        v-on="click: toggleForge"
+      )
+        | [点击查看或关闭剧透]
+    .amounts
+      span.alv
+        | 工坊
+        b {{data['forge']['open']}}
+      span.lva
+        | 使用中
+        b {{checkout('forge')}}
+    ul.equ
+      li(
+        v-repeat="data['forge']['data']"
+      )
+        | [{{finished_at | tt2lt}}] {{sword_id | fs2n}}
+
+  .panel.fr
+    .t
+      | 手入
+    .amounts
+      span.alv
+        | 工坊
+        b {{data['repair']['open']}}
+      span.lva
+        | 使用中
+        b {{checkout('repair')}}
+    ul.equ
+      li(
+        v-repeat="data['repair']['data']"
+      )
+        | [{{finished_at | tt2lt}}] {{sword_serial_id | sid2n}}

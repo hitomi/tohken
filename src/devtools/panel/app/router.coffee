@@ -7,6 +7,7 @@
     @gaming = true if !@gaming
     @status['last_router'] = @status['router']
     @status['router'] = action
+    console.log @status['router']
     switch action
       # 本丸
       when 'home'
@@ -26,6 +27,41 @@
           parse.party.call    this, data['party']
           parse.forge.call    this, data['forge']
           exports.tohken.parse.view.call this, 'resource'
+      # 锻刀提交
+      when 'forge/start'
+        @parser request, (data)=>
+          @data['forge']['filling'] = true if !@data['forge']['filling']
+          time = Date.parse "#{data['finished_at']} GMT+0900"
+          id = "#{data['slot_no']}-#{time}"
+          forge = {}
+          forge['slot_no']            = data['slot_no']
+          forge['finish_at']          = time
+          forge['sword_id']           = data['sword_id']
+          # 记录
+          forge['resource']           = true
+          forge['times']              = Math.ceil((time - Date.now()) / 1000 / 60)
+          forge['charcoal']           = data['post_data']['charcoal']
+          forge['coolant']            = data['post_data']['coolant']
+          forge['file']               = data['post_data']['file']
+          forge['steel']              = data['post_data']['steel']
+          @data['logs']['forge'][id]  = forge
+          ''
+      # 手入
+      when 'repair'
+        @parser request, (data)=>
+          parse.resource.call this, data['resource']
+          parse.sword.call    this, data['sword']
+          parse.party.call    this, data['party']
+          parse.repair.call   this, data['repair']
+          exports.tohken.parse.view.call this, 'resource'
+          exports.tohken.parse.check_repair.call　this, data['repair']
+      # 手入
+      when 'repair/repair'
+        @parser request, (data)=>
+          parse.resource.call this, data['resource']
+          parse.repair.call   this, data['repair']
+          exports.tohken.parse.view.call this, 'resource'
+          exports.tohken.parse.check_repair.call　this, data['repair']
       # 结成
       when 'party/list'
         @parser request, (data)=>
@@ -80,17 +116,20 @@
           parse.party.call this, data['party']
       # 出阵确认
       when 'sally/sally'
-        partyno = request['request']['postData']['text'].match(/no=(\d)/)[1]
-        exports.tohken.event.fatigue.call this
-        @status['in_battle'] = true
-        _.forEach @data['party']['data'][partyno]['slot'], (v, k)=>
-          return if v['serial_id'] == null
-          v['fatigue'] = parseInt(v['fatigue'], 10) - 10
-          @data['sword']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['sword']['data'][v['serial_id']]['vfatigue'], 10) - 10
+        @parser request, (data)=>
+          exports.tohken.event.fatigue.call this
+          @status['in_battle'] = true
+          @status['battle_id'] = data['post_data']['party_no']
+          @status['battle_episode'] = data['post_data']['episode_id']
+          @status['battle_field'] = data['post_data']['field_id']
+          _.forEach @data['party']['data'][@status['battle_id']]['slot'], (v, k)=>
+            return if v['serial_id'] == null
+            v['fatigue'] = parseInt(v['fatigue'], 10) - 10
+            @data['sword']['data'][v['serial_id']]['vfatigue'] = parseInt(@data['sword']['data'][v['serial_id']]['vfatigue'], 10) - 10
       # 出阵确认
       when 'sally/forward'
         @parser request, (data)=>
-          @square_id = data.square_id
+          @status['battle_pos'] = data.square_id
       # 远征
       when 'conquest/start'
         @parser request, (data)=>

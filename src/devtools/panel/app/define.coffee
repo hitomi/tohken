@@ -459,6 +459,7 @@
     "8": "精鋭兵"
     "9": "弓兵"
     "10": "銃兵"
+    "-1": "馬"
   }
   exports.tohken.define.equiptype_s = {
     "1": "投石"
@@ -622,6 +623,46 @@
       "name": "銃兵・特上"
       "soldier": 6
       "type": 10
+    }
+    "10001": {
+      "name": "王庭"
+      "soldier": 0
+      "type": -1
+    }
+    "10002": {
+      "name": "三国黒"
+      "soldier": 0
+      "type": -1
+    }
+    "10003": {
+      "name": "松風"
+      "soldier": 0
+      "type": -1
+    }
+    "10004": {
+      "name": "小雲雀"
+      "soldier": 0
+      "type": -1
+    }
+    "10005": {
+      "name": "高楯黒"
+      "soldier": 0
+      "type": -1
+    }
+    "10006": {
+      "name": "花柑子"
+      "soldier": 0
+      "type": -1
+    }
+    "10007": {
+      "name": "青海波"
+      "soldier": 0
+      "type": -1
+    }
+    "10008": {
+      "name": "望月"
+      "soldier": 0
+      "type": -1
     }
   }
   exports.tohken.define.area = {

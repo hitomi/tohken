@@ -32,6 +32,12 @@
       "set": false
       "data": {}
     }
+    # 刀装整理
+    equips: {
+      "set": false
+      # 准备加合计
+      "data": {}
+    }
   }
 )(window)
 

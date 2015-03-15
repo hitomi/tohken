@@ -10,7 +10,7 @@
         return pre
     set: (key, value)->
       localStorage.setItem(key, value)
-    removeItem: (key)->
+    remove: (key)->
       localStorage.removeItem(key)
     reset: ->
       localStorage.clear()

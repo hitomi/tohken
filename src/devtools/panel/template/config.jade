@@ -57,7 +57,8 @@ div(
           )
             | 开启
         .desc
-          | 将游戏数据储存在本地，方便离线时查阅
+          | 将游戏数据储存在本地，如果在战斗中误关插件的话这个功能会很有用
+          | 另外可以存储锻刀和拾取数据
         .desc(
           v-show="dataExist"
           v-on="click: applyConfig('dataCache', -1)"
@@ -127,36 +128,7 @@ div(
             | 结束时
         .desc
           | 手入结束提醒。
-      li
-        .act
-          | 锻刀时间提醒
-          span(
-            v-class="on: config.notify_forge == 0"
-            v-on="click: applyConfig('notify_forge', 0)"
-          )
-            | 关闭
-          span(
-            v-class="on: config.notify_forge == 1"
-            v-on="click: applyConfig('notify_forge', 1)"
-          )
-            | 五分钟前
-          span(
-            v-class="on: config.notify_forge == 2"
-            v-on="click: applyConfig('notify_forge', 2)"
-          )
-            | 两分钟前
-          span(
-            v-class="on: config.notify_forge == 3"
-            v-on="click: applyConfig('notify_forge', 3)"
-          )
-            | 半分钟前
-          span(
-            v-class="on: config.notify_forge == 4"
-            v-on="click: applyConfig('notify_forge', 4)"
-          )
-            | 结束时
-        .desc
-          | 锻刀结束提醒。
+          | * [待解决]使用手伝い札时提醒不会消失
       li
         .act
           | 战斗损失提醒
@@ -223,53 +195,83 @@ div(
           | 亚洲刀包括枪、岩融、大太刀和四花太以及欧洲刀。
         .desc
           | 欧洲刀包括两把欧短、狐球和爷爷。
-      li
-        .act
-          | 疲劳状态提醒
-          span(
-            v-class="on: config.notify_fatigue == 0"
-            v-on="click: applyConfig('notify_fatigue', 0)"
-          )
-            | 关闭
-          span(
-            v-class="on: config.notify_fatigue == 1"
-            v-on="click: applyConfig('notify_fatigue', 1)"
-          )
-            | 脸黄
-          span(
-            v-class="on: config.notify_fatigue == 2"
-            v-on="click: applyConfig('notify_fatigue', 2)"
-          )
-            | 脸红
-        .desc
-          | 疲劳状态提醒，需要开启疲劳演算功能。
-      li
-        .act
-          | 疲劳恢复提醒
-          span(
-            v-class="on: config.notify_frecover == 0"
-            v-on="click: applyConfig('notify_frecover', 0)"
-          )
-            | 关闭
-          span(
-            v-class="on: config.notify_frecover == 1"
-            v-on="click: applyConfig('notify_frecover', 1)"
-          )
-            | 解除疲劳状态
-          span(
-            v-class="on: config.notify_frecover == 2"
-            v-on="click: applyConfig('notify_frecover', 2)"
-          )
-            | 30点
-          span(
-            v-class="on: config.notify_frecover == 3"
-            v-on="click: applyConfig('notify_frecover', 3)"
-          )
-            | 40点
-          span(
-            v-class="on: config.notify_frecover == 4"
-            v-on="click: applyConfig('notify_frecover', 4)"
-          )
-            | 49点
-        .desc
-          | 疲劳恢复提醒，需要开启疲劳演算功能。
+//-      li
+//-        .act
+//-          | 锻刀时间提醒
+//-          span(
+//-            v-class="on: config.notify_forge == 0"
+//-            v-on="click: applyConfig('notify_forge', 0)"
+//-          )
+//-            | 关闭
+//-          span(
+//-            v-class="on: config.notify_forge == 1"
+//-            v-on="click: applyConfig('notify_forge', 1)"
+//-          )
+//-            | 五分钟前
+//-          span(
+//-            v-class="on: config.notify_forge == 2"
+//-            v-on="click: applyConfig('notify_forge', 2)"
+//-          )
+//-            | 两分钟前
+//-          span(
+//-            v-class="on: config.notify_forge == 3"
+//-            v-on="click: applyConfig('notify_forge', 3)"
+//-          )
+//-            | 半分钟前
+//-          span(
+//-            v-class="on: config.notify_forge == 4"
+//-            v-on="click: applyConfig('notify_forge', 4)"
+//-          )
+//-            | 结束时
+//-        .desc
+//-          | 锻刀结束提醒。
+//-      li
+//-        .act
+//-          | 疲劳状态提醒
+//-          span(
+//-            v-class="on: config.notify_fatigue == 0"
+//-            v-on="click: applyConfig('notify_fatigue', 0)"
+//-          )
+//-            | 关闭
+//-          span(
+//-            v-class="on: config.notify_fatigue == 1"
+//-            v-on="click: applyConfig('notify_fatigue', 1)"
+//-          )
+//-            | 脸黄
+//-          span(
+//-            v-class="on: config.notify_fatigue == 2"
+//-            v-on="click: applyConfig('notify_fatigue', 2)"
+//-          )
+//-            | 脸红
+//-        .desc
+//-          | 疲劳状态提醒，需要开启疲劳演算功能。
+//-      li
+//-        .act
+//-          | 疲劳恢复提醒
+//-          span(
+//-            v-class="on: config.notify_frecover == 0"
+//-            v-on="click: applyConfig('notify_frecover', 0)"
+//-          )
+//-            | 关闭
+//-          span(
+//-            v-class="on: config.notify_frecover == 1"
+//-            v-on="click: applyConfig('notify_frecover', 1)"
+//-          )
+//-            | 解除疲劳状态
+//-          span(
+//-            v-class="on: config.notify_frecover == 2"
+//-            v-on="click: applyConfig('notify_frecover', 2)"
+//-          )
+//-            | 30点
+//-          span(
+//-            v-class="on: config.notify_frecover == 3"
+//-            v-on="click: applyConfig('notify_frecover', 3)"
+//-          )
+//-            | 40点
+//-          span(
+//-            v-class="on: config.notify_frecover == 4"
+//-            v-on="click: applyConfig('notify_frecover', 4)"
+//-          )
+//-            | 49点
+//-        .desc
+//-          | 疲劳恢复提醒，需要开启疲劳演算功能。

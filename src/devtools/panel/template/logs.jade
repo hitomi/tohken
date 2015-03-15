@@ -1,0 +1,84 @@
+.logs(
+  v-if = "tab==5"
+)
+  .panel
+    .t(
+      style="cursor: pointer;"
+      v-on="click: saveLogs()"
+    )
+      | 戳这里导出原始数据和方便使用的CSV文件
+  .panel
+    .t 锻刀日志
+    table
+      thead
+        tr
+          th
+            | 时间
+          th
+            | 结果
+          th
+            | 耗时
+          th
+            | 木炭
+          th
+            | 玉鋼
+          th
+            | 冷却材
+          th
+            | 砥石
+      tbody
+        tr(
+          v-repeat="data['logs']['forge']"
+        )
+          // "1-1426389451000":{"slot_no":"1","finish_at":1426389451000,"sword_id":"45","resource":false,"charcoal":"50","coolant":"50","file":"50","steel":"50"}
+          td
+            | {{finish_at | ls2t}}
+          td
+            | {{sword_id | ls2n}}
+          td
+            | {{resource?times:'-'}} min
+          td
+            | {{resource?charcoal:'-'}}
+          td
+            | {{resource?steel:'-'}}
+          td
+            | {{resource?coolant:'-'}}
+          td
+            | {{resource?file:'-'}}
+  .panel
+    .t 捞刀日志
+    span
+      | 位置对应图测试组已经跑出来了，下次更新就能看到了
+    span
+      | 以后会慢慢更新让数据看着更方便的功能的！在此之前请好好的把数据存好！
+    table
+      thead
+        tr
+          th
+            | 时间
+          th
+            | 队伍
+          th
+            | 评分
+          th
+            | 获得
+          th
+            | 地图
+          th
+            | 位置
+      tbody
+        tr(
+          v-repeat="data['logs']['battle']"
+        )
+          td
+            | {{time | ls2t}}
+          td
+            | {{party_no}}
+          td
+            | {{rank | r2r}}
+          td
+            | {{get_sword_id | ls2n}}
+          td
+            | {{battle_episode}}-{{battle_field}}
+          td
+            | {{battle_pos}}
