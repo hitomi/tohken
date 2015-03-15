@@ -7,9 +7,6 @@ html
   body#app
     ul.top
       li
-        | 图块ID
-        b {{square_id}}
-      li
         | 審神者
         b(v-if="view.player.name!=null")
           | {{view.player.name}}
@@ -40,24 +37,27 @@ html
         | 小判
         b {{Math.floor(view.resource.money)}}
     ul.nav
-      li(v-class="active: tab == 1", v-on="click: tab = 1")
-        | 总览
       li(v-class="active: tab == 2", v-on="click: tab = 2")
-        | 战斗
-      li(v-class="active: tab == 3", v-on="click: tab = 3")
         | 队伍
-      li(v-class="active: tab == 4", v-on="click: tab = 4")
-        | 刀装
+      li(v-class="active: tab == 3", v-on="click: tab = 3")
+        | 本丸
       li(v-class="active: tab == 5", v-on="click: tab = 5")
-        | 锻刀
+        | 记录
       li(v-class="active: tab == -1", v-on="click: tab = -1")
         | 设置
       li(v-class="active: tab == -2", v-on="click: tab = -2")
         | 关于
     .container
+      div.outgame(
+        v-if="!gaming"
+      )
+        | 尚未监测到游戏数据，如果您已经开启了【储存游戏数据】功能，您看的的可能是上次游戏时缓存的记录
       include ./template/party_item.jade
+      include ./template/forge_rep.jade
+      include ./template/logs.jade
       include ./template/config.jade
       include ./template/about.jade
+    script(src="../../thirdparty/FileSaver.js")
     script(src="../../thirdparty/lodash.js")
     script(src="../../thirdparty/jquery.js")
     script(src="../../thirdparty/vue.js")
