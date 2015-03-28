@@ -369,6 +369,26 @@
       "area": 1
       "upgrade": 25
     }
+    "103": {
+      "name": "浦島虎徹"
+      "id": 103
+      "rarity": 2
+      "type": 4
+      "group": 10
+      "equip": 2
+      "area": 1
+      "upgrade": 20
+    }
+    "105": {
+      "name": "長曽祢虎徹"
+      "id": 105
+      "rarity": 2
+      "type": 5
+      "group": 10
+      "equip": 2
+      "area": 1
+      "upgrade": 25
+    }
     "116": {
       "name": "大倶利伽羅"
       "id": 116
