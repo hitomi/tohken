@@ -87,5 +87,12 @@ src─┐
 解析并将处理后的数据传递至view模型中。
 
 通过Vue.js的数据绑定机制来更新视图
+
+# 参考资料
+https://developer.chrome.com/extensions/api_index
+https://lodash.com/docs
+http://vuejs.org/
+https://github.com/eligrey/FileSaver.js
+
 ## License
 CC0 1.0 Universal
