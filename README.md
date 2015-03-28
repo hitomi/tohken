@@ -88,10 +88,13 @@ src─┐
 
 通过Vue.js的数据绑定机制来更新视图
 
-# 参考资料
+## 参考资料
 https://developer.chrome.com/extensions/api_index
+
 https://lodash.com/docs
+
 http://vuejs.org/
+
 https://github.com/eligrey/FileSaver.js
 
 ## License
