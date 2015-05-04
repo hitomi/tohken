@@ -220,8 +220,8 @@
       type: 'get'
       value: result['get_sword_id']
     } if result['get_sword_id'] != 0
-    asia = [3, 5, 7, 9, 25, 31, 33, 55, 59, 65, 79, 103, 132, 134, 138]
-    europe = [3, 5, 31, 33]
+    asia = [3, 5, 7, 9, 25, 31, 33, 55, 57, 59, 65, 79, 103, 105, 132, 134, 138]
+    europe = [3, 5, 31, 33, 57, 103, 105]
     # 推送提醒
     _.forEach notify, (n)=>
       switch n['type']
