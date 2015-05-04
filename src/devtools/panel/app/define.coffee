@@ -210,6 +210,16 @@
       "area": 1
       "upgrade": 25
     }
+    "57": {
+      "name": "明石国行"
+      "id": 57
+      "rarity": 3
+      "type": 2
+      "group": 8
+      "equip": 2
+      "area": 1
+      "upgrade": 25
+    }
     "59": {
       "name": "蛍丸"
       "id": 59

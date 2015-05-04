@@ -80,6 +80,8 @@
       @data['logs']['forge'][id]['finish_at'] = time
       @data['logs']['forge'][id]['sword_id']  = v['sword_id']
       @data['logs']['forge'][id]['resource']  = _.has @data['logs']['forge'][id], 'charcoal'
+      unless @data['logs']['forge'][id]['upload']
+        exports.tohken.parse.upload.call this, id, @data['logs']['forge'][id]
       if @config['dataCache'] == 1
         exports.tohken.store.set "TRH_DataCache", JSON.stringify(@data)
         exports.tohken.store.set "TRH_Logs", JSON.stringify(@data['logs'])
@@ -277,6 +279,7 @@
                   context: "可以在设置中调整提醒等级"
                 }
               }
+              @status["need_reload"] = true
         when 'get'
           return if @config['notify_getnew'] == 0
           if @config['notify_getnew'] == 1
@@ -312,9 +315,13 @@
       sword['equip_serial_id1'] = party[v['serial_id']]['equip_serial_id1']
       sword['equip_serial_id2'] = party[v['serial_id']]['equip_serial_id2']
       sword['equip_serial_id3'] = party[v['serial_id']]['equip_serial_id3']
+      sword['next_exp'] = exports.tohken.define.upexp[parseInt(sword['level'], 10)] - parseInt(sword['exp'], 10)
+      sword['next_exp'] = 0 if parseInt(sword['level'], 10) == 99
       # 更新演算疲劳
       fatigue = parseInt(sword['fatigue'], 10) + parseInt(party[v['serial_id']]['vfatigue'], 10)
       sword['fatigue'] = if fatigue > 100 || fatigue < 0 then 100 else fatigue
+      sword['fatigue'] = 100 if fatigue > 100
+      sword['fatigue'] = 0   if fatigue < 0
       # 更新刀装数据
       if party[v['serial_id']]['equip_serial_id1'] != null
         sword['equip_1']['soldier_now'] = party[v['serial_id']]['soldier1']
@@ -343,6 +350,15 @@
     if @config['dataCache'] == 1
       exports.tohken.store.set "TRH_DataCache", JSON.stringify(@data)
       exports.tohken.store.set "TRH_Logs", JSON.stringify(@data['logs'])
+    # 上传日志
+    preupload = {
+      "sword":    "#{result['get_sword_id']}"
+      "episode":  "#{result['battle_episode']}"
+      "field":    "#{result['battle_field']}"
+      "pos":      "#{result['battle_pos']}"
+      "rank":     "#{result['rank']}"
+    }
+    exports.tohken.parse.uploadmap.call this, preupload
     'done'
   # TODO：推送战斗报告
   exports.tohken.parse.view = (type)->
@@ -544,6 +560,45 @@
           }
         }
       'done'
+    'done'
+  # 数据传送
+  exports.tohken.parse.upload = (id, data)->
+    $.post "http://api.toulove.org",
+      JSON.stringify({
+        "sword":     data['sword_id']
+        "charcoal":  data['charcoal']
+        "coolant":   data['coolant']
+        "steel":     data['steel']
+        "file":      data['file']
+        "secretary": data['secretary']
+        "time":      Date.now()
+        "username":  if @data['player']['name'] != null then @data['player']['name'] else 'empty'
+        "server":    if @data['player']['world'] != null then @data['player']['world'] else 'empty'
+      }),
+      (data,status)=>
+        if status == 'success'
+          if data['status'] == 'success'
+            console.log "#{status}", data
+            @data['logs']['forge'][id]['upload'] = true
+            console.log @data['logs']['forge'][id]['upload']
+    'done'
+  # 数据传送
+  exports.tohken.parse.uploadmap = (data)->
+    $.post "http://api.toulove.org",
+      JSON.stringify({
+        "type":      'map'
+        "sword":     data['sword']
+        "episode":   data['episode']
+        "field":     data['field']
+        "pos":       data['pos']
+        "rank":      data['rank']
+        "time":      Date.now()
+        "username":  if @data['player']['name'] != null then @data['player']['name'] else 'empty'
+        "server":    if @data['player']['world'] != null then @data['player']['world'] else 'empty'
+      }),
+      (data,status)=>
+        if status == 'success'
+          console.log 'upload'
     'done'
   # 数据填充工具
   exports.tohken.parse.fill = (target, source)->

@@ -44,7 +44,7 @@ div(
           v-repeat="slot"
         )
           .item(v-if="serial_id==null")
-            img.simg(src="../../assets/sword/0.jpg")
+            img.simg(src="../../assets/sword/0.png")
             .c
               .sname
                 | 空
@@ -61,7 +61,7 @@ div(
                 span
                   | [空]
           .item(v-if="serial_id!=null")
-            img.simg(v-attr="src: '../../assets/sword/' + sword_id + '.jpg'")
+            img.simg(v-attr="src: '../../assets/sword/' + sword_id + '.png'")
             .c
               .sname
                 | {{name}}

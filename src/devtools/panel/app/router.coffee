@@ -18,6 +18,9 @@
           @status['in_battle'] = false
           exports.tohken.event.fatigue.call this
           exports.tohken.event.start this if exports.tohken.event.handle == null
+      when 'user/profile'
+        @parser request, (data)=>
+          @data['player']['world'] = data['world']
       # 锻刀
       when 'forge'
         @parser request, (data)=>
@@ -34,6 +37,7 @@
           time = Date.parse "#{data['finished_at']} GMT+0900"
           id = "#{data['slot_no']}-#{time}"
           forge = {}
+            # consumable_id
           forge['slot_no']            = data['slot_no']
           forge['finish_at']          = time
           forge['sword_id']           = data['sword_id']
@@ -44,6 +48,8 @@
           forge['coolant']            = data['post_data']['coolant']
           forge['file']               = data['post_data']['file']
           forge['steel']              = data['post_data']['steel']
+          forge['secretary']          = if @data['player']['secretary'] == null then 0 else @data['player']['secretary']
+          forge['upload']             = false
           @data['logs']['forge'][id]  = forge
           ''
       # 手入
@@ -130,6 +136,9 @@
       when 'sally/forward'
         @parser request, (data)=>
           @status['battle_pos'] = data.square_id
+          if @status['need_reload']
+            chrome.devtools.inspectedWindow.reload()
+            @status['need_reload'] = false
       # 远征
       when 'conquest/start'
         @parser request, (data)=>

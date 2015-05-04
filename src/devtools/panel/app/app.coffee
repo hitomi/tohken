@@ -29,6 +29,8 @@
         "battle_pos": null
         # 显示锻刀结果
         "show_forge": false
+        # 是否重伤刷新
+        "need_reload": false
       }
     }
 
