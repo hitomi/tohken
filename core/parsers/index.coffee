@@ -2,8 +2,9 @@ define (require, exports, module)->
   _parser = {
     # load parsers
     parsers: [
-      'resource': require 'cs!./resource'
-
+      require 'cs!./resource'
+      require 'cs!./sword'
+      require 'cs!./party'
     ]
 
     init: (_target)-> @target = _target

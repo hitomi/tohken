@@ -1,0 +1,52 @@
+{
+  "slot_no": 1,
+  "sword_serial_id": 28266448,
+  "serial_id": 19337527
+}
+{
+  "serial_id": "19337527",
+  "sword_serial_id": "28266448",
+  "slot_no": "1",
+  "equip": {
+    "serial_id": 19337527,
+    "equip_id": "7",
+    "soldier": "8"
+  },
+  "sword": {
+    "serial_id": "28266448",
+    "sword_id": "39",
+    "symbol": "0",
+    "rarity": "1",
+    "level": "1",
+    "exp": "0",
+    "evol_num": "0",
+    "hp": "29",
+    "hp_max": "29",
+    "atk": "18",
+    "def": "28",
+    "mobile": "23",
+    "back": "14",
+    "scout": "34",
+    "hide": "34",
+    "hp_up": "3",
+    "atk_up": "9",
+    "def_up": "9",
+    "mobile_up": "25",
+    "back_up": "12",
+    "scout_up": "10",
+    "hide_up": "0",
+    "loyalties": "37",
+    "fatigue": "40",
+    "equip_serial_id1": "19337527",
+    "equip_serial_id2": null,
+    "equip_serial_id3": null,
+    "horse_serial_id": null,
+    "item_id": null,
+    "protect": "0",
+    "status": "0",
+    "recovered_at": "2015-03-06 02:41:49",
+    "created_at": "2015-03-06 02:41:49"
+  },
+  "status": 0,
+  "now": "2015-03-06 15:25:06"
+}

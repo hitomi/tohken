@@ -1,0 +1,24 @@
+// slot_no:1
+// sword:lg63foj5eujhpvlmcl4ch3gt97
+// serial_id:31210808
+// use_assist:0
+{
+  "repair": {
+    "1": {
+      "slot_no": "1",
+      "sword_serial_id": "27424282",
+      "finished_at": "2015-03-03 23:38:16"
+    }
+  },
+  "resource": {
+    "bill": "23",
+    "charcoal": 1703,
+    "steel": 2391,
+    "coolant": 1742,
+    "file": 487,
+    "max_resource": "12800",
+    "recovered_at": "2015-03-03 23:30:54"
+  },
+  "status": 0,
+  "now": "2015-03-03 23:33:46"
+}

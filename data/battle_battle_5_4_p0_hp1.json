@@ -1,0 +1,492 @@
+{
+  "first_atk": {
+    "bow": {
+      "player": [],
+      "enemy": [{
+        "atk": "932",
+        "def": [{
+          "party_order": 1,
+          "serial_id": "28221029",
+          "sword": 25,
+          "soldier1": 0,
+          "soldier2": 0,
+          "soldier3": 0
+        }]
+      }, {
+        "atk": "934",
+        "def": [{
+          "party_order": 1,
+          "serial_id": "28221029",
+          "sword": 0,
+          "soldier1": 0,
+          "soldier2": 0,
+          "soldier3": 0
+        }]
+      }]
+    },
+    "gun": {
+      "player": [],
+      "enemy": [{
+        "atk": "933",
+        "def": [{
+          "party_order": 1,
+          "serial_id": "28221029",
+          "sword": 0,
+          "soldier1": 0,
+          "soldier2": 0,
+          "soldier3": 0
+        }]
+      }]
+    },
+    "stone": {
+      "player": [],
+      "enemy": [{
+        "atk": "931",
+        "def": [{
+          "party_order": 1,
+          "serial_id": "28221029",
+          "sword": 13,
+          "soldier1": 0,
+          "soldier2": 0,
+          "soldier3": 0
+        }]
+      }]
+    },
+    "serious": [],
+    "party": {
+      "1": {
+        "status": 4,
+        "is_damage_effect": true
+      }
+    },
+    "enemy": {
+      "1": {
+        "status": 0,
+        "is_damage_effect": false
+      },
+      "2": {
+        "status": 0,
+        "is_damage_effect": false
+      },
+      "3": {
+        "status": 0,
+        "is_damage_effect": false
+      },
+      "4": {
+        "status": 0,
+        "is_damage_effect": false
+      },
+      "5": {
+        "status": 0,
+        "is_damage_effect": false
+      },
+      "6": {
+        "status": 0,
+        "is_damage_effect": false
+      }
+    }
+  },
+  "player": {
+    "formation_id": "4",
+    "name": null,
+    "level": "44",
+    "exp": 179483,
+    "party": {
+      "1": {
+        "atk_type": 1,
+        "party_order": 1,
+        "serial_id": "28221029",
+        "sword_id": "116",
+        "type": "4",
+        "symbol": "0",
+        "rarity": "3",
+        "level": 3,
+        "exp": 324,
+        "hp": 39,
+        "hp_max": "48",
+        "equip_id1": 0,
+        "equip_serial_id1": null,
+        "soldier1": 0,
+        "init_soldier1": 0,
+        "max_soldier1": 0,
+        "soldier_type1": 0,
+        "equip_id2": 0,
+        "equip_serial_id2": null,
+        "soldier_type2": 0,
+        "soldier2": 0,
+        "init_soldier2": 0,
+        "max_soldier2": 0,
+        "equip_id3": 0,
+        "equip_serial_id3": null,
+        "soldier_type3": 0,
+        "soldier3": 0,
+        "init_soldier3": 0,
+        "max_soldier3": 0,
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 4,
+        "turn_end_hp": 1,
+        "init_hp": 39,
+        "is_serious": false,
+        "is_active": false,
+        "is_damage_effect": true,
+        "deadly_flg": true,
+        "death_flg": false
+      }
+    },
+    "party_name": "\u7b2c1\u90e8\u968a"
+  },
+  "enemy": {
+    "formation_id": 5,
+    "name": "\u6575120",
+    "level": "1",
+    "exp": "0",
+    "party": {
+      "1": {
+        "atk_type": 2,
+        "party_order": 1,
+        "serial_id": "931",
+        "sword_id": "100203",
+        "type": "3",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "37",
+        "hp_max": "37",
+        "equip_id1": "3",
+        "equip_serial_id1": "2249",
+        "soldier1": "10",
+        "init_soldier1": "10",
+        "max_soldier1": "10",
+        "soldier_type1": "1",
+        "equip_id2": "6",
+        "equip_serial_id2": "2250",
+        "soldier_type2": "2",
+        "soldier2": "8",
+        "init_soldier2": "8",
+        "max_soldier2": "8",
+        "equip_id3": "15",
+        "equip_serial_id3": "2251",
+        "soldier_type3": "5",
+        "soldier3": "15",
+        "init_soldier3": "15",
+        "max_soldier3": "15",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "37",
+        "init_hp": "37",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      },
+      "2": {
+        "atk_type": 2,
+        "party_order": 2,
+        "serial_id": "932",
+        "sword_id": "100103",
+        "type": "2",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "29",
+        "hp_max": "29",
+        "equip_id1": "9",
+        "equip_serial_id1": "2252",
+        "soldier1": "10",
+        "init_soldier1": "10",
+        "max_soldier1": "10",
+        "soldier_type1": "3",
+        "equip_id2": "18",
+        "equip_serial_id2": "2253",
+        "soldier_type2": "6",
+        "soldier2": "12",
+        "init_soldier2": "12",
+        "max_soldier2": "12",
+        "equip_id3": "27",
+        "equip_serial_id3": "2254",
+        "soldier_type3": "9",
+        "soldier3": "8",
+        "init_soldier3": "8",
+        "max_soldier3": "8",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "29",
+        "init_hp": "29",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      },
+      "3": {
+        "atk_type": 2,
+        "party_order": 3,
+        "serial_id": "933",
+        "sword_id": "100103",
+        "type": "2",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "29",
+        "hp_max": "29",
+        "equip_id1": "12",
+        "equip_serial_id1": "2255",
+        "soldier1": "12",
+        "init_soldier1": "12",
+        "max_soldier1": "12",
+        "soldier_type1": "4",
+        "equip_id2": "21",
+        "equip_serial_id2": "2256",
+        "soldier_type2": "7",
+        "soldier2": "13",
+        "init_soldier2": "13",
+        "max_soldier2": "13",
+        "equip_id3": "30",
+        "equip_serial_id3": "2257",
+        "soldier_type3": "10",
+        "soldier3": "6",
+        "init_soldier3": "6",
+        "max_soldier3": "6",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "29",
+        "init_hp": "29",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      },
+      "4": {
+        "atk_type": 2,
+        "party_order": 4,
+        "serial_id": "934",
+        "sword_id": "100003",
+        "type": "1",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "20",
+        "hp_max": "20",
+        "equip_id1": "24",
+        "equip_serial_id1": "2258",
+        "soldier1": "13",
+        "init_soldier1": "13",
+        "max_soldier1": "13",
+        "soldier_type1": "8",
+        "equip_id2": "27",
+        "equip_serial_id2": "2259",
+        "soldier_type2": "9",
+        "soldier2": "8",
+        "init_soldier2": "8",
+        "max_soldier2": "8",
+        "equip_id3": "9",
+        "equip_serial_id3": "2260",
+        "soldier_type3": "3",
+        "soldier3": "10",
+        "init_soldier3": "10",
+        "max_soldier3": "10",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "20",
+        "init_hp": "20",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      },
+      "5": {
+        "atk_type": 2,
+        "party_order": 5,
+        "serial_id": "935",
+        "sword_id": "100003",
+        "type": "1",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "20",
+        "hp_max": "20",
+        "equip_id1": "15",
+        "equip_serial_id1": "2261",
+        "soldier1": "15",
+        "init_soldier1": "15",
+        "max_soldier1": "15",
+        "soldier_type1": "5",
+        "equip_id2": "18",
+        "equip_serial_id2": "2262",
+        "soldier_type2": "6",
+        "soldier2": "12",
+        "init_soldier2": "12",
+        "max_soldier2": "12",
+        "equip_id3": "6",
+        "equip_serial_id3": "2263",
+        "soldier_type3": "2",
+        "soldier3": "8",
+        "init_soldier3": "8",
+        "max_soldier3": "8",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "20",
+        "init_hp": "20",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      },
+      "6": {
+        "atk_type": 2,
+        "party_order": 6,
+        "serial_id": "936",
+        "sword_id": "100003",
+        "type": "1",
+        "symbol": "0",
+        "rarity": "3",
+        "level": "60",
+        "exp": "0",
+        "hp": "20",
+        "hp_max": "20",
+        "equip_id1": "12",
+        "equip_serial_id1": "2264",
+        "soldier1": "12",
+        "init_soldier1": "12",
+        "max_soldier1": "12",
+        "soldier_type1": "4",
+        "equip_id2": "9",
+        "equip_serial_id2": "2265",
+        "soldier_type2": "3",
+        "soldier2": "10",
+        "init_soldier2": "10",
+        "max_soldier2": "10",
+        "equip_id3": "24",
+        "equip_serial_id3": "2266",
+        "soldier_type3": "8",
+        "soldier3": "13",
+        "init_soldier3": "13",
+        "max_soldier3": "13",
+        "horse_id": 0,
+        "horse_serial_id": null,
+        "item_id": null,
+        "turn_end_status": 0,
+        "turn_end_hp": "20",
+        "init_hp": "20",
+        "is_serious": false,
+        "is_active": true,
+        "is_damage_effect": true,
+        "deadly_flg": false,
+        "death_flg": true
+      }
+    },
+    "party_name": "\u938c\u5009\u6539\u5909\u963f\u6d25\u8cc0\u5fd7\u5c71\u65b9\u9762\u7532\u90e8\u968a"
+  },
+  "battle": [],
+  "one_on_one": [],
+  "result": {
+    "rank": 6,
+    "mvp": 0,
+    "get_sword_id": 0,
+    "player": {
+      "gauge": 0,
+      "life": 0,
+      "life_max": 39,
+      "soldier": 0,
+      "soldier_max": 0,
+      "retire": 1,
+      "get_exp": 0,
+      "is_level_up": false,
+      "level_up_money": 0,
+      "sword_exp": 500,
+      "level": "44",
+      "exp": 179483,
+      "evolution": [],
+      "party": {
+        "party_no": "1",
+        "party_name": "\u7b2c1\u90e8\u968a",
+        "slot": {
+          "1": {
+            "serial_id": "28221029",
+            "hp": 1,
+            "status": 4,
+            "sword_id": "116",
+            "get_exp": 600,
+            "is_level_up": true,
+            "exp": 924,
+            "level": 4
+          }
+        }
+      }
+    },
+    "enemy": {
+      "gauge": 100,
+      "life": 155,
+      "life_max": 155,
+      "soldier": 195,
+      "soldier_max": 195,
+      "retire": 0,
+      "party": {
+        "party_no": "1",
+        "party_name": "\u938c\u5009\u6539\u5909\u963f\u6d25\u8cc0\u5fd7\u5c71\u65b9\u9762\u7532\u90e8\u968a",
+        "slot": {
+          "1": {
+            "serial_id": "931",
+            "hp": "37",
+            "status": 0
+          },
+          "2": {
+            "serial_id": "932",
+            "hp": "29",
+            "status": 0
+          },
+          "3": {
+            "serial_id": "933",
+            "hp": "29",
+            "status": 0
+          },
+          "4": {
+            "serial_id": "934",
+            "hp": "20",
+            "status": 0
+          },
+          "5": {
+            "serial_id": "935",
+            "hp": "20",
+            "status": 0
+          },
+          "6": {
+            "serial_id": "936",
+            "hp": "20",
+            "status": 0
+          }
+        }
+      }
+    }
+  },
+  "finish": {
+    "is_finish": false,
+    "episode_id": 0,
+    "field_id": 0
+  },
+  "secretary_hp": 1,
+  "secretary_hp_max": "48",
+  "status": 0,
+  "now": "2015-03-06 02:13:17"
+}

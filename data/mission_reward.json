@@ -1,0 +1,31 @@
+{
+  "item": [{
+    "item_type": 1,
+    "item_id": 8,
+    "item_num": 1
+  }, {
+    "item_type": 5,
+    "item_id": 3,
+    "item_num": "100"
+  }, {
+    "item_type": 5,
+    "item_id": 4,
+    "item_num": "100"
+  }, {
+    "item_type": 5,
+    "item_id": 5,
+    "item_num": "100"
+  }],
+  "resource": {
+    "bill": "4",
+    "charcoal": 1190,
+    "steel": 2028,
+    "coolant": 510,
+    "file": 2299,
+    "max_resource": "11200",
+    "recovered_at": "2015-02-28 01:21:54"
+  },
+  "max_party": "3",
+  "status": 0,
+  "now": "2015-02-28 01:22:53"
+}

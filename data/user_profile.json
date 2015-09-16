@@ -1,0 +1,42 @@
+{
+  "world": "\u5c71\u57ce\u56fd",
+  "created_at": "2015-01-19 13:30:54",
+  "level": "44",
+  "exp": 177102,
+  "next_exp": "179525",
+  "introduction": "\u86cd\u4e38\u5927\u597d\u304d(*\u00b4\u2200\uff40*)",
+  "introduction_id": "133134421",
+  "forge_slot": "2",
+  "max_forge": 4,
+  "repair_slot": "2",
+  "max_repair": 4,
+  "party_num": "3",
+  "max_party": 4,
+  "sword_num": 50,
+  "max_sword": "50",
+  "equip_max": 100,
+  "complete": {
+    "sword": 39,
+    "dagger": 10,
+    "short": 4,
+    "normal": 9,
+    "long": 10,
+    "large": 4,
+    "spear": 1,
+    "partisan": 1,
+    "equip": 100,
+    "horse": 8,
+    "scene": 9,
+    "furniture": 1
+  },
+  "summary": {
+    "battle": "1445",
+    "battle_win": "1442",
+    "practice": 257,
+    "practice_win": 192,
+    "conquest": "193",
+    "conquest_success": "187"
+  },
+  "status": 0,
+  "now": "2015-03-04 21:39:39"
+}

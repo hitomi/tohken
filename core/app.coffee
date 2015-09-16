@@ -10,12 +10,20 @@ define (require, exports, module)->
   router = require 'cs!core/services/router'
   parser = require 'cs!core/parsers/index'
 
+  gamelogs = require 'cs!core/utils/gamelogs'
+
   # debug
   $console = $('#console')
   $console.log = (ctx)->
     $console.append("<div>#{ctx}</div>");
-  $console.log "trh-x loaded core v#{config['verson']['core']} ui v#{config['verson']['ui']}"
+  $console.log "trh-x loaded core v#{config['verson']['core']} ui v#{config['verson']['ui']} build 4"
+
+  chrome.runtime.sendMessage({
+    type: "test"
+  });
 
   # init
+  gamelogs.init()
+
   parser.init data
   router.init data, parser

@@ -1,0 +1,382 @@
+{
+  "success": 1,
+  "field_id": "1",
+  "party_no": "2",
+  "party": {
+    "1": {
+      "party_no": "1",
+      "status": "1",
+      "party_name": "\u7b2c1\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "17043682"
+        },
+        "2": {
+          "serial_id": "3294091"
+        },
+        "3": {
+          "serial_id": "14236910"
+        },
+        "4": {
+          "serial_id": "6478040"
+        },
+        "5": {
+          "serial_id": "2793128"
+        },
+        "6": {
+          "serial_id": "17841650"
+        }
+      }
+    },
+    "2": {
+      "party_no": "2",
+      "status": 1,
+      "party_name": "\u7b2c2\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "5700142"
+        },
+        "2": {
+          "serial_id": "25348610"
+        },
+        "3": {
+          "serial_id": "1575114"
+        },
+        "4": {
+          "serial_id": "2816969"
+        },
+        "5": {
+          "serial_id": "14373619"
+        },
+        "6": {
+          "serial_id": "1656817"
+        }
+      }
+    },
+    "3": {
+      "party_no": "3",
+      "status": "1",
+      "party_name": "\u7b2c3\u90e8\u968a",
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": "1394113"
+        },
+        "2": {
+          "serial_id": "2229867"
+        },
+        "3": {
+          "serial_id": "3291094"
+        },
+        "4": {
+          "serial_id": "1498312"
+        },
+        "5": {
+          "serial_id": "2792947"
+        },
+        "6": {
+          "serial_id": null
+        }
+      }
+    },
+    "4": {
+      "party_no": 4,
+      "party_name": "\u7b2c4\u90e8\u968a",
+      "status": 0,
+      "finished_at": null,
+      "slot": {
+        "1": {
+          "serial_id": null
+        },
+        "2": {
+          "serial_id": null
+        },
+        "3": {
+          "serial_id": null
+        },
+        "4": {
+          "serial_id": null
+        },
+        "5": {
+          "serial_id": null
+        },
+        "6": {
+          "serial_id": null
+        }
+      }
+    }
+  },
+  "sword": {
+    "5700142": {
+      "serial_id": "5700142",
+      "sword_id": "73",
+      "symbol": "1",
+      "rarity": "3",
+      "level": "26",
+      "exp": 65802,
+      "evol_num": "1",
+      "hp": "58",
+      "hp_max": "58",
+      "atk": "73",
+      "def": "72",
+      "mobile": "34",
+      "back": "53",
+      "scout": "34",
+      "hide": "30",
+      "hp_up": "7",
+      "atk_up": "0",
+      "def_up": "0",
+      "mobile_up": "0",
+      "back_up": "0",
+      "scout_up": "3",
+      "hide_up": "0",
+      "loyalties": "30",
+      "fatigue": 92,
+      "equip_serial_id1": "17453531",
+      "equip_serial_id2": "3399042",
+      "equip_serial_id3": null,
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-01-25 15:04:18"
+    },
+    "25348610": {
+      "serial_id": "25348610",
+      "sword_id": "55",
+      "symbol": "0",
+      "rarity": "4",
+      "level": "7",
+      "exp": 3980,
+      "evol_num": "0",
+      "hp": "50",
+      "hp_max": "50",
+      "atk": "54",
+      "def": "49",
+      "mobile": "31",
+      "back": "39",
+      "scout": "30",
+      "hide": "27",
+      "hp_up": "8",
+      "atk_up": "11",
+      "def_up": "14",
+      "mobile_up": "0",
+      "back_up": "10",
+      "scout_up": "2",
+      "hide_up": "0",
+      "loyalties": "28",
+      "fatigue": 46,
+      "equip_serial_id1": "17508396",
+      "equip_serial_id2": "17381926",
+      "equip_serial_id3": "18030538",
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-02-26 14:06:50"
+    },
+    "1575114": {
+      "serial_id": "1575114",
+      "sword_id": "91",
+      "symbol": "1",
+      "rarity": "3",
+      "level": "27",
+      "exp": 70231,
+      "evol_num": "1",
+      "hp": "56",
+      "hp_max": "56",
+      "atk": "70",
+      "def": "69",
+      "mobile": "36",
+      "back": "46",
+      "scout": "36",
+      "hide": "31",
+      "hp_up": "8",
+      "atk_up": "0",
+      "def_up": "0",
+      "mobile_up": "0",
+      "back_up": "10",
+      "scout_up": "2",
+      "hide_up": "0",
+      "loyalties": "30",
+      "fatigue": 46,
+      "equip_serial_id1": "15184514",
+      "equip_serial_id2": "13800014",
+      "equip_serial_id3": null,
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-01-19 20:15:52"
+    },
+    "2816969": {
+      "serial_id": "2816969",
+      "sword_id": "27",
+      "symbol": "0",
+      "rarity": "2",
+      "level": "14",
+      "exp": 15852,
+      "evol_num": "0",
+      "hp": "27",
+      "hp_max": "27",
+      "atk": "27",
+      "def": "27",
+      "mobile": "33",
+      "back": "25",
+      "scout": "40",
+      "hide": "41",
+      "hp_up": "3",
+      "atk_up": "13",
+      "def_up": "13",
+      "mobile_up": "10",
+      "back_up": "10",
+      "scout_up": "7",
+      "hide_up": "0",
+      "loyalties": "47",
+      "fatigue": 46,
+      "equip_serial_id1": "17050283",
+      "equip_serial_id2": "14931576",
+      "equip_serial_id3": null,
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-01-21 17:04:09"
+    },
+    "14373619": {
+      "serial_id": "14373619",
+      "sword_id": "130",
+      "symbol": "1",
+      "rarity": "4",
+      "level": "29",
+      "exp": 86713,
+      "evol_num": "1",
+      "hp": "54",
+      "hp_max": "54",
+      "atk": "69",
+      "def": "69",
+      "mobile": "34",
+      "back": "41",
+      "scout": "31",
+      "hide": "29",
+      "hp_up": "8",
+      "atk_up": "0",
+      "def_up": "0",
+      "mobile_up": "0",
+      "back_up": "10",
+      "scout_up": "2",
+      "hide_up": "0",
+      "loyalties": "32",
+      "fatigue": 46,
+      "equip_serial_id1": "17224550",
+      "equip_serial_id2": "17224595",
+      "equip_serial_id3": "17381825",
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-02-06 12:05:20"
+    },
+    "1656817": {
+      "serial_id": "1656817",
+      "sword_id": "99",
+      "symbol": "0",
+      "rarity": "2",
+      "level": "17",
+      "exp": 25201,
+      "evol_num": "0",
+      "hp": "29",
+      "hp_max": "29",
+      "atk": "33",
+      "def": "29",
+      "mobile": "40",
+      "back": "20",
+      "scout": "41",
+      "hide": "41",
+      "hp_up": "3",
+      "atk_up": "9",
+      "def_up": "9",
+      "mobile_up": "5",
+      "back_up": "11",
+      "scout_up": "7",
+      "hide_up": "0",
+      "loyalties": "45",
+      "fatigue": 46,
+      "equip_serial_id1": "13286649",
+      "equip_serial_id2": "13828253",
+      "equip_serial_id3": null,
+      "horse_serial_id": null,
+      "item_id": null,
+      "protect": "1",
+      "status": 0,
+      "recovered_at": "2015-03-01 02:28:24",
+      "created_at": "2015-01-19 21:35:23"
+    }
+  },
+  "summary": {},
+  "conquest": {
+    "field_id": "16"
+  },
+  "evolution": [],
+  "result": {
+    "user_exp": 5,
+    "is_level_up": false,
+    "level_up_money": 0,
+    "level": 37,
+    "exp": 110813,
+    "sword_exp": "5"
+  },
+  "resource": {
+    "bill": "1",
+    "charcoal": 1268,
+    "steel": 2859,
+    "coolant": 999,
+    "file": 2079,
+    "max_resource": "11400",
+    "recovered_at": "2015-03-01 02:27:54"
+  },
+  "item": {
+    "5": {
+      "consumable_id": "5",
+      "num": "0"
+    },
+    "6": {
+      "consumable_id": "6",
+      "num": "0"
+    },
+    "7": {
+      "consumable_id": "7",
+      "num": "0"
+    },
+    "8": {
+      "consumable_id": "8",
+      "num": "18"
+    },
+    "13": {
+      "consumable_id": "13",
+      "num": "0"
+    },
+    "14": {
+      "consumable_id": "14",
+      "num": "0"
+    }
+  },
+  "reward": [{
+    "item_type": "5",
+    "item_id": "2",
+    "item_num": 10
+  }, {
+    "item_type": "5",
+    "item_id": "3",
+    "item_num": 15
+  }],
+  "status": 0,
+  "now": "2015-03-01 02:28:24"
+}

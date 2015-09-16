@@ -1,0 +1,17 @@
+{
+  "mission": 0,
+  "party": [],
+  "duty": [],
+  "receive": 1,
+  "resource": {
+    "bill": "5",
+    "charcoal": 2850.5,
+    "steel": 3472,
+    "coolant": 2072,
+    "file": 4035,
+    "max_resource": "11200",
+    "recovered_at": "2015-02-27 19:51:54"
+  },
+  "status": 0,
+  "now": "2015-02-27 19:52:02"
+}
