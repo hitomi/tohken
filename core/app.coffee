@@ -17,13 +17,17 @@ define (require, exports, module)->
   $console.log = (ctx)->
     $console.append("<div>#{ctx}</div>");
   $console.log "trh-x loaded core v#{config['verson']['core']} ui v#{config['verson']['ui']} build 4"
-
-  chrome.runtime.sendMessage({
-    type: "test"
-  });
+  $console.log "#{new Date()}"
 
   # init
   gamelogs.init()
 
+  # start event listener
   parser.init data
   router.init data, parser
+
+  # init views
+  vm = new Vue {
+    el: "#trhv4",
+    data: data
+  }

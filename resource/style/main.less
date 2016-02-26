@@ -1,0 +1,196 @@
+/*
+* Global
+*/
+@import 'color';
+
+@defaultFontSize: 12px;
+* {
+  font-size: @defaultFontSize;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  font-family: Ubuntu, "Helvetica Neue", Helvetica, "Nimbus Sans L", "Open Sans", "Roboto", "Segoe WP", "Segoe UI", arial, "Liberation Sans", freesans, clean, "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans CJK TC", "Source Han Sans TW", "Noto Sans CJK JP", "Source Han Sans JP", "Noto Sans CJK", "Source Han Sans", "Microsoft YaHei UI", "Microsoft YaHei", DengXian, "Wenquanyi Micro Hei", "ST Heiti", "Droid Sans Fallback", "Microsoft JhengHei", SimSun, sans-serif;
+  min-height: 100%;
+  background-color: @colorMain;
+  background-image: url(../image/ui/bgs.png);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 13px;
+  background-color: #666;
+}
+
+.clear() {
+  &:after {
+    content: '　';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+}
+
+#notfound {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+  font-size: 16px;
+  color: @colorRed;
+  background: @colorMain;
+  z-index: 99999;
+}
+
+
+/*
+* Reset
+*/
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  & > li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+/*
+* Resource
+*/
+
+.resource {
+  padding: 4px;
+  color: @colorWhite;
+  min-width: 256px;
+  background-color: #534D3F;
+  > ul {
+    float: left;
+  }
+  > ul.fr {
+    float: right;
+    text-align: right;
+    > li {
+      float: left;
+      margin-left: 4px;
+    }
+  }
+  .k {
+    color: @colorGray;
+  }
+  small {
+    font-size: 10px;
+  }
+  .clear();
+}
+
+
+/*
+* Card
+*/
+
+.card {
+  margin: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: @defaultFontSize;
+  color: @colorWhite;
+  background-color: @colorDark;
+}
+
+.party {
+  > ul {
+    color: @colorBlack;
+    .clear();
+    > li {
+      position: relative;
+      background-color: @colorMain;
+      height: 48px;
+      padding: 2px;
+      .clear();
+      
+      > .pattern {
+        width: 48px;
+        height: 48px;
+      }
+      
+      > .info {
+        position: absolute;
+        height: 48px;
+        top: 2px;
+        left: 54px;
+        right: 2px;
+        
+        > div {
+          float: left;
+          width: 50%;
+        }
+        
+        > .name,
+        > .hp {
+          height: 18px;
+          line-height: 18px;
+          font-size: 14px;
+        }
+        
+        > .level,
+        > .fatigue {
+          height: 14px;
+          line-height: 14px;
+          font-size: 12px;
+        }
+        
+        > .fatigue {
+          &:before {
+            content: "";
+            display: block;
+            float: left;
+            height: 12px;
+            width: 12px;
+            margin: 1px;
+            background: @colorPink;
+          }
+        }
+        
+        > .equip {
+          width: 100% !important;
+          height: 16px;
+          line-height: 16px;
+          
+          > ul > li {
+            width: 33%;
+            font-size: 10px;
+            float: left;
+            text-align: center;
+            color: @colorWhite;
+            background: @colorYellow;
+            
+            &:not(:last-child) {
+              margin-right: 0.5%;
+            }
+          }
+        }
+      }
+      
+      >.horse {}
+      
+      >.equip {}
+    }
+  }
+}

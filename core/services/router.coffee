@@ -1,10 +1,10 @@
-_router = {
-
+define (require, exports, module)->
   # init network request listener
   init: (_target, _parser)->
     @target = _target
     @parser = _parser
     # Listen the network request
+    console.log chrome
     chrome.devtools.network.onRequestFinished.addListener (request)=>
       # filter request
       tohken = request.request.url.match /http:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/
@@ -12,8 +12,9 @@ _router = {
         # throw static resource
         return if tohken[1] == "static"
         # pass
-        @parser.pass request, tohken[2]
-        @route request, tohken[2]
+        console.log tohken
+        @parser.pass request, tohken[2].split('?')[0]
+        @route request, tohken[2].split('?')[0]
 
   # route the data
   route: (request, action)->
@@ -24,6 +25,4 @@ _router = {
         'nothing'
       else
         'nothing'
-}
 
-define -> _router

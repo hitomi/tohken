@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>刀帳</title>
+  <link rel="stylesheet" href="../../resource/style/normalize.css">
+  <link rel="stylesheet" href="../../resource/style/page_sword.css">
+  <script data-main="loader" src="../../vendor/require.js"></script>
+  
+</head>
+<body id="swords">
+  <div class="logo">
+    刀帳 持有{{swords.length}}柄
+  </div>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th v-on="">番号</th>
+          <th>刀名</th>
+          <th>稀有度</th>
+          <th>種類</th>
+          <th>刀派</th>
+          <th>等级</th>
+          <th>经验</th>
+          <th>阶数</th>
+          <th>生存</th>
+          <th>打撃</th>
+          <th>統率</th>
+          <th>機動</th>
+          <th>衝力</th>
+          <th>偵察</th>
+          <th>隠蔽</th>
+          <th>範囲</th>
+          <th>必殺</th>
+          <th>疲劳</th>
+          <th>刀装数</th>
+          <th>刀装</th>
+          <th>御守</th>
+          <th>马</th>
+          <th>锁</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="sword in swords | orderBy order">
+          <td>{{sword.sword_id}}</td>
+          <td>{{define['sword'][sword.sword_id].name}}</td>
+          <td>{{define['flower'][sword.rarity-1]}}花</td>
+          <td>{{define['type'][define['sword'][sword.sword_id].type]}}</td>
+          <td>{{define['group'][define['sword'][sword.sword_id].group]}}</td>
+          <td>{{sword.level}}</td>
+          <td>{{sword.exp}}</td>
+          <td>{{define['evol'][sword.evol_num]}}</td>
+          <td>{{sword.hp}} / {{sword.hp_max}} <em>(+{{sword.hp_up}})</em></td>
+          <td>{{sword.atk}} <em>(+{{sword.atk_up}})</em></td>
+          <td>{{sword.def}} <em>(+{{sword.def_up}})</em></td>
+          <td>{{sword.mobile}} <em>(+{{sword.mobile_up}})</em></td>
+          <td>{{sword.back}} <em>(+{{sword.back_up}})</em></td>
+          <td>{{sword.scout}} <em>(+{{sword.scout_up}})</em></td>
+          <td>{{sword.hide}} <em>(+{{sword.hide_up}})</em></td>
+          <td>{{define['area'][define['sword'][sword.sword_id].area]}}</td>
+          <td>{{sword.loyalties}}</td>
+          <td>{{sword.fatigue}}</td>
+          <td>{{define['sword'][sword.sword_id].equip}}</td>
+          <td>{{e2n(sword.equip_serial_id1)}} / {{e2n(sword.equip_serial_id2)}} / {{e2n(sword.equip_serial_id3)}}</td>
+          <td>{{sword.item_id?(sword.item_id==1?"极":"有"):"无"}}</td>
+          <td>{{e2n(sword.horse_serial_id)}}</td>
+          <td>{{sword.protect?"锁":"未锁"}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

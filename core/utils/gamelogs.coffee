@@ -3,7 +3,8 @@ define ['cs!./websql'], (websql)->
     init: ->
       websql.init()
       # test data
-      websql.insert 'map', {
+      websql.insert 'log_map', {
+        "serial_id": Date.now()
         "sword_id": 1
         "episode": 1
         "field": 1
@@ -14,6 +15,6 @@ define ['cs!./websql'], (websql)->
       }
       websql
         .select()
-        .from 'map'
+        .from 'log_map'
         .go (tx, data)-> console.log data.rows
   }

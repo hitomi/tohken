@@ -1,14 +1,159 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Test</title>
-    <script src="debug/livereload.js"></script>
-    <script data-main="core/loader" src="vendor/require.js"></script>
-  </head>
-  <body>
-    <div id="console">
 
-    </div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <link rel="stylesheet" href="resource/style/normalize.css">
+  <link rel="stylesheet" href="resource/style/main.css">
+  <script src="debug/livereload.js"></script>
+  <script data-main="core/loader" src="vendor/require.js"></script>
+</head>
+
+<body id="trhv4">
+  <!--<div id="notfound">
+    尚未找到游戏本体，无法使用本插件
+  </div>-->
+  <div class="resource">
+    <ul>
+      <li>
+        <div class="k">审神者</div>
+        <div class="v">瞳<small>(Lv.81)</small></div>
+      </li>
+    </ul>
+    <ul class="fr">
+      <li>
+        <div class="k">木炭</div>
+        <div class="v">{{preprocess['resource']['charcoal']}}</div>
+      </li>
+      <li>
+        <div class="k">玉鋼</div>
+        <div class="v">{{preprocess['resource']['steel']}}</div>
+      </li>
+      <li>
+        <div class="k">冷却</div>
+        <div class="v">{{preprocess['resource']['coolant']}}</div>
+      </li>
+      <li>
+        <div class="k">砥石</div>
+        <div class="v">{{preprocess['resource']['file']}}</div>
+      </li>
+      <li>
+        <div class="k">依頼</div>
+        <div class="v">{{preprocess['resource']['bill']}}</div>
+      </li>
+    </ul>
+  </div>
+  <div class="nav">
+    <ul>
+      <li><a href="page/test.html" target="_blank">{{hello}}</a></li>
+    </ul>
+  </div>
+  <div class="party">
+    队伍1
+    <ul>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <img src="resource/image/sword/59.png" class="pattern" alt="空">
+        <div class="info">
+          <div class="name">蛍丸</div>
+          <div class="hp">HP 64 / 64</div>
+          <div class="level">Lv.99<small>(next 0)</small></div>
+          <div class="fatigue">桜吹雪100(+20%)</div>
+          <div class="equip">
+            <ul>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+              <li>轻步 [10/10]</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- debug -->
+  <div id="console">
+
+  </div>
+</body>
+
 </html>

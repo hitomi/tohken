@@ -5,6 +5,7 @@ define (require, exports, module)->
       require 'cs!./resource'
       require 'cs!./sword'
       require 'cs!./party'
+      require 'cs!./equip'
     ]
 
     init: (_target)-> @target = _target
