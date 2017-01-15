@@ -1,0 +1,3 @@
+window.TRHConfig = {
+  mode: 'debug'
+}
