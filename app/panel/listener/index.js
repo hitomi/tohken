@@ -11,6 +11,15 @@ class TRHRequestListener {
           request.getContent((content, encoding) => {
             TRHMasterData.init(content)
           })
+        } else if (path.indexOf('31de83dedee2de4024a974e0370676ea') > -1) {
+          // swr_crest_s_000003u0xq7npke
+          // 31de83dedee2de4024a974e0370676ea
+          // data:image/png;base64,content
+          request.getContent((content, encoding) => {
+            console.log(content)
+            console.log(encoding)
+          })
+
         } else if (server !== 'static' && path.indexOf('?uid=') > -1) {
           let action = path.split('?')[0]
           let postData = _.isObject(request['request']['postData'])
@@ -31,8 +40,9 @@ class TRHRequestListener {
                   CryptoJS.enc.Utf8.parse("9ij8pNKv7qVJnpj4"),
                 { iv: CryptoJS.enc.Hex.parse(iv), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.NoPadding }
               )
+              let textData = CryptoJS.enc.Utf8.stringify(decryptData)
               // Magic ?
-              let jsonText = decryptData.substr(0, decryptData.lastIndexOf('}') + 1)
+              let jsonText = textData.substr(0, textData.lastIndexOf('}') + 1)
               // To Object
               let dataObj = JSON.parse(jsonText)
               // Assign

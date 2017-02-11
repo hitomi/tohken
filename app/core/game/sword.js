@@ -1,7 +1,6 @@
 class TRHGameSword {
 
   constructor (data) {
-    this._save_prefix = 'trh_sword_'
     this.init(data.sword_id, data.serial_id)
     this.update(data)
     this.bind()
@@ -10,7 +9,7 @@ class TRHGameSword {
   init (_sword_id, _serial_id) {
     let sword_id = _.toInteger(_sword_id)
     let serial_id = _.toInteger(_serial_id)
-    this._data = { serial_id }
+    this._data = { serial_id, sword_id }
     _.assign(this._data, TRHMasterData.Sword[sword_id])
   }
 
@@ -58,8 +57,29 @@ class TRHGameSword {
     return fatigue
   }
 
-  set fatigue(newValue) {
-    this._data['fatigue'] = newValue
+  get hana () {
+    // let words = ['一', '二', '三', '四', '五']
+    return '❀'.repeat(this.rarity) // words[this.rarity - 1] + 
+  }
+
+  get typeName () {
+    return TRH.SwordType[this.type]
+  }
+
+  get styleName () {
+    return TRH.SwordStyle[this.styleId] ? TRH.SwordStyle[this.styleId] : '-'
+  }
+
+  get rangeName () {
+    return TRH.SwordRange[this.type]
+  }
+
+  get protectName () {
+    return this.protect ? '锁' : '-'
+  }
+
+  get evoName () {
+    return ["普通", "特", "特二", "特三"][this.evol_num]
   }
 
   bind () {
@@ -68,9 +88,6 @@ class TRHGameSword {
       Object.defineProperty(this, k, {
         get () {
           return this._data[k]
-        },
-        set (newValue) {
-          this._data[k] = newValue
         }
       })
     })

@@ -3,7 +3,7 @@ class TRHMasterData {
 
   // Load data from local cache
   static load () {
-    Promise.props({
+    return Promise.props({
       UserLevel: localforage.getItem('UserLevelMaster'),
       SwordLevel: localforage.getItem('SwordLevelMaster'),
       Sword: localforage.getItem('SwordMaster'),
@@ -35,6 +35,7 @@ class TRHMasterData {
     jsonText = jsonText.substr(0, jsonText.lastIndexOf('}') + 1)
     // To Object
     let dataObj = JSON.parse(jsonText)
+    console.log(dataObj)
     // Take useful part
     TRHMasterData.masterData = dataObj
     // level_master
@@ -67,13 +68,11 @@ class TRHMasterData {
       })
       .keyBy('level')
       .value()
-    localforage
+    return localforage
       .setItem('UserLevelMaster', TRHMasterData.UserLevel)
       .then(function (value) {
         console.log(value)
-      }).catch(function(err) {
-        console.log(err)
-    })
+      })
   }
 
   // Init Sword Level Data
@@ -94,13 +93,11 @@ class TRHMasterData {
         return _(val).keyBy('level').mapValues(v => v.exp).value()
       })
       .value()
-    localforage
+    return localforage
       .setItem('SwordLevelMaster', TRHMasterData.SwordLevel)
       .then(function (value) {
         console.log(value)
-      }).catch(function(err) {
-        console.log(err)
-    })
+      })
   }
 
   // Init Sword Data
@@ -128,6 +125,13 @@ class TRHMasterData {
         obj['back']         = _.toInteger(arr[14])
         obj['scout']        = _.toInteger(arr[15])
         obj['hide']         = _.toInteger(arr[16])
+        obj['hpUp']         = _.toInteger(arr[17])
+        obj['atkUp']        = _.toInteger(arr[18])
+        obj['defUp']        = _.toInteger(arr[19])
+        obj['mobileUp']     = _.toInteger(arr[20])
+        obj['backUp']       = _.toInteger(arr[21])
+        obj['scoutUp']      = _.toInteger(arr[22])
+        obj['hideUp']       = _.toInteger(arr[23])
         obj['getCharcoal']  = _.toInteger(arr[24])
         obj['getSteel']     = _.toInteger(arr[25])
         obj['getCoolant']   = _.toInteger(arr[26])
@@ -146,13 +150,11 @@ class TRHMasterData {
       })
       .keyBy('swordId')
       .value()
-    localforage
+    return localforage
       .setItem('SwordMaster', TRHMasterData.Sword)
       .then(function (value) {
         console.log(value)
-      }).catch(function(err) {
-        console.log(err)
-    })
+      })
   }
 
   // Init Equip Data
@@ -183,13 +185,11 @@ class TRHMasterData {
       })
       .keyBy('equipId')
       .value()
-    localforage
+    return localforage
       .setItem('EquipMaster', TRHMasterData.Equip)
       .then(function (value) {
         console.log(value)
-      }).catch(function(err) {
-        console.log(err)
-    })
+      })
   }
 
 }

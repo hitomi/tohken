@@ -10,8 +10,11 @@ class TRHRequestRouter {
   }
 
   static ['party/list'] (data) {
-    console.log(data)
     TRHSwordManager.update(data.sword)
+  }
+
+  static ['battle/battle'] (data) {
+    TRHBattleManager.update(data)
   }
 
 }
