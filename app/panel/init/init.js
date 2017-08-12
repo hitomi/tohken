@@ -2,7 +2,7 @@
 // Init Panel
 chrome.devtools.inspectedWindow.eval('window.location.href', {}, function(result, exceptionInfo) {
   // Init
-  if (result.indexOf('app_id=825012') > -1)
+  if (result.indexOf('tohken') > -1)
     // Create Panel
     chrome.devtools.panels.create(
       '婶婶忙',

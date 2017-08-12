@@ -13,7 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://www.dmm.com/*/app_id=825012*"],
+      "matches": ["*://pc-play.games.dmm.com/play/tohken/*"],
       "js": ["bridge/detect.js"],
       "run_at": "document_start"
     }
@@ -24,9 +24,6 @@
   "permissions": [
     "*://www.dmm.com/*/app_id=825012*",
     "*://*.touken-ranbu.jp/*",
-    "http://pre.yaolianqitan.com/*",
-    "http://115.28.206.203:3000/*",
-    "http://flag.moe/*",
     "notifications",
     "alarms",
     "tabs"

@@ -62,21 +62,3 @@ let vm = new Vue({
 }).$mount('#app')
 
 
-$.get('http://115.28.206.203:3000/', (res) => {
-  console.log(res)
-})
-
-$.get('http://pre.yaolianqitan.com/watch.php', (res) => {
-  console.log(res)
-})
-
-$.get('http://flag.moe', (res) => {
-  console.log(res)
-})
-
-$.get('http://shiromi.org', (res) => {
-  console.log(res)
-})
-
-
-
