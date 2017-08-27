@@ -22,7 +22,7 @@
     "128": "static/icon_128.png"
   },
   "permissions": [
-    "*://www.dmm.com/*/app_id=825012*",
+    "*://pc-play.games.dmm.com/play/tohken/*",
     "*://*.touken-ranbu.jp/*",
     "notifications",
     "alarms",
