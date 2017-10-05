@@ -5,6 +5,8 @@ define((require, exports, module) => {
       status: null,
       party_name: null,
       finished_at: null,
+      totalLevel: null,
+      averageLevel: null,
       slot: {
         1: {
           serial_id: null,

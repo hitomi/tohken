@@ -13,7 +13,8 @@ function mergeModel (target, source) {
     return _.mapValues(basePath.length ? _.get(target, basePath) : target, (v, k) => {
       let getKey = _.concat(basePath, k)
       if (_.isObject(v)) return mergeDeep(target, source, getKey)
-      return parseValues(_.get(source, getKey)) || v || null
+      let returnValue = parseValues(_.get(source, getKey))
+      return isNaN(returnValue) ? returnValue || v || null : returnValue
     })
   }
   return _.extend(target, mergeDeep(target, source))

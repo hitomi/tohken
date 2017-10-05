@@ -1,5 +1,6 @@
 define((require, exports, module) => {
   const SwordMasterData = require('data/SwordMaster1507123959937')
+  const SwordLevelMasterData = require('data/SwordLevelMaster1507123959924')
   const TRH = require('app/core/const/index')
   return () => {
     return {
@@ -37,7 +38,10 @@ define((require, exports, module) => {
       recovered_at: null,
       created_at: null,
       get name () {
-        return this.sword_id ? SwordMasterData[this.sword_id].name : '空'
+        return _.get(SwordMasterData, [this.sword_id, 'name'], '暂未获取')
+      },
+      get baseId () {
+        return _.get(SwordMasterData, [this.sword_id, 'baseId'], 0)
       },
       get vfatigue () {
         let fatigue = this.fatigue
@@ -49,9 +53,28 @@ define((require, exports, module) => {
         }
         return fatigue
       },
+      get fatigueFlag () {
+        let fatigue = this.fatigue
+        if (fatigue <= TRH.FATIGUE.VALUE.VERY_TIERD) {
+          return 0
+        } else if (fatigue <= TRH.FATIGUE.VALUE.TIERD) {
+          return 1
+        } else if (fatigue <= TRH.FATIGUE.VALUE.NOMAL) {
+          return 2
+        } else if (fatigue <= TRH.FATIGUE.VALUE.MAX) {
+          return 3
+        }
+      },
+      get shareWord () {
+        return _.get(SwordMasterData, [this.sword_id, 'shareWord'], 0)
+      },
+      get nextExp () {
+        let expMaster = SwordLevelMasterData[this.shareWord]
+        return Math.max(expMaster[Math.min(this.level + 1, 99)] - this.exp, 0)
+      },
       get hana () {
         // let words = ['一', '二', '三', '四', '五']
-        return '❀'.repeat(this.rarity) // words[this.rarity - 1] + 
+        return '❀'.repeat(this.rarity) // words[this.rarity - 1] +
       },
       get typeName () {
         return TRH.SwordType[this.type]
@@ -67,6 +90,13 @@ define((require, exports, module) => {
       },
       get evoName () {
         return ['普通', '特', '特二', '特三'][this.evol_num]
+      },
+      get equips () {
+        return [
+          this.equip_serial_id1,
+          this.equip_serial_id2,
+          this.equip_serial_id3
+        ]
       }
     }
   }

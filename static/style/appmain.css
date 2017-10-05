@@ -99,6 +99,8 @@ a {
   height: 48px;
   padding: 2px;
   margin: 4px;
+  float: left;
+  min-width: 330px;
 }
 .touken-info .pattern {
   width: 48px;
@@ -164,8 +166,16 @@ a {
 .touken-info .info > .fatigue.perfect:before {
   background: #cb1685;
 }
+.touken-info .info > .horse {
+  width: 14% !important;
+  color: #fff;
+  background: #635c5c;
+  overflow: hidden;
+  text-align: center;
+  margin-right: 1%;
+}
 .touken-info .info > .equip {
-  width: 100% !important;
+  width: 85% !important;
   height: 16px;
   line-height: 16px;
 }

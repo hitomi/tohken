@@ -2,11 +2,11 @@ define((require, exports, module) => {
   const defaultDutyModel = require('./model/duty')
   return {
     namespaced: true,
-    state() {
+    state () {
       return defaultDutyModel()
     },
     mutations: {
-      updateDuty(state, payload) {
+      updateDuty (state, payload) {
         let {updateData} = payload
         mergeModel(state, updateData)
       }

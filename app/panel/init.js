@@ -18,15 +18,30 @@ define((require, exports, module) => {
       { path: '/party/:id', components: { 'party-list-wrapper': partyListWrapper } }
     ]
   })
+
+  Vue.component('party-list', {
+    template: '#party-list',
+    props: ['party-no'],
+    computed: Vuex.mapState({
+      party (state) {
+        return _.get(state, ['party', 'parties', this.partyNo], {})
+      }
+    })
+  })
+
   Vue.component('sword-item', {
     template: '#sword-item',
     props: ['sword-serial-id'],
     computed: Vuex.mapState({
       sword (state) {
-        let sword = state.sword[this.swordSerialId]
-        return _.isUndefined(sword) ? {} : sword
+        return _.get(state, ['swords', 'serial', this.swordSerialId], {})
       }
-    })
+    }),
+    methods: {
+      equipSerialName (serialId) {
+        return serialId ? _.get(store.state, ['equip', 'serial', serialId, 'name'], '未获取').replace(/\d+/, '') : '无'
+      }
+    }
   })
 
   Vue.component('equip-item', {
@@ -34,28 +49,22 @@ define((require, exports, module) => {
     props: ['equip-serial-id'],
     computed: Vuex.mapState({
       equip (state) {
-        let equip = state.equip[this.equipSerialId]
-        return _.isUndefined(equip)
-          ? _.isNull(this.equipSerialId) ? null : {}
-          : equip
+        return _.get(state, ['equip', 'serial', this.equipSerialId], {})
       }
     })
   })
 
-  Vue.component('party-list', {
-    template: '#party-list',
-    props: ['party-no'],
-    computed: Vuex.mapState({
-      party (state) {
-        let party = state.party[this.partyNo]
-        return _.isUndefined(party) ? {} : party
-      }
-    })
+  Vue.filter('averageLevel', (party) => {
+    return 0
+  })
+
+  Vue.filter('totalLevel', (party) => {
+    return 0
   })
 
   Vue.component('resource-panel', {
     template: '#resource-panel',
-    computed: Vuex.mapState(['resource'])
+    computed: Vuex.mapState(['resource', 'player'])
   })
 
   return new Vue({
@@ -70,7 +79,9 @@ define((require, exports, module) => {
       ...Vuex.mapState(['swords', 'party'])
     },
     methods: {
-      nextData: () => TRHRequestListener.nextData(this.testDataIndex++),
+      nextData () {
+        TRHRequestListener.nextData(this.testDataIndex++)
+      },
       autoData: () => TRHRequestListener.autoData()
     }
   })

@@ -1,33 +1,41 @@
 
-Vue.filter('status-text', function (status_id) {
-  return ['通常', '手入', '軽傷', '中傷', '重傷'][status_id]
+Vue.filter('status-text', function (statusId) {
+  return ['通常', '手入', '軽傷', '中傷', '重傷'][statusId]
 })
 
-Vue.filter('status-class', function (status_id) {
-  return ['normal', 'recovery', 'damaged', 'warning', 'danger'][status_id]
+Vue.filter('status-cname', function (statusId) {
+  return ['normal', 'recovery', 'damaged', 'warning', 'danger'][statusId]
 })
 
-Vue.filter('figure-class', function (figure_flag) {
-  return ['very-tired', 'tired', 'normal', 'perfect'][figure_flag]
+Vue.filter('fatigue-cname', function (fatigueFlag) {
+  return ['very-tired', 'tired', 'normal', 'perfect'][fatigueFlag]
 })
 
-Vue.filter('figure-text', function (figure_flag) {
-  return ['过労', '疲労', '通常', '桜吹雪'][figure_flag]
+Vue.filter('fatigue-text', function (fatigueFlag) {
+  return ['过労', '疲労', '通常', '桜吹雪'][fatigueFlag]
 })
 
-Vue.filter('figure-buff', function (figure_flag) {
-  return '(' + ['-40%', '-20%', '+0%', '+20%'][figure_flag] + ')'
+Vue.filter('equipName', (name) => {
+  return name.replace('兵', '').replace('特上', '特')
 })
 
-Vue.filter('sword-pattern', function (sword_id) {
-  return '../../static/sword/' + sword_id + '.png'
+Vue.filter('fatigue-buff', function (fatigueFlag) {
+  return '(' + ['-40%', '-20%', '+0%', '+20%'][fatigueFlag] + ')'
 })
 
-Vue.filter('sword-object', function (serial_id) {
-  console.log(serial_id)
-  return serial_id
+Vue.filter('sword-pattern', function (swordId) {
+  return swordId ? '../../static/sword/' + swordId + '.png' : '../../static/sword/0.png'
 })
 
-Vue.filter('equip-level-class', function (level) {
-  return ['destroyed', 'n', 'r', 'sr'][level]
+Vue.filter('sword-object', function (serialId) {
+  return serialId
+})
+
+Vue.filter('equip-level-cname', function (level) {
+  return {
+    0: 'destroyed',
+    1: 'n',
+    3: 'r',
+    5: 'sr'
+  }[level]
 })

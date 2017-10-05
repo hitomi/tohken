@@ -2,13 +2,13 @@ define((require, exports, module) => {
   const defaultEquipModel = require('./model/equip')
   return {
     namespaced: true,
-    state() {
+    state () {
       return {
         serial: {}
       }
     },
     mutations: {
-      updateEquip(state, payload) {
+      updateEquip (state, payload) {
         let {serialId, updateData} = payload
         if (!state.serial[serialId]) {
           Vue.set(state.serial, serialId, defaultEquipModel())

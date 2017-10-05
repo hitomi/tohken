@@ -2,13 +2,13 @@ define((require, exports, module) => {
   const defaultRepairModel = require('./model/repair')
   return {
     namespaced: true,
-    state() {
+    state () {
       return {
         slot: {}
       }
     },
     mutations: {
-      updateRepair(state, payload) {
+      updateRepair (state, payload) {
         let {slotNo, updateData} = payload
         if (!state.slot[slotNo]) {
           Vue.set(state.slot, slotNo, defaultRepairModel())

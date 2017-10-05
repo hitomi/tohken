@@ -6,7 +6,7 @@ define((require, exports, module) => {
       return defaultResourceModel()
     },
     mutations: {
-      updateResource(state, payload) {
+      updateResource (state, payload) {
         let { updateData } = payload
         mergeModel(state, updateData)
       }
