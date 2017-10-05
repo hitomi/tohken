@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TRH Final</title>
+  <link rel="stylesheet" href="../../static/style/normalize.css">
+  <link rel="stylesheet" href="../../static/style/appmain.css">
+</head>
+<body>
+  <div id="app">
+    <resource-panel></resource-panel>
+    <div class="party-tab">
+      <div class="switch-tab">
+        <router-link v-for='i in 4' :to="'/party/' + i" :key="i">
+          第{{i}}部隊
+          <small v-if="party.parties[i]">
+            A.<span>{{party.parties[i].averageLevel}}</span> / T.<span>{{party.parties[i].totalLevel}}</span>
+          </small>
+          <small v-else>暂未获取</small>
+        </router-link>
+      </div>
+      <router-view name="party-list-wrapper"></router-view>
+    </div>
+    <div id="debug" style="position: fixed; top: 0; right: 0;">
+      <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
+      <button @click="autoData" :disabled="testDataIndex === testDataCount">Auto</button>
+    </div>
+  </div>
+
+  <!-- Component Resouce Panel -->
+  <script id="resource-panel" type="text/template">
+    <div class="resource">
+      <ul>
+        <li>
+          <div class="k">审神者</div>
+          <div class="v">{{ player.name || '暂未获取' }}  <small>(Lv.{{ player.level || 'N/A' }})</small></div>
+        </li>
+      </ul>
+      <ul class="fr">
+        <li><div class="k">木炭</div><div class="v">{{ resource.charcoal || 'N/A' }}</div></li>
+        <li><div class="k">玉鋼</div><div class="v">{{ resource.steel || 'N/A' }}</div></li>
+        <li><div class="k">冷却</div><div class="v">{{ resource.coolant || 'N/A' }}</div></li>
+        <li><div class="k">砥石</div><div class="v">{{ resource.file || 'N/A' }}</div></li>
+        <li><div class="k">依頼</div><div class="v">{{ resource.bill || 'N/A' }}</div></li>
+      </ul>
+    </div>
+  </script>
+
+  <!-- Component Party List -->
+  <script id="party-list" type="text/template">
+    <div v-if="!_.isEmpty(party)" class="party-list">
+      <sword-item v-for="sword in party.slot" :sword-serial-id="sword.serial_id" :key="sword.serial_id"></sword-item>
+    </div>
+  </script>
+
+  <!-- Component Sword Item -->
+  <script id="sword-item" type="text/template">
+    <div v-if="sword.serial_id" class="touken-info" :class="sword.status | status-cname">
+      <img :src="sword.baseId | sword-pattern" alt="空" class="pattern">
+      <div class="info">
+        <div class="name">{{sword.name}} <span>[{{sword.status | status-text}}]</span></div>
+        <div class="hp">HP <span>{{sword.hp}} / {{sword.hp_max}}</span></div>
+        <div class="level">Lv.{{sword.level}}<small>(next {{sword.nextExp}})</small></div>
+        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname">{{sword.fatigueFlag | fatigue-text}} {{sword.fatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
+        <div class="horse">{{ equipSerialName(sword.horse_serial_id) }}</div>
+        <div class="equip">
+          <ul>
+            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :key="equip"></equip-item>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="touken-info" v-else-if="_.isNull(swordSerialId)">
+      <img src="../../static/sword/0.png" alt="空" class="pattern">
+      <div class="info"><div class="name">暂无队员</div></div>
+    </div>
+    <div class="touken-info danger" v-else>
+      <img src="../../static/sword/0.png" alt="空" class="pattern">
+      <div class="info"><div class="name">数据错误</div></div>
+    </div>
+  </script>
+
+  <!-- Component Equip Item -->
+  <script id="equip-item" type="text/template">
+    <li v-if="equip === null">空</li>
+    <li v-else-if="equip.serial_id" :class="equip.level | equip-level-cname">{{equip.name | equipName}} [{{equip.hp}}/{{equip.hp_max}}]</li>
+    <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
+    <li v-else>数据错误</li>
+  </script>
+  
+  <!-- Vue -->
+  <script src="../../vendor/vue.js"></script>
+  <script src="../../vendor/vuex.js"></script>
+  <script src="../../vendor/vue-router.js"></script>
+  <!-- Library -->
+  <script src="../../vendor/lodash.js"></script>
+  <script src="../../vendor/bluebird.min.js"></script>
+  <!-- ZLib -->
+  <script src="../../vendor/pako.min.js"></script>
+  <!-- Crypto -->
+  <script src="../../vendor/aes.js"></script>
+  <script src="../../vendor/mode-ecb.js"></script>
+  <script src="../../vendor/lib-typedarrays.js"></script>
+  <script src="../../vendor/pad-nopadding-min.js"></script>
+  <!-- Data -->
+  <script src="../../vendor/FileSaver.js"></script>
+  <script src="../../vendor/localforage.min.js"></script>
+  <!-- Util -->
+  <script src="util/filter.js"></script>
+  <script src="util/data.js"></script>
+  <!-- app -->
+  <script data-main="loader" src="../../vendor/require.js"></script>
+</body>
+</html>

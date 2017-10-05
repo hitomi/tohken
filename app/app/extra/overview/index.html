@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>刀帳</title>
+  <link rel="stylesheet" href="../../static/style/normalize.css">
+  <link rel="stylesheet" href="sword.css">
+</head>
+<body>
+
+  <div id="swords">
+    <div class="logo">
+      刀帳 持有{{swords.length}}柄
+    </div>
+    <div class="option">
+      <span class="switcher" :class="{active: !option.info}" @click="option.info = !option.info">信息</span>
+      <span class="switcher" :class="{active: !option.value}" @click="option.value = !option.value">属性</span>
+      <span class="switcher" :class="{active: !option.equip}" @click="option.equip = !option.equip">装备</span>
+    </div>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>番号</th>
+            <th>刀名</th>
+            <th v-if="option.info">稀有度</th>
+            <th v-if="option.info">種類</th>
+            <th v-if="option.info">刀派</th>
+            <th>等级</th>
+            <th>经验</th>
+            <th>阶数</th>
+            <th>生存</th>
+            <th v-if="option.value">打撃</th>
+            <th v-if="option.value">統率</th>
+            <th v-if="option.value">機動</th>
+            <th v-if="option.value">衝力</th>
+            <th v-if="option.value">偵察</th>
+            <th v-if="option.value">隠蔽</th>
+            <th v-if="option.value">範囲</th>
+            <th v-if="option.value">必殺</th>
+            <th>疲劳</th>
+            <th v-if="option.equip">刀装位</th>
+            <th v-if="option.equip">刀装</th>
+            <th v-if="option.equip">御守</th>
+            <th v-if="option.equip">马</th>
+            <th v-if="option.info">锁</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sword in swords" :key="sword.serial_id">
+            <td v-text="sword.sword_id"></td>
+            <td v-text="sword.name"></td>
+            <td v-if="option.info" v-text="sword.hana"></td>
+            <td v-if="option.info" v-text="sword.typeName"></td>
+            <td v-if="option.info" v-text="sword.styleName"></td>
+            <td v-text="sword.level"></td>
+            <td v-text="sword.exp"></td>
+            <td v-text="sword.evoName"></td>
+            <td>{{sword.hp}} / {{sword.hp_max}} <em v-if="sword.hp_up > 0">(+{{sword.hp_up}})</em></td>
+            <td v-if="option.value">{{sword.atk}} <em v-if="sword.atk_up > 0">(+{{sword.atk_up}})</em></td>
+            <td v-if="option.value">{{sword.def}} <em v-if="sword.def_up > 0">(+{{sword.def_up}})</em></td>
+            <td v-if="option.value">{{sword.mobile}} <em v-if="sword.mobile_up > 0">(+{{sword.mobile_up}})</em></td>
+            <td v-if="option.value">{{sword.back}} <em v-if="sword.back_up > 0">(+{{sword.back_up}})</em></td>
+            <td v-if="option.value">{{sword.scout}} <em v-if="sword.scout_up > 0">(+{{sword.scout_up}})</em></td>
+            <td v-if="option.value">{{sword.hide}} <em v-if="sword.hide_up > 0">(+{{sword.hide_up}})</em></td>
+            <td v-if="option.value" v-text="sword.rangeName"></td>
+            <td v-if="option.value" v-text="sword.loyalties"></td>
+            <td v-text="sword.fatigue"></td>
+            <td v-if="option.equip" v-text="sword.equipSlot"></td>
+            <td v-if="option.equip" v-text="sword._equips"></td>
+            <td v-if="option.equip" v-text="sword._item"></td>
+            <td v-if="option.equip" v-text="sword._horse"></td>
+            <td v-if="option.info" v-text="sword.protectName"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Vue -->
+  <script src="../../vendor/vue.js"></script>
+  <script src="../../vendor/vuex.2.1.1.js"></script>
+  <!-- Library -->
+  <script src="../../vendor/lodash.min.js"></script>
+  <script src="../../vendor/bluebird.min.js"></script>
+  <!-- ZLib -->
+  <script src="../../vendor/pako.min.js"></script>
+  <!-- Crypto -->
+  <script src="../../vendor/aes.js"></script>
+  <script src="../../vendor/mode-ecb.js"></script>
+  <script src="../../vendor/lib-typedarrays.js"></script>
+  <script src="../../vendor/pad-nopadding-min.js"></script>
+  <!-- Data -->
+  <script src="../../vendor/FileSaver.js"></script>
+  <script src="../../vendor/localforage.min.js"></script>
+  <!-- Const -->
+  <script src="../core/const/index.js"></script>
+  <!-- Core -->
+  <script src="../core/master.js"></script>
+  <!-- Game -->
+  <script src="../core/game/sword.js"></script>
+  <!-- Manage -->
+  <script src="../core/manager/sword.js"></script>
+  <!-- Manage -->
+  <script src="overview.js"></script>
+</body>
+</html>

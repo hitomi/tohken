@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TRHfinal</title>
+  <link rel="stylesheet" href="../../static/style/normalize.css">
+  <link rel="stylesheet" href="../../static/style/appmain.css">
+</head>
+<body>
+
+  <div id="app">
+    <resource-panel></resource-panel>
+    <div class="party-tab">
+      <div class="switch-tab">
+        <router-link to="/party/1">第1部隊<small v-if="party[1]">A.<span v-text="party[1].level.average"></span> / T.<span v-text="party[1].level.total"></span></small></router-link>
+        <router-link to="/party/2">第2部隊<small v-if="party[2]">A.90 / T.300</small><small v-if="!party[2]">暂未获取</small></router-link>
+        <router-link to="/party/3">第3部隊<small v-if="party[3]">A.90 / T.300</small><small v-if="!party[3]">暂未获取</small></router-link>
+        <router-link to="/party/4">第4部隊<small v-if="party[4]">A.90 / T.300</small><small v-if="!party[4]">暂未获取</small></router-link>
+        <router-link to="/menu">其他<small>功能</small></router-link>
+      </div>
+      <router-view name="party-list-wrapper"></router-view>
+    </div>
+  </div>
+
+  <!-- Component Resouce Panel -->
+  <script id="resource-panel" type="text/template">
+    <div class="resource">
+      <ul>
+        <li>
+          <div class="k">审神者</div>
+          <div class="v">{{ resource.name }}  <small>(Lv.{{ resource.level }})</small></div>
+        </li>
+      </ul>
+      <ul class="fr">
+        <li><div class="k">木炭</div><div class="v">{{ resource.charcoal }}</div></li>
+        <li><div class="k">玉鋼</div><div class="v">{{ resource.steel }}</div></li>
+        <li><div class="k">冷却</div><div class="v">{{ resource.coolant }}</div></li>
+        <li><div class="k">砥石</div><div class="v">{{ resource.file }}</div></li>
+        <li><div class="k">依頼</div><div class="v">{{ resource.bill }}</div></li>
+      </ul>
+    </div>
+  </script>
+
+  <!-- Component Party List -->
+  <script id="party-list" type="text/template">
+    <div v-if="!_.isEmpty(party)" class="party-list">
+      <sword-item v-for="sword in party.swords" :sword-serial-id="sword"></sword-item>
+    </div>
+  </script>
+
+  <!-- Component Sword Item -->
+  <script id="sword-item" type="text/template">
+    <div v-if="sword.serial_id" class="touken-info" :class="sword.status | status-class">
+      <img :src="sword.origin_id | sword-pattern" alt="空" class="pattern">
+      <div class="info">
+        <div class="name">{{sword.name}} <span>[{{sword.status | status-text}}]</span></div>
+        <div class="hp">HP <span>{{sword.hp}} / {{sword.hp_max}}</span></div>
+        <div class="level">Lv.{{sword.level}}<small>(next {{sword.next_exp}})</small></div>
+        <div class="fatigue" :class="sword.figure_flag | figure-class">{{sword.figure_flag | figure-text}} {{sword.figure}} <small>{{sword.figure_flag | figure-buff}}</small></div>
+        <div class="equip">
+          <ul>
+            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip"></equip-item>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="touken-info danger" v-else>
+      <img src="../../static/sword/0.png" alt="空" class="pattern">
+      <div class="info"><div class="name">数据错误</div></div>
+    </div>
+  </script>
+
+  <!-- Component Equip Item -->
+  <script id="equip-item" type="text/template">
+    <li v-if="equip === null">空</li>
+    <li v-else-if="equip.serial_id" :class="equip.level | equip-level-class">{{equip.name}} [{{equip.hp}}/{{equip.hp_max}}]</li>
+    <li v-else>数据错误</li>
+  </script>
+    
+  <!-- Vue -->
+  <script src="../../vendor/vue.js"></script>
+  <script src="../../vendor/vue-router.js"></script>
+  <script src="../../vendor/vuex.2.1.1.js"></script>
+  <!-- Library -->
+  <script src="../../vendor/lodash.min.js"></script>
+  <script src="../../vendor/bluebird.min.js"></script>
+  <!-- ZLib -->
+  <script src="../../vendor/pako.min.js"></script>
+  <!-- Crypto -->
+  <script src="../../vendor/aes.js"></script>
+  <script src="../../vendor/mode-ecb.js"></script>
+  <script src="../../vendor/lib-typedarrays.js"></script>
+  <script src="../../vendor/pad-nopadding-min.js"></script>
+  <!-- Data -->
+  <script src="../../vendor/FileSaver.js"></script>
+  <script src="../../vendor/localforage.min.js"></script>
+  <!-- Const -->
+  <script src="../core/const/index.js"></script>
+  <!-- Core -->
+  <script src="../core/master.js"></script>
+  <!-- Game -->
+  <script src="../core/game/sword.js"></script>
+  <!-- Manage -->
+  <script src="../core/manager/sword.js"></script>
+  <!-- Store -->
+  <script src="store/index.js"></script>
+  <!-- App -->
+  <script src="app/filter.js"></script>
+  <script src="app/index.js"></script>
+</body>
+</html> 
