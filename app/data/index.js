@@ -1,47 +1,7 @@
 define((require, exports, module) => {
-  const createPartyLevelPlugin = (store) => {
-    store.subscribe((mutation, state) => {
-      function updatePartyLevel (partyNo) {
-        let party = _.get(state, ['party', 'parties', partyNo])
-        let swordLevels = _(party.slot)
-          .values()
-          .map(o => o.serial_id)
-          .filter(_.isNumber)
-          .map(o => _.get(state, ['swords', 'serial', o, 'level']))
-          .filter(_.isNumber)
-          .value()
-        let totalLevel = Math.floor(_.sum(swordLevels))
-        let averageLevel = Math.floor(_.mean(swordLevels))
-        store.commit('party/updateLevel', {
-          partyNo,
-          totalLevel,
-          averageLevel
-        })
-      }
-      if (mutation.type === 'party/updateParty') {
-        let { partyNo } = mutation.payload
-        updatePartyLevel(partyNo)
-      }
-    })
-  }
-  const createRepairPlugin = (store) => {
-    store.subscribe((mutation, state) => {
-      function updateRepairTime (slotNo) {
-        let slot = _.get(state, ['repair', slotNo])
-        let sword = _(state.repair.slot)
-          .values()
-          .map(o => o.sword_serial_id)
-          .filter(_.isNumber)
-          .map(o => _.get(state, ['swords', 'serial', o, 'name']))
-          .value()
-        let time = _(state.repair.slot).finished_at.values()
-        console.log(name + "手入开始，将于" + time + "完成")
-      }
-      if (mutation.type === 'repair/updateRepair') {
-        let { slotNo } = mutation.payload
-        updateRepairTime(slotNo)
-      }
-    })
+  const Plugin = {
+    PartyLevel: require('app/plugin/party_level'),
+    RepairNotice: require('app/plugin/repair_notice')
   }
 
   return new Vuex.Store({
@@ -60,17 +20,17 @@ define((require, exports, module) => {
       }
     },
     modules: {
-      swords: require('./swords'),
-      resource: require('./resource'),
-      duty: require('./duty'),
-      party: require('./party'),
-      repair: require('./repair'),
-      player: require('./player'),
-      equip: require('./equip'),
-      battle_result: require('./battle_result'),
-      battle_player: require('./battle_player'),
-      sally: require('./sally')
+      swords: require('./state/swords'),
+      resource: require('./state/resource'),
+      duty: require('./state/duty'),
+      party: require('./state/party'),
+      repair: require('./state/repair'),
+      player: require('./state/player'),
+      equip: require('./state/equip'),
+      battle_result: require('./state/battle_result'),
+      battle_player: require('./state/battle_player'),
+      sally: require('./state/sally')
     },
-    plugins: [createPartyLevelPlugin, createRepairPlugin]
+    plugins: _.values(Plugin)
   })
 })

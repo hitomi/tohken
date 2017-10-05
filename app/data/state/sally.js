@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-    const defaultSallyModel = require('./model/sally')
+    const defaultSallyModel = require('../model/sally')
     return {
       namespaced: true,
       state () {

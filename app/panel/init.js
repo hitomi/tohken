@@ -1,7 +1,9 @@
 define((require, exports, module) => {
   const store = require('app/data/index')
   const TRHMasterData = require('app/core/master')
-  const TRHRequestListener = chrome.devtools ? require('app/panel/listener/index') : require('app/panel/listener/debug')
+  const TRHRequestListener = chrome.devtools
+    ? require('app/panel/listener/index')
+    : require('app/panel/listener/debug')
 
   // Load Master Data
   TRHMasterData.load()

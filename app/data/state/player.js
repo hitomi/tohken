@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const defaultPlayerModel = require('./model/player')
+  const defaultPlayerModel = require('../model/player')
   return {
     namespaced: true,
     state () {

@@ -1,12 +1,12 @@
 define((require, exports, module) => {
-  const defaultBattleResultModel = require('./model/battle_result')
+  const defaultBattlePlayerModel = require('../model/battle_player')
   return {
     namespaced: true,
     state () {
-      return defaultBattleResultModel()
+      return defaultBattlePlayerModel()
     },
     mutations: {
-      updateBattleResult(state, payload) {
+      updateBattlePlayer (state, payload) {
         let {updateData} = payload
         mergeModel(state, updateData)
       }

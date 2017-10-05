@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const defaultRepairModel = require('./model/repair')
+  const defaultRepairModel = require('../model/repair')
   return {
     namespaced: true,
     state () {

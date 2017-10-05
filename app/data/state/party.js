@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const defaultPartyModel = require('./model/party')
+  const defaultPartyModel = require('../model/party')
   return {
     namespaced: true,
     state () {

@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const defaultResourceModel = require('./model/resource')
+  const defaultResourceModel = require('../model/resource')
   return {
     namespaced: true,
     state () {

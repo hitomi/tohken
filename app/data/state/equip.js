@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const defaultSwordModel = require('./model/sword')
+  const defaultEquipModel = require('../model/equip')
   return {
     namespaced: true,
     state () {
@@ -8,10 +8,10 @@ define((require, exports, module) => {
       }
     },
     mutations: {
-      updateSword (state, payload) {
-        let { serialId, updateData } = payload
+      updateEquip (state, payload) {
+        let {serialId, updateData} = payload
         if (!state.serial[serialId]) {
-          Vue.set(state.serial, serialId, defaultSwordModel())
+          Vue.set(state.serial, serialId, defaultEquipModel())
         }
         mergeModel(state.serial[serialId], updateData)
       }
