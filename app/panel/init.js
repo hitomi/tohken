@@ -21,6 +21,11 @@ define((require, exports, module) => {
     ]
   })
 
+  Vue.component('notice-content', {
+    template: '#notice-template',
+    computed: Vuex.mapState(['notice'])
+  })
+
   Vue.component('party-list', {
     template: '#party-list',
     props: ['party-no'],
@@ -88,8 +93,8 @@ define((require, exports, module) => {
       },
       autoData: () => TRHRequestListener.autoData(),
       dataRec () {
-        this.rec = !this.rec
         this.rec ? TRHRequestListener.stopRec() : TRHRequestListener.startRec()
+        this.rec = !this.rec
       },
       dataExport () {
         this.rec = !this.rec

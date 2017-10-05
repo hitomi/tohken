@@ -1,10 +1,10 @@
 define((require, exports, module) => {
   const TRHMasterData = require('app/core/master')
   const TRHRequestRouter = require('./router')
+  let recData = []
+  let recStatus = false
   return class TRHRequestListener {
     static init () {
-      this.recData = []
-      this.recStatus = false
       // Listen Response
       chrome.devtools.network.onRequestFinished.addListener((request) => {
         let tohken = request.request.url.match(/http:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
@@ -58,8 +58,8 @@ define((require, exports, module) => {
                 // Assign
                 _.assign(jsonObj, dataObj)
               }
-              if (this.recStatus) {
-                this.recData.push({
+              if (recStatus) {
+                recData.push({
                   url: request.request.url,
                   time: Date.now(),
                   content: _.omit(_.cloneDeep(jsonObj), ['data', 'iv'])
@@ -73,14 +73,14 @@ define((require, exports, module) => {
       })
     }
     static startRec () {
-      this.recData = []
-      this.recStatus = true
+      recData = []
+      recStatus = true
     }
     static stopRec () {
-      this.recStatus = false
+      recStatus = false
     }
     static exportRec () {
-      let blob = new Blob([`define((require, exports, module) => { return ${JSON.stringify(this.recData)} })`], {
+      let blob = new Blob([`define((require, exports, module) => { return ${JSON.stringify(recData)} })`], {
         type: 'text/plain;charset=utf-8'
       })
       saveAs(blob, 'DataRec' + (Date.now()) + '.js')

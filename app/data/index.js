@@ -29,7 +29,8 @@ define((require, exports, module) => {
       equip: require('./state/equip'),
       battle_result: require('./state/battle_result'),
       battle_player: require('./state/battle_player'),
-      sally: require('./state/sally')
+      sally: require('./state/sally'),
+      notice: require('./state/notice')
     },
     plugins: _.values(Plugin)
   })

@@ -21,15 +21,34 @@
       </div>
       <router-view name="party-list-wrapper"></router-view>
     </div>
-    <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0;">
+    <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
       <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
       <button @click="autoData" :disabled="testDataIndex === testDataCount">Auto</button>
     </div>
-    <div v-else style="position: fixed; bottom: 0; right: 0;">
+    <div v-else style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
       <button @click="dataRec">{{ rec ? 'Stop Rec' : 'Start Rec'}}</button>
       <button @click="dataExport">Export</button>
     </div>
+    <notice-content></notice-content>
   </div>
+
+  <!-- Notice template -->
+  <script id="notice-template" type="text/template">
+    <div id="notice">
+      <transition-group name="notice-block-list" tag="div">
+        <div class="notice-block" v-for="n in notice.history" v-if="!n.hidden" :key="n._id">
+          <div class="notice-image">
+            <img :src="n.swordBaseId | sword-pattern" alt="空">
+          </div>
+          <div class="notice-content">
+            <div class="notice-title">{{n.title}}</div>
+            <div class="notice-message">{{n.message}}</div>
+            <div class="notice-context">{{n.context}}</div>
+          </div>
+        </div>
+      </transition-group>
+    </div>
+  </script>
 
   <!-- Component Resouce Panel -->
   <script id="resource-panel" type="text/template">
@@ -99,6 +118,7 @@
   <!-- Library -->
   <script src="../../vendor/lodash.js"></script>
   <script src="../../vendor/bluebird.min.js"></script>
+  <script src="../../vendor/moment.min.js"></script>
   <!-- ZLib -->
   <script src="../../vendor/pako.min.js"></script>
   <!-- Crypto -->

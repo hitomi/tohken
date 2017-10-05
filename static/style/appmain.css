@@ -257,3 +257,51 @@ a {
   display: block;
   clear: both;
 }
+
+#notice {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.notice-block {
+  transition: all 1s;
+  background: #fff;
+  padding: 12px;
+  margin: 4px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px #777;
+  min-height: 55px;
+  cursor: pointer;
+}
+
+.notice-block .notice-content {
+  margin-left: 68px;
+}
+
+.notice-block .notice-title {
+  font-size: 140%;
+}
+
+.notice-block .notice-message {
+  font-size: 120%;
+}
+
+.notice-block .notice-context {
+  font-size: 100%;
+}
+
+.notice-block .notice-image {
+  float: left;
+}
+
+.notice-block .notice-image > img {
+  width: 55px;
+}
+
+.notice-block-list-enter, .notice-block-list-leave-to {
+  opacity: 0;
+}
+.notice-block-list-leave-active {
+  position: absolute;
+}

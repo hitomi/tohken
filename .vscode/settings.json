@@ -17,7 +17,8 @@
 			"atob",
 			"pako",
 			"VueRouter",
-			"Blob"
+			"Blob",
+			"moment"
 		],
 		"ignore": ["node_modules/**", "vendor/**"]
 	},
