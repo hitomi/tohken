@@ -173,6 +173,9 @@ a {
   overflow: hidden;
   text-align: center;
   margin-right: 1%;
+  font-size: 10px;
+  height: 16px;
+  line-height: 16px;
 }
 .touken-info .info > .equip {
   width: 85% !important;
