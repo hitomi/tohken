@@ -1,11 +1,11 @@
 
-var notify = function (title, msg, cm) {
+var notify = function (title, msg, cm, icon = 'static/icon.png') {
   var opt
   opt = {
     type: 'basic',
     title: title,
     message: msg,
-    iconUrl: 'static/icon.png',
+    iconUrl: icon,
     contextMessage: cm
   }
   return chrome.notifications.create('trhn-' + (Date.now()), opt, function (notificationId) {
@@ -22,6 +22,6 @@ chrome.runtime.onMessage.addListener(function (message) {
   switch (message.type) {
     case 'notify':
       msg = message['message']
-      return notify(msg.title, msg.message, msg.context)
+      return notify(msg.title, msg.message, msg.context, msg.icon)
   }
 })

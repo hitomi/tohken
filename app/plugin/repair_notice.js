@@ -7,7 +7,9 @@ define((require, exports, module) => {
         store.dispatch('notice/addNotice', {
           title: `${sword.name} 手入开始`,
           message: `结束时间：${moment(sword.recovered_at).format('hh:mm:ss')}`,
-          swordBaseId: sword.baseId
+          context: 'hahahaha',
+          swordBaseId: sword.baseId,
+          icon: `static/sword/${sword.baseId}.png`
         })
       }
     })
