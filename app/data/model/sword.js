@@ -73,8 +73,7 @@ define((require, exports, module) => {
         return Math.max(expMaster[Math.min(this.level + 1, 99)] - this.exp, 0)
       },
       get hana () {
-        // let words = ['一', '二', '三', '四', '五']
-        return '❀'.repeat(this.rarity) // words[this.rarity - 1] +
+        return '❀'.repeat(this.rarity)
       },
       get typeName () {
         return TRH.SwordType[this.type]
@@ -96,7 +95,7 @@ define((require, exports, module) => {
           this.equip_serial_id1,
           this.equip_serial_id2,
           this.equip_serial_id3
-        ]
+        ].splice(0, _.get(SwordMasterData, [this.sword_id, 'equipSlot'], 3))
       }
     }
   }

@@ -72,6 +72,31 @@ define((require, exports, module) => {
       store.commit('battle_player/updateBattlePlayer', {
         updateData: content.player
       })
+      _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id,
+          updateData: v
+        })
+      })
+      console.log(_.get(content, ['player', 'party']))
+      _.each(_.values(_.get(content, ['player', 'party'])), (v, k) => {
+        let equipUpdate = [{
+          serial_id: v.equip_serial_id1,
+          soldier: v.soldier1
+        }, {
+          serial_id: v.equip_serial_id2,
+          soldier: v.soldier2
+        }, {
+          serial_id: v.equip_serial_id3,
+          soldier: v.soldier3
+        }]
+        _.each(_.filter(equipUpdate, o => !isNaN(o.serial_id)), (v) => {
+          store.commit('equip/updateEquip', {
+            serialId: v.serial_id,
+            updateData: v
+          })
+        })
+      })
     }
 
     static ['sally/sally'] (content) {
