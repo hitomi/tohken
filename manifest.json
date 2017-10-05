@@ -9,7 +9,7 @@
     "*"
   ],
   "background": {
-    "scripts": ["vendor/lodash.min.js", "bridge/inject.js"]
+    "scripts": ["vendor/lodash.js", "bridge/inject.js"]
   },
   "content_scripts": [
     {
