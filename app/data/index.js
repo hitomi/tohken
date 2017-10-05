@@ -8,7 +8,9 @@ define((require, exports, module) => {
           .map(o => o.serial_id)
           .filter(_.isNumber)
           .map(o => _.get(state, ['swords', 'serial', o, 'level']))
+          .filter(_.isNumber)
           .value()
+        console.log(swordLevels)
         let totalLevel = Math.floor(_.sum(swordLevels))
         let averageLevel = Math.floor(_.mean(swordLevels))
         store.commit('party/updateLevel', {

@@ -81,6 +81,31 @@ define((require, exports, module) => {
       })
     }
 
+    static ['login/start'] (content) {
+      store.commit('player/updatePlayer', {
+        updateData: _.pick(content, ['name', 'level'])
+      })
+    }
+
+    static ['party/setsword'] (content) {
+      _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
+        console.log(k)
+        store.commit('party/updateParty', {
+          partyNo: k,
+          updateData: v
+        })
+      })
+    }
+
+    static ['party/removesword'] (content) {
+      _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
+        store.commit('party/updateParty', {
+          partyNo: k,
+          updateData: v
+        })
+      })
+    }
+
     static default (content) {
       store.commit('notInBattle')
     }

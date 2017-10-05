@@ -1,5 +1,5 @@
 define((require, exports, module) => {
-  const testData = require('data/DataRec1507109320046')
+  const testData = require('data/DataRec1507167842659')
   const TRHRequestRouter = require('./router')
   return class TRHRequestListener {
     static init () {
@@ -12,6 +12,7 @@ define((require, exports, module) => {
         let data = testData[this.testDataIndex++]
         let pattern = data.url.match(/http:\/\/(.*?)\.touken-ranbu\.jp\/(.*)(?:\?uid=\d+)/)
         let path = pattern[2]
+        console.log(path, data.content)
         TRHRequestRouter.route(path, data.content)
       }
     }
