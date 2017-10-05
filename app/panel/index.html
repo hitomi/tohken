@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>TRH Final</title>
   <link rel="stylesheet" href="../../static/style/normalize.css">
+  <link rel="stylesheet" href="../../static/style/appmain.css">
 </head>
 <body>
-  <a href="../overview/index.html" target="_blank">刀账</a>
-  <a href="../test/index.html" target="_blank">刀账</a>
-
   <div id="app">
     <resource-panel></resource-panel>
     <div class="party-tab">
@@ -17,9 +15,12 @@
         <router-link to="/party/2">第2部隊<small v-if="party[2]">A.90 / T.300</small><small v-if="!party[2]">暂未获取</small></router-link>
         <router-link to="/party/3">第3部隊<small v-if="party[3]">A.90 / T.300</small><small v-if="!party[3]">暂未获取</small></router-link>
         <router-link to="/party/4">第4部隊<small v-if="party[4]">A.90 / T.300</small><small v-if="!party[4]">暂未获取</small></router-link>
-        <router-link to="/menu">其他<small>功能</small></router-link>
       </div>
       <router-view name="party-list-wrapper"></router-view>
+    </div>
+    <div id="debug">
+      <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
+      <button @click="autoData" :disabled="testDataIndex === testDataCount">Auto</button>
     </div>
   </div>
 
@@ -79,10 +80,11 @@
   </script>
   
   <!-- Vue -->
-  <script src="../../vendor/vue.min.js"></script>
-  <script src="../../vendor/vuex.2.1.1.js"></script>
+  <script src="../../vendor/vue.js"></script>
+  <script src="../../vendor/vuex.js"></script>
+  <script src="../../vendor/vue-router.js"></script>
   <!-- Library -->
-  <script src="../../vendor/lodash.min.js"></script>
+  <script src="../../vendor/lodash.js"></script>
   <script src="../../vendor/bluebird.min.js"></script>
   <!-- ZLib -->
   <script src="../../vendor/pako.min.js"></script>
@@ -94,18 +96,9 @@
   <!-- Data -->
   <script src="../../vendor/FileSaver.js"></script>
   <script src="../../vendor/localforage.min.js"></script>
-  <!-- Const -->
-  <script src="../core/const/index.js"></script>
-  <!-- Core -->
-  <script src="../core/master.js"></script>
-  <!-- Game -->
-  <script src="../core/game/sword.js"></script>
-  <!-- Manage -->
-  <script src="../core/manager/sword.js"></script>
-  <script src="../core/manager/battle.js"></script>
+  <!-- Util -->
+  <script src="util/data.js"></script>
   <!-- app -->
-  <script src="listener/router.js"></script>
-  <script src="listener/index.js"></script>
-  <script src="loader.js"></script>
+  <script data-main="loader" src="../../vendor/require.js"></script>
 </body>
 </html>

@@ -1,11 +1,7 @@
+require.config({
+  baseUrl: '/'
+})
 
-// Load Master Data
-TRHMasterData.load()
+Vue.use(Vuex)
 
-// Sword Mangager
-TRHSwordManager.load()
-
-// Start Request Listener
-TRHRequestListener.init()
-
-
+require(['app/panel/init'])

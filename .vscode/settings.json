@@ -1,0 +1,24 @@
+{
+	"standard.options": {
+		"globals": [
+			"$",
+			"jQuery",
+			"fetch",
+			"define",
+			"_",
+			"chrome",
+			"Vue",
+			"Vuex",
+			"saveAs",
+			"parseValues",
+			"mergeModel",
+			"CryptoJS",
+			"localforage",
+			"atob",
+			"pako",
+			"VueRouter"
+		],
+		"ignore": ["node_modules/**", "vendor/**"]
+	},
+	"standard.autoFixOnSave": true
+}
