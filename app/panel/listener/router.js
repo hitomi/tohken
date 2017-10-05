@@ -165,6 +165,8 @@ define((require, exports, module) => {
 
     static default (content) {
       store.commit('notInBattle')
+      store.commit('party/updateInBattlePartyNo', null)
+      store.commit('swords/updateNotInBattleSwords')
     }
   }
 })
