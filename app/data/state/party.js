@@ -4,7 +4,8 @@ define((require, exports, module) => {
     namespaced: true,
     state () {
       return {
-        parties: {}
+        parties: {},
+        inBattlePartyNo: null
       }
     },
     mutations: {
@@ -14,6 +15,9 @@ define((require, exports, module) => {
           Vue.set(state.parties, partyNo, defaultPartyModel())
         }
         mergeModel(state.parties[partyNo], updateData)
+      },
+      updateInBattlePartyNo (state, payload) {
+        state.inBattlePartyNo = payload
       },
       updateLevel (state, payload) {
         let { partyNo, totalLevel, averageLevel } = payload
