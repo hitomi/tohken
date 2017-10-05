@@ -66,9 +66,15 @@ define((require, exports, module) => {
 
     static ['battle/battle'] (content) {
       store.commit('inBattle')
-      store.commit('party/updateInBattlePartyNo', content.result.player.party.partyNo)
+      store.commit('party/updateParty', {
+        partyNo: content.result.player.party.partyNo,
+        updateData: { inBattle: true }
+      })
       _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
-        store.commit('swords/updateInBattleSwords', v.serial_id)
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id,
+          updateData: { inBattle: true }
+        })
       })
       store.commit('battle_result/updateBattleResult', {
         updateData: content.result
@@ -146,6 +152,7 @@ define((require, exports, module) => {
 
     static ['party/setsword'] (content) {
       _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
+        console.log(k)
         store.commit('party/updateParty', {
           partyNo: k,
           updateData: v
@@ -164,8 +171,6 @@ define((require, exports, module) => {
 
     static default (content) {
       store.commit('notInBattle')
-      store.commit('party/updateInBattlePartyNo', null)
-      store.commit('swords/updateNotInBattleSwords')
     }
   }
 })
