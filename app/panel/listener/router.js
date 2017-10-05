@@ -142,7 +142,6 @@ define((require, exports, module) => {
 
     static ['party/setsword'] (content) {
       _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
-        console.log(k)
         store.commit('party/updateParty', {
           partyNo: k,
           updateData: v

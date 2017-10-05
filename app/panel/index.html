@@ -21,9 +21,13 @@
       </div>
       <router-view name="party-list-wrapper"></router-view>
     </div>
-    <div id="debug" style="position: fixed; top: 0; right: 0;">
+    <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0;">
       <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
       <button @click="autoData" :disabled="testDataIndex === testDataCount">Auto</button>
+    </div>
+    <div v-else style="position: fixed; bottom: 0; right: 0;">
+      <button @click="dataRec">{{ rec ? 'Stop Rec' : 'Start Rec'}}</button>
+      <button @click="dataExport">Export</button>
     </div>
   </div>
 

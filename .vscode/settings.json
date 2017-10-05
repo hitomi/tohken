@@ -16,7 +16,8 @@
 			"localforage",
 			"atob",
 			"pako",
-			"VueRouter"
+			"VueRouter",
+			"Blob"
 		],
 		"ignore": ["node_modules/**", "vendor/**"]
 	},

@@ -75,7 +75,9 @@ define((require, exports, module) => {
     router,
     data: {
       testDataCount: TRHRequestListener.testDataCount,
-      testDataIndex: 0
+      testDataIndex: 0,
+      devtools: !!chrome.devtools,
+      rec: false
     },
     computed: {
       ...Vuex.mapState(['swords', 'party'])
@@ -84,7 +86,14 @@ define((require, exports, module) => {
       nextData () {
         TRHRequestListener.nextData(this.testDataIndex++)
       },
-      autoData: () => TRHRequestListener.autoData()
+      autoData: () => TRHRequestListener.autoData(),
+      dataRec () {
+        this.rec ? TRHRequestListener.stopRec() : TRHRequestListener.startRec()
+      },
+      dataExport () {
+        TRHRequestListener.stopRec()
+        TRHRequestListener.exportRec()
+      }
     }
   })
 })
