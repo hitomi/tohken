@@ -87,6 +87,34 @@ define((require, exports, module) => {
       })
     }
 
+    static ['equip/setequip'] (content) {
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
+    static ['equip/removeequip'] (content) {
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
+    static ['equip/setitem'] (content) {
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
+    static ['equip/removeitem'] (content) {
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
     static ['party/setsword'] (content) {
       _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
         console.log(k)
