@@ -88,9 +88,11 @@ define((require, exports, module) => {
       },
       autoData: () => TRHRequestListener.autoData(),
       dataRec () {
+        this.rec = !this.rec
         this.rec ? TRHRequestListener.stopRec() : TRHRequestListener.startRec()
       },
       dataExport () {
+        this.rec = !this.rec
         TRHRequestListener.stopRec()
         TRHRequestListener.exportRec()
       }
