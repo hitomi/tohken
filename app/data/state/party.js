@@ -16,9 +16,6 @@ define((require, exports, module) => {
         }
         mergeModel(state.parties[partyNo], updateData)
       },
-      updateInBattlePartyNo (state, payload) {
-        state.inBattlePartyNo = payload
-      },
       updateLevel (state, payload) {
         let { partyNo, totalLevel, averageLevel } = payload
         if (!state.parties[partyNo]) {

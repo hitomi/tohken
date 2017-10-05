@@ -37,6 +37,7 @@ define((require, exports, module) => {
       status: null,
       recovered_at: null,
       created_at: null,
+      inBattle: false,
       get name () {
         return _.get(SwordMasterData, [this.sword_id, 'name'], '暂未获取')
       },
