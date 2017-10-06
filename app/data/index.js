@@ -2,6 +2,7 @@ define((require, exports, module) => {
   const Plugin = {
     PartyLevel: require('app/plugin/party_level'),
     RepairNotice: require('app/plugin/repair_notice'),
+    ForgeNotice: require('app/plugin/forge_notice'),
     HurtNotice: require('app/plugin/hurt_notice')
   }
 
@@ -31,6 +32,7 @@ define((require, exports, module) => {
       duty: require('./state/duty'),
       party: require('./state/party'),
       repair: require('./state/repair'),
+      forge: require('./state/forge'),
       player: require('./state/player'),
       equip: require('./state/equip'),
       battle: require('./state/battle'),
