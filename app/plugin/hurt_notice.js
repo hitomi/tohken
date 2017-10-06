@@ -1,5 +1,4 @@
 define((require, exports, module) => {
-  let TRHMasterData = require('app/core/master')
   return (store) => {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'battle/updateBattle') {
@@ -13,13 +12,14 @@ define((require, exports, module) => {
           .keyBy(o => o.serial_id)
           .mapValues((v, k) => {
             return {
+              serial_id: v.serial_id,
               hp: _.toNumber(v.hp) - _.toNumber(_.get(resultParty, [k, 'hp'], 0)),
               battleStatus: _.toNumber(_.get(resultParty, [k, 'status'], 0))
             }
           })
-          .filter(o => o > 0)
+          .filter(o => o.hp > 0)
           .mapValues((v, k) => {
-            let sword = _.get(state, ['swords', 'serial', k], {})
+            let sword = _.get(state, ['swords', 'serial', v.serial_id], {})
             return _.extend(v, {
               name: sword.name,
               injury: sword.injury,
