@@ -39,7 +39,7 @@ define((require, exports, module) => {
       created_at: null,
       inBattle: false,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取')
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·极' : '')
       },
       get baseId () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'baseId'], 0)
