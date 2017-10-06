@@ -1,4 +1,5 @@
 define((require, exports, module) => {
+  let TRHMasterData = require('app/core/master')
   return (store) => {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'battle/updateBattle') {
@@ -29,12 +30,24 @@ define((require, exports, module) => {
           })
           .values()
           .value()
+        let getSwordId = _.get(updateData, ['result', 'get_sword_id'])
         if (playerParty.length) {
+          let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
           store.dispatch('notice/addNotice', {
             title: `战斗报告`,
             message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
-            context: '请关注战斗情况',
+            context: `掉落：${swordName}！`,
             swordBaseId: playerParty[0].baseId,
+            icon: `static/icon.png`,
+            disableAutoClose: true
+          })
+        }
+        else {
+          let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
+          store.dispatch('notice/addNotice', {
+            title: `战斗报告`,
+            message: '本场无受伤',
+            context: `掉落：${swordName}！`,
             icon: `static/icon.png`,
             disableAutoClose: true
           })
