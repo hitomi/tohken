@@ -6,10 +6,10 @@ define((require, exports, module) => {
     // Load data from local cache
     static load (store) {
       return Promise.props({
-        UserLevel: localforage.getItem('UserLevelMaster'),
-        SwordLevel: localforage.getItem('SwordLevelMaster'),
-        Sword: localforage.getItem('SwordMaster'),
-        Equip: localforage.getItem('EquipMaster')
+        UserLevel: chrome.devtools ? localforage.getItem('UserLevelMaster') : require('data/UserLevelMaster1507123959917'),
+        SwordLevel: chrome.devtools ? localforage.getItem('SwordLevelMaster') : require('data/SwordLevelMaster1507123959924'),
+        Sword: chrome.devtools ? localforage.getItem('SwordMaster') : require('data/SwordMaster1507123959937'),
+        Equip: chrome.devtools ? localforage.getItem('EquipMaster') : require('data/EquipMaster1507123959946')
       }).then((saved) => {
         _.each(saved, (v, k) => {
           TRHMasterData[k] = v
