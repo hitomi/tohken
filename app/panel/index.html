@@ -8,18 +8,39 @@
 </head>
 <body>
   <div id="app">
-    <resource-panel></resource-panel>
-    <div class="party-tab">
+    <div class="top-nav">
+      <resource-panel></resource-panel>
       <div class="switch-tab">
-        <router-link v-for='i in 4' :to="'/party/' + i" :key="i">
-          第{{i}}部隊
-          <small v-if="party.parties[i]">
-            A.<span>{{party.parties[i].averageLevel}}</span> / T.<span>{{party.parties[i].totalLevel}}</span>
-          </small>
-          <small v-else>暂未获取</small>
+        <router-link class="main-menu" to="/party">
+          <div class="menu-cover">
+            队伍
+          </div>
+          <div class="menu-inner" v-for='i in 4' :key="i" :data-party="i" @click="partyScroll(i)">
+            第{{i}}部隊
+            <small v-if="party.parties[i]">
+              A.<span>{{party.parties[i].averageLevel}}</span> / T.<span>{{party.parties[i].totalLevel}}</span>
+            </small>
+            <small v-else>暂未获取</small>
+          </div>
+        </router-link>
+        <router-link class="main-menu" to="/other">
+          <div class="menu-cover">
+            本丸
+          </div>
+        </router-link>
+        <router-link class="main-menu" to="/extra">
+          <div class="menu-cover">
+            扩展
+          </div>
+        </router-link>
+        <router-link class="main-menu" to="/setting">
+          <div class="menu-cover">
+            设置
+          </div>
         </router-link>
       </div>
-      <party-list v-for='i in 4' :key="i" :party-no="i"></party-list>
+    </div>
+    <div class="view-content">
       <router-view name="party-list-wrapper"></router-view>
     </div>
     <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
@@ -73,7 +94,7 @@
   
   <!-- Component Party List -->
   <script id="party-list" type="text/template">
-    <div v-if="!_.isEmpty(party) && party.status" class="party-list">
+    <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
       <div class="party-info">
         <div class="party-name">{{ party.party_name }} <small v-if="party.status > 1">[{{party.status | party-status}}]</small></div>
         <div class="party-level">
@@ -124,6 +145,7 @@
   <script src="../../vendor/vuex.js"></script>
   <script src="../../vendor/vue-router.js"></script>
   <!-- Library -->
+  <script src="../../vendor/jquery.js"></script>
   <script src="../../vendor/lodash.js"></script>
   <script src="../../vendor/bluebird.min.js"></script>
   <script src="../../vendor/moment.min.js"></script>

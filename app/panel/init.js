@@ -12,14 +12,12 @@ define((require, exports, module) => {
   TRHRequestListener.init(store)
 
   const partyListWrapper = {
-    template: '<party-list :party-no="$route.params.id"></party-list>'
+    template: `
+      <div class="party-list-wrapper">
+      <party-list v-for="i in 4" :key="i" :party-no="i"></party-list>
+      </div>
+    `
   }
-
-  const router = new VueRouter({
-    routes: [
-      { path: '/party/:id', components: { 'party-list-wrapper': partyListWrapper } }
-    ]
-  })
 
   Vue.component('notice-content', {
     template: '#notice-template',
@@ -66,6 +64,12 @@ define((require, exports, module) => {
     })
   })
 
+  const router = new VueRouter({
+    routes: [
+      { path: '/party', components: { 'party-list-wrapper': partyListWrapper } }
+    ]
+  })
+
   Vue.filter('averageLevel', (party) => {
     return 0
   })
@@ -105,6 +109,10 @@ define((require, exports, module) => {
         this.rec = !this.rec
         TRHRequestListener.stopRec()
         TRHRequestListener.exportRec()
+      },
+      partyScroll (i) {
+        if (!$(`#party-${i}`).offset()) return
+        window.scrollTo(0, $(`#party-${i}`).offset().top - 80)
       }
     }
   })
