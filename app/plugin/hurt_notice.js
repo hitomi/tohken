@@ -35,7 +35,8 @@ define((require, exports, module) => {
             message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
             context: '请关注战斗情况',
             swordBaseId: playerParty[0].baseId,
-            icon: `static/icon.png`
+            icon: `static/icon.png`,
+            disableAutoClose: true
           })
         }
       }

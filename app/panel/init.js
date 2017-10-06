@@ -23,7 +23,12 @@ define((require, exports, module) => {
 
   Vue.component('notice-content', {
     template: '#notice-template',
-    computed: Vuex.mapState(['notice'])
+    computed: Vuex.mapState(['notice']),
+    methods: {
+      close (n) {
+        n.hidden = true
+      }
+    }
   })
 
   Vue.component('party-list', {

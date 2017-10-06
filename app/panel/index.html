@@ -37,7 +37,7 @@
   <script id="notice-template" type="text/template">
     <div id="notice">
       <transition-group name="notice-block-list" tag="div">
-        <div class="notice-block" v-for="n in notice.history" v-if="!n.hidden" :key="n._id">
+        <div class="notice-block" v-for="n in notice.history" v-if="!n.hidden" :key="n._id" @click="close(n)">
           <div class="notice-image">
             <img :src="n.swordBaseId | sword-pattern" alt="空">
           </div>
