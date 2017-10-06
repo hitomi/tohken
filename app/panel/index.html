@@ -25,17 +25,17 @@
         </router-link>
         <router-link class="main-menu" to="/other">
           <div class="menu-cover">
-            本丸
+            这些
           </div>
         </router-link>
         <router-link class="main-menu" to="/extra">
           <div class="menu-cover">
-            扩展
+            还没
           </div>
         </router-link>
         <router-link class="main-menu" to="/setting">
           <div class="menu-cover">
-            设置
+            做好
           </div>
         </router-link>
       </div>
@@ -43,16 +43,35 @@
     <div class="view-content">
       <router-view name="party-list-wrapper"></router-view>
     </div>
-    <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
+    <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 99999;">
       <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
       <button @click="autoData" :disabled="testDataIndex === testDataCount">Auto</button>
     </div>
-    <div v-else style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
+    <div v-else style="position: fixed; bottom: 0; right: 0; z-index: 99999;">
       <button @click="dataRec">{{ rec ? 'Stop Rec' : 'Start Rec'}}</button>
       <button @click="dataExport">Export</button>
     </div>
     <!-- {{dataLoaded}} -->
     <notice-content></notice-content>
+    <div class="check-data" v-if="!_.every(dataLoaded) || _.isEmpty(swords.serial)">
+      <div class="check-title">婶婶忙 · 初始化</div>
+      <div class="check-item">
+        <div class="check-item-title">
+          <span v-if="_.every(dataLoaded)">[已取得]</span>
+          <span v-else>[等待中]</span>
+          游戏设定数据
+        </div>
+        <p>* 请在开启插件的状态下刷新游戏页面重新进入游戏</p>
+      </div>
+      <div class="check-item" v-if="_.every(dataLoaded)">
+        <div class="check-item-title">
+          <span v-if="!_.isEmpty(swords.serial)">[已取得]</span>
+          <span v-else>[等待中]</span>
+          游戏基础数据
+        </div>
+        <p>* 请访问结成页面，如果已经处于结成页面请回到本丸重新进入</p>
+      </div>
+    </div>
   </div>
 
   <!-- Notice template -->

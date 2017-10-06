@@ -5,14 +5,28 @@ define((require, exports, module) => {
     }
     // Load data from local cache
     static load (store) {
+      if (!chrome.devtools) {
+        // TRHMasterData.UserLevel = require('data/UserLevelMaster1507123959917')
+        // TRHMasterData.SwordLevel = require('data/SwordLevelMaster1507123959924')
+        // TRHMasterData.Sword = require('data/SwordMaster1507123959937')
+        // TRHMasterData.Equip = require('data/EquipMaster1507123959946')
+        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip'], k => {
+          store.commit('loadData', {
+            key: k,
+            loaded: true
+          })
+        })
+      }
       return Promise.props({
-        UserLevel: chrome.devtools ? localforage.getItem('UserLevelMaster') : require('data/UserLevelMaster1507123959917'),
-        SwordLevel: chrome.devtools ? localforage.getItem('SwordLevelMaster') : require('data/SwordLevelMaster1507123959924'),
-        Sword: chrome.devtools ? localforage.getItem('SwordMaster') : require('data/SwordMaster1507123959937'),
-        Equip: chrome.devtools ? localforage.getItem('EquipMaster') : require('data/EquipMaster1507123959946')
+        UserLevel: localforage.getItem('UserLevelMaster'),
+        SwordLevel: localforage.getItem('SwordLevelMaster'),
+        Sword: localforage.getItem('SwordMaster'),
+        Equip: localforage.getItem('EquipMaster')
       }).then((saved) => {
+        console.log('loadLocal')
         _.each(saved, (v, k) => {
           TRHMasterData[k] = v
+          console.log(TRHMasterData[k])
           store.commit('loadData', {
             key: k,
             loaded: !_.isNull(v)
@@ -60,7 +74,9 @@ define((require, exports, module) => {
         TRHMasterData.initSwordLevelMaster(store),
         TRHMasterData.initSwordMaster(store),
         TRHMasterData.initEquipMaster(store)
-      ])
+      ]).then(() => {
+        console.log('done', store)
+      })
     }
 
     // Init User Level Data
@@ -81,12 +97,14 @@ define((require, exports, module) => {
         .value()
       return localforage.setItem('UserLevelMaster', TRHMasterData.UserLevel)
         .then(() => {
+          console.log(TRHMasterData.UserLevel)
           store.commit('loadData', {
             key: 'UserLevel',
             loaded: true
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('err', err)
           store.commit('loadData', {
             key: 'UserLevel',
             loaded: false
@@ -114,12 +132,14 @@ define((require, exports, module) => {
         .value()
       return localforage.setItem('SwordLevelMaster', TRHMasterData.SwordLevel)
         .then(() => {
+          console.log(TRHMasterData.SwordLevel)
           store.commit('loadData', {
             key: 'SwordLevel',
             loaded: true
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('err', err)
           store.commit('loadData', {
             key: 'SwordLevel',
             loaded: false
@@ -179,12 +199,14 @@ define((require, exports, module) => {
         .value()
       return localforage.setItem('SwordMaster', TRHMasterData.Sword)
         .then(() => {
+          console.log(TRHMasterData.Sword)
           store.commit('loadData', {
             key: 'Sword',
             loaded: true
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('err', err)
           store.commit('loadData', {
             key: 'Sword',
             loaded: false
@@ -222,12 +244,14 @@ define((require, exports, module) => {
         .value()
       return localforage.setItem('EquipMaster', TRHMasterData.Equip)
         .then(() => {
+          console.log(TRHMasterData.Equip)
           store.commit('loadData', {
             key: 'Equip',
             loaded: true
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('err', err)
           store.commit('loadData', {
             key: 'Equip',
             loaded: false

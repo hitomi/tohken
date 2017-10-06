@@ -33,6 +33,43 @@ a {
   text-decoration: none;
 }
 
+.check-data {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #efdeb0;
+  color: #233333;
+  padding: 24px;
+}
+
+.check-data .check-title {
+  font-size: 24px;
+  line-height: 2;
+  margin: 24px 0;
+  font-weight: bold;
+}
+
+.check-data .check-item-title {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+.check-data .check-item {
+  margin-top: 24px;
+}
+
+.check-data .check-item span {
+  font-size: inherit;
+}
+
+.check-data .check-item p {
+  font-size: 16px;
+}
+
 .top-nav {
   position: fixed;
   width: 100%;
