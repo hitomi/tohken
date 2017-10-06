@@ -8,6 +8,7 @@ define((require, exports, module) => {
     mutations: {
       updatePlayer (state, payload) {
         let {updateData} = payload
+        if (state.name && !updateData.name) updateData = state.name
         mergeModel(state, updateData)
       }
     }

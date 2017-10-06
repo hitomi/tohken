@@ -281,6 +281,7 @@ a {
   box-shadow: 2px 2px 4px #777;
   min-height: 55px;
   cursor: pointer;
+  width: 300px;
 }
 
 .notice-block .notice-content {
@@ -312,4 +313,5 @@ a {
 }
 .notice-block-list-leave-active {
   position: absolute;
+  pointer-events: none;
 }
