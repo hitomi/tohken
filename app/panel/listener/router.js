@@ -77,11 +77,14 @@ define((require, exports, module) => {
         partyNo: content.result.player.party.partyNo,
         updateData: { inBattle: true }
       })
-      store.commit('battle_result/updateBattleResult', {
+      store.commit('battle/updateBattleResult', {
         updateData: content.result
       })
-      store.commit('battle_player/updateBattlePlayer', {
+      store.commit('battle/updateBattlePlayer', {
         updateData: content.player
+      })
+      store.commit('battle/updateBattle', {
+        updateData: content
       })
       _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
         v.inBattle = true

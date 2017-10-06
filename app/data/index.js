@@ -2,7 +2,8 @@ define((require, exports, module) => {
   const Plugin = {
     PartyLevel: require('app/plugin/party_level'),
     RepairNotice: require('app/plugin/repair_notice'),
-    GetSwordNotice: require('app/plugin/get_sword_notice')
+    GetSwordNotice: require('app/plugin/get_sword_notice'),
+    HurtNotice: require('app/plugin/hurt_notice')
   }
 
   return new Vuex.Store({
@@ -33,8 +34,7 @@ define((require, exports, module) => {
       repair: require('./state/repair'),
       player: require('./state/player'),
       equip: require('./state/equip'),
-      battle_result: require('./state/battle_result'),
-      battle_player: require('./state/battle_player'),
+      battle: require('./state/battle'),
       sally: require('./state/sally'),
       notice: require('./state/notice')
     },

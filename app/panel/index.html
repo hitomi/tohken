@@ -42,9 +42,9 @@
             <img :src="n.swordBaseId | sword-pattern" alt="空">
           </div>
           <div class="notice-content">
-            <div class="notice-title">{{n.title}}</div>
-            <div class="notice-message">{{n.message}}</div>
-            <div class="notice-context">{{n.context}}</div>
+            <div class="notice-title" v-html="n.title"></div>
+            <div class="notice-message" v-html="n.message"></div>
+            <div class="notice-context" v-html="n.context"></div>
           </div>
         </div>
       </transition-group>
