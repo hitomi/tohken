@@ -35,6 +35,14 @@ Vue.filter('sword-object', function (serialId) {
   return serialId
 })
 
+Vue.filter('party-status', (status) => {
+  return [
+    '未开放',
+    '正常',
+    '远征'
+  ][status] || ''
+})
+
 Vue.filter('equip-level-cname', function (level) {
   return {
     0: 'destroyed',

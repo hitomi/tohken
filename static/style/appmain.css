@@ -1,4 +1,5 @@
 * {
+  -webkit-text-size-adjust: none;
   font-size: 12px;
 }
 html {
@@ -91,6 +92,14 @@ a {
 
 .switch-tab a.router-link-active {
   border-bottom-color: #789263;
+}
+
+.party-info {
+  padding: 8px;
+}
+
+.party-info .party-name {
+  font-size: 130%;
 }
 
 .touken-info {

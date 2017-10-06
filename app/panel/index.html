@@ -19,6 +19,7 @@
           <small v-else>暂未获取</small>
         </router-link>
       </div>
+      <party-list v-for='i in 4' :key="i" :party-no="i"></party-list>
       <router-view name="party-list-wrapper"></router-view>
     </div>
     <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 9999;">
@@ -69,10 +70,16 @@
       </ul>
     </div>
   </script>
-
+  
   <!-- Component Party List -->
   <script id="party-list" type="text/template">
-    <div v-if="!_.isEmpty(party)" class="party-list">
+    <div v-if="!_.isEmpty(party) && party.status" class="party-list">
+      <div class="party-info">
+        <div class="party-name">{{ party.party_name }} <small v-if="party.status > 1">[{{party.status | party-status}}]</small></div>
+        <div class="party-level">
+          A.<span>{{party.averageLevel}}</span> / T.<span>{{party.totalLevel}}</span>
+        </div>
+      </div>
       <sword-item v-for="sword in party.slot" :sword-serial-id="sword.serial_id" :key="sword.serial_id"></sword-item>
     </div>
   </script>
