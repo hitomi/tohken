@@ -56,6 +56,14 @@ define((require, exports, module) => {
           })
         })
       }
+      if (content.forge) {
+        _.each(content.forge, (v, k) => {
+          store.commit('forge/updateForge', {
+            slotNo: k,
+            updateData: v
+          })
+        })
+      }
       if (content.duty) {
         store.commit('duty/updateDuty', {
           updateData: content.duty
