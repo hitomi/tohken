@@ -2,7 +2,6 @@ define((require, exports, module) => {
   const Plugin = {
     PartyLevel: require('app/plugin/party_level'),
     RepairNotice: require('app/plugin/repair_notice'),
-    GetSwordNotice: require('app/plugin/get_sword_notice'),
     HurtNotice: require('app/plugin/hurt_notice')
   }
 
