@@ -1,6 +1,5 @@
 define((require, exports, module) => {
-  const SwordMasterData = require('data/SwordMaster1507123959937')
-  const SwordLevelMasterData = require('data/SwordLevelMaster1507123959924')
+  let TRHMasterData = require('app/core/master')
   const TRH = require('app/core/const/index')
   return () => {
     return {
@@ -40,10 +39,10 @@ define((require, exports, module) => {
       created_at: null,
       inBattle: false,
       get name () {
-        return _.get(SwordMasterData, [this.sword_id, 'name'], '暂未获取')
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取')
       },
       get baseId () {
-        return _.get(SwordMasterData, [this.sword_id, 'baseId'], 0)
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'baseId'], 0)
       },
       get injury () {
         let hpp = (this.hp / this.hp_max)
@@ -84,10 +83,10 @@ define((require, exports, module) => {
         }
       },
       get shareWord () {
-        return _.get(SwordMasterData, [this.sword_id, 'shareWord'], 0)
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'shareWord'], 0)
       },
       get nextExp () {
-        let expMaster = SwordLevelMasterData[this.shareWord]
+        let expMaster = TRHMasterData.getMasterData('SwordLevel')[this.shareWord]
         return Math.max(expMaster[Math.min(this.level + 1, 99)] - this.exp, 0)
       },
       get hana () {
@@ -113,7 +112,7 @@ define((require, exports, module) => {
           this.equip_serial_id1,
           this.equip_serial_id2,
           this.equip_serial_id3
-        ].splice(0, _.get(SwordMasterData, [this.sword_id, 'equipSlot'], 3))
+        ].splice(0, _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'equipSlot'], 3))
       }
     }
   }

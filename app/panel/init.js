@@ -6,10 +6,10 @@ define((require, exports, module) => {
     : require('app/panel/listener/debug')
 
   // Load Master Data
-  TRHMasterData.load()
+  TRHMasterData.load(store)
 
   // Start Request Listener
-  TRHRequestListener.init()
+  TRHRequestListener.init(store)
 
   const partyListWrapper = {
     template: '<party-list :party-no="$route.params.id"></party-list>'
@@ -85,7 +85,7 @@ define((require, exports, module) => {
       rec: false
     },
     computed: {
-      ...Vuex.mapState(['swords', 'party'])
+      ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party'])
     },
     methods: {
       nextData () {

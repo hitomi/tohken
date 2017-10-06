@@ -1,7 +1,10 @@
 define((require, exports, module) => {
   return class TRHMasterData {
+    static getMasterData (k) {
+      return TRHMasterData[k]
+    }
     // Load data from local cache
-    static load () {
+    static load (store) {
       return Promise.props({
         UserLevel: localforage.getItem('UserLevelMaster'),
         SwordLevel: localforage.getItem('SwordLevelMaster'),
@@ -10,12 +13,16 @@ define((require, exports, module) => {
       }).then((saved) => {
         _.each(saved, (v, k) => {
           TRHMasterData[k] = v
+          store.commit('loadData', {
+            key: k,
+            loaded: !_.isNull(v)
+          })
         })
       })
     }
 
     // Init data from Game Resource
-    static init (content) {
+    static init (content, store) {
       TRHMasterData.masterData = null
       // Convert data type
       let encodeData = atob(content)
@@ -41,20 +48,23 @@ define((require, exports, module) => {
       TRHMasterData.masterData = dataObj
       // level_master
       TRHMasterData.UserLevel = null
-      TRHMasterData.initUserLevelMaster()
       // sword_level_master
       TRHMasterData.SwordLevel = null
-      TRHMasterData.initSwordLevelMaster()
       // sword_master
       TRHMasterData.Sword = null
-      TRHMasterData.initSwordMaster()
       // equip_master
       TRHMasterData.Equip = null
-      TRHMasterData.initEquipMaster()
+      // wait promise
+      return Promise.all([
+        TRHMasterData.initUserLevelMaster(store),
+        TRHMasterData.initSwordLevelMaster(store),
+        TRHMasterData.initSwordMaster(store),
+        TRHMasterData.initEquipMaster(store)
+      ])
     }
 
     // Init User Level Data
-    static initUserLevelMaster () {
+    static initUserLevelMaster (store) {
       if (TRHMasterData.masterData === null) return
       TRHMasterData.UserLevel = _(TRHMasterData.masterData.level_master)
         .split('\n')
@@ -70,10 +80,22 @@ define((require, exports, module) => {
         .keyBy('level')
         .value()
       return localforage.setItem('UserLevelMaster', TRHMasterData.UserLevel)
+        .then(() => {
+          store.commit('loadData', {
+            key: 'UserLevel',
+            loaded: true
+          })
+        })
+        .catch(() => {
+          store.commit('loadData', {
+            key: 'UserLevel',
+            loaded: false
+          })
+        })
     }
 
     // Init Sword Level Data
-    static initSwordLevelMaster () {
+    static initSwordLevelMaster (store) {
       if (TRHMasterData.masterData === null) return
       TRHMasterData.SwordLevel = _(TRHMasterData.masterData.sword_level_master)
         .split('\n')
@@ -91,10 +113,22 @@ define((require, exports, module) => {
         })
         .value()
       return localforage.setItem('SwordLevelMaster', TRHMasterData.SwordLevel)
+        .then(() => {
+          store.commit('loadData', {
+            key: 'SwordLevel',
+            loaded: true
+          })
+        })
+        .catch(() => {
+          store.commit('loadData', {
+            key: 'SwordLevel',
+            loaded: false
+          })
+        })
     }
 
     // Init Sword Data
-    static initSwordMaster () {
+    static initSwordMaster (store) {
       if (TRHMasterData.masterData === null) return
       TRHMasterData.Sword = _(TRHMasterData.masterData.sword_master)
         .split('\n')
@@ -144,10 +178,22 @@ define((require, exports, module) => {
         .keyBy('swordId')
         .value()
       return localforage.setItem('SwordMaster', TRHMasterData.Sword)
+        .then(() => {
+          store.commit('loadData', {
+            key: 'Sword',
+            loaded: true
+          })
+        })
+        .catch(() => {
+          store.commit('loadData', {
+            key: 'Sword',
+            loaded: false
+          })
+        })
     }
 
     // Init Equip Data
-    static initEquipMaster () {
+    static initEquipMaster (store) {
       if (TRHMasterData.masterData === null) return
       TRHMasterData.Equip = _(TRHMasterData.masterData.equip_master)
         .split('\n')
@@ -175,6 +221,18 @@ define((require, exports, module) => {
         .keyBy('equipId')
         .value()
       return localforage.setItem('EquipMaster', TRHMasterData.Equip)
+        .then(() => {
+          store.commit('loadData', {
+            key: 'Equip',
+            loaded: true
+          })
+        })
+        .catch(() => {
+          store.commit('loadData', {
+            key: 'Equip',
+            loaded: false
+          })
+        })
     }
   }
 })

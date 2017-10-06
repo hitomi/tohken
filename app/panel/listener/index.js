@@ -4,7 +4,7 @@ define((require, exports, module) => {
   let recData = []
   let recStatus = false
   return class TRHRequestListener {
-    static init () {
+    static init (store) {
       // Listen Response
       chrome.devtools.network.onRequestFinished.addListener((request) => {
         let tohken = request.request.url.match(/http:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
@@ -14,7 +14,7 @@ define((require, exports, module) => {
           if (server === 'static' && path.indexOf('.bin') > -1) {
             // Load Bin Data
             request.getContent((content, encoding) => {
-              TRHMasterData.init(content)
+              TRHMasterData.init(content, store)
             })
           } else if (path.indexOf('31de83dedee2de4024a974e0370676ea') > -1) {
             // swr_crest_s_000003u0xq7npke

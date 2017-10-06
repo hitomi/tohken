@@ -9,7 +9,8 @@ define((require, exports, module) => {
     namespaced: true,
     state () {
       return {
-        inBattle: false
+        inBattle: false,
+        dataLoaded: {}
       }
     },
     mutations: {
@@ -18,6 +19,10 @@ define((require, exports, module) => {
       },
       notInBattle (state) {
         state.inBattle = false
+      },
+      loadData (state, payload) {
+        let { key, loaded } = payload
+        Vue.set(state.dataLoaded, key, loaded)
       }
     },
     modules: {
