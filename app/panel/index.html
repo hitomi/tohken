@@ -89,7 +89,7 @@
         <div class="horse">{{ equipSerialName(sword.horse_serial_id) }}</div>
         <div class="equip">
           <ul>
-            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :key="equip"></equip-item>
+            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :in-battle="sword.inBattle" :key="equip"></equip-item>
           </ul>
         </div>
       </div>
@@ -107,7 +107,7 @@
   <!-- Component Equip Item -->
   <script id="equip-item" type="text/template">
     <li v-if="equip === null">空</li>
-    <li v-else-if="equip.serial_id" :class="equip.level | equip-level-cname">{{equip.name | equipName}} [{{equip.hp}}/{{equip.hp_max}}]</li>
+    <li v-else-if="equip.serial_id" :class="equip.level | equip-level-cname">{{equip.name | equipName}} [{{inBattle ? equip.hp : equip.hp_max}}/{{equip.hp_max}}]</li>
     <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
     <li v-else>数据错误</li>
   </script>

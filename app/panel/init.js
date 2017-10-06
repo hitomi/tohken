@@ -53,7 +53,7 @@ define((require, exports, module) => {
 
   Vue.component('equip-item', {
     template: '#equip-item',
-    props: ['equip-serial-id'],
+    props: ['equip-serial-id', 'in-battle'],
     computed: Vuex.mapState({
       equip (state) {
         return _.get(state, ['equip', 'serial', this.equipSerialId], {})
