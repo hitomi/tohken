@@ -19,6 +19,11 @@ define((require, exports, module) => {
     static common (content) {
       if (content.sword) {
         _.each(content.sword, (v, k) => {
+          v.inBattle = false
+          if (v.battleStatus) {
+            v.status = v.battleStatus
+            delete v.battleStatus
+          }
           store.commit('swords/updateSword', {
             serialId: k,
             updateData: v
