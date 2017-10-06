@@ -5,9 +5,11 @@ define((require, exports, module) => {
         let swordSerialId = mutation.payload.updateData.sword_serial_id
         let sword = _.get(state, ['swords', 'serial', swordSerialId])
         store.dispatch('notice/addNotice', {
-          title: `${sword.name} 手入开始`,
+          title: `${sword.name} 手入中`,
           message: `结束时间：${moment(sword.recovered_at).format('hh:mm:ss')}`,
-          context: 'hahahaha',
+          context: '请耐心等待哟（或者拍个加速？）',
+          tag: sword.baseId,
+          renotify: true,
           swordBaseId: sword.baseId,
           icon: `static/sword/${sword.baseId}.png`
         })
