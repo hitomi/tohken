@@ -35,6 +35,7 @@ define((require, exports, module) => {
       item_id: null,
       protect: null,
       status: null,
+      battleStatus: null,
       recovered_at: null,
       created_at: null,
       inBattle: false,
@@ -43,6 +44,22 @@ define((require, exports, module) => {
       },
       get baseId () {
         return _.get(SwordMasterData, [this.sword_id, 'baseId'], 0)
+      },
+      get injury () {
+        let hpp = (this.hp / this.hp_max)
+        if (hpp >= TRH.SwordInjury.MINOR_INJURY_PERCENTAGE) {
+          return (TRH.SwordInjury.NONE)
+        }
+        if (hpp >= TRH.SwordInjury.MEDIUM_INJURY_PERCENTAGE) {
+          return (TRH.SwordInjury.MINOR_INJURY)
+        }
+        if (hpp >= TRH.SwordInjury.SERIOUS_INJURY_PERCENTAGE) {
+          return (TRH.SwordInjury.MEDIUM_INJURY)
+        }
+        if (hpp > 0) {
+          return (TRH.SwordInjury.SERIOUS_INJURY)
+        }
+        return (TRH.SwordInjury.DEATH)
       },
       get vfatigue () {
         let fatigue = this.fatigue
@@ -55,7 +72,7 @@ define((require, exports, module) => {
         return fatigue
       },
       get fatigueFlag () {
-        let fatigue = this.fatigue
+        let fatigue = this.vfatigue
         if (fatigue <= TRH.FATIGUE.VALUE.VERY_TIERD) {
           return 0
         } else if (fatigue <= TRH.FATIGUE.VALUE.TIERD) {

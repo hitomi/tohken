@@ -23,5 +23,7 @@ chrome.runtime.onMessage.addListener(function (message) {
     case 'notify':
       msg = message['message']
       return notify(msg.title, msg.message, msg.context, msg.icon)
+    case 'originNotify':
+      return chrome.notifications.create(...msg.args)
   }
 })

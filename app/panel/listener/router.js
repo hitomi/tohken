@@ -9,9 +9,11 @@ define((require, exports, module) => {
       // Route
       if (_.isFunction(this[action])) {
         this[action](content)
-      } else {
-        this.default(content)
       }
+    }
+
+    static updatePartyBattleStatus (partyNo, inBattle) {
+
     }
 
     static common (content) {
@@ -70,12 +72,6 @@ define((require, exports, module) => {
         partyNo: content.result.player.party.partyNo,
         updateData: { inBattle: true }
       })
-      _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
-        store.commit('swords/updateSword', {
-          serialId: v.serial_id,
-          updateData: { inBattle: true }
-        })
-      })
       store.commit('battle_result/updateBattleResult', {
         updateData: content.result
       })
@@ -83,12 +79,16 @@ define((require, exports, module) => {
         updateData: content.player
       })
       _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
+        v.inBattle = true
+        if (v.status) {
+          v.battleStatus = v.status
+          delete v.status
+        }
         store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v
         })
       })
-      console.log(_.get(content, ['player', 'party']))
       _.each(_.values(_.get(content, ['player', 'party'])), (v, k) => {
         let equipUpdate = [{
           serial_id: v.equip_serial_id1,
@@ -107,6 +107,10 @@ define((require, exports, module) => {
           })
         })
       })
+    }
+
+    static ['home'] (content) {
+      store.commit('notInBattle')
     }
 
     static ['sally/sally'] (content) {
@@ -166,12 +170,6 @@ define((require, exports, module) => {
           updateData: v
         })
       })
-    }
-
-    static default (content) {
-      store.commit('notInBattle')
-      store.commit('party/updateInBattlePartyNo', null)
-      store.commit('swords/updateNotInBattleSwords')
     }
   }
 })

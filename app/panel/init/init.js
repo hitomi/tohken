@@ -1,8 +1,8 @@
 
 // Init Panel
-chrome.devtools.inspectedWindow.eval('window.location.href', {}, function(result, exceptionInfo) {
+chrome.devtools.inspectedWindow.eval('window.location.href', {}, function (result, exceptionInfo) {
   // Init
-  if (result.indexOf('tohken') > -1)
+  if (result.indexOf('tohken') > -1) {
     // Create Panel
     chrome.devtools.panels.create(
       '婶婶忙',
@@ -20,4 +20,5 @@ chrome.devtools.inspectedWindow.eval('window.location.href', {}, function(result
         })
       }
     )
+  }
 })

@@ -78,13 +78,13 @@
 
   <!-- Component Sword Item -->
   <script id="sword-item" type="text/template">
-    <div v-if="sword.serial_id" class="touken-info" :class="sword.status | status-cname">
+    <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname">
       <img :src="sword.baseId | sword-pattern" alt="空" class="pattern">
       <div class="info">
-        <div class="name">{{sword.name}} <span>[{{sword.status | status-text}}]</span></div>
+        <div class="name">{{sword.name}} <span v-if="sword.inBattle || sword.injury">[{{sword.injury | battle-status-text}}]</span><span v-if="!sword.inBattle || (sword.injury && sword.status != 0 )">[{{sword.status | status-text}}]</span></div>
         <div class="hp">HP <span>{{sword.hp}} / {{sword.hp_max}}</span></div>
         <div class="level">Lv.{{sword.level}}<small>(next {{sword.nextExp}})</small></div>
-        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname">{{sword.fatigueFlag | fatigue-text}} {{sword.fatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
+        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname">{{sword.fatigueFlag | fatigue-text}} {{sword.vfatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
         <div class="horse">{{ equipSerialName(sword.horse_serial_id) }}</div>
         <div class="equip">
           <ul>

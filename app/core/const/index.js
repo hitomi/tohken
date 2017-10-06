@@ -3,6 +3,7 @@ define((require, exports, module) => {
     SwordStyle: require('./sword/style'),
     SwordType: require('./sword/style'),
     SwordRange: require('./sword/range'),
+    SwordInjury: require('./sword/injury'),
     FATIGUE: {
       STATUS: {
         NONE: 0,

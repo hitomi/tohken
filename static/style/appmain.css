@@ -258,6 +258,14 @@ a {
   clear: both;
 }
 
+.party-list::after {
+  content: ' ';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+
 #notice {
   position: fixed;
   bottom: 0;

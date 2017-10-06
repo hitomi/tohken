@@ -1,6 +1,10 @@
 
+Vue.filter('battle-status-text', function (statusId) {
+  return ['战斗', '軽傷', '中傷', '重傷', '死亡'][statusId]
+})
+
 Vue.filter('status-text', function (statusId) {
-  return ['通常', '手入', '軽傷', '中傷', '重傷'][statusId]
+  return ['通常', '手入', 'ADSENCE', '远征'][statusId]
 })
 
 Vue.filter('status-cname', function (statusId) {
