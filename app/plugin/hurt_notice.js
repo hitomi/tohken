@@ -41,13 +41,13 @@ define((require, exports, module) => {
             icon: `static/icon.png`,
           })
         }
-        else {
+        else if (!getSwordId) {
           let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
           store.dispatch('notice/addNotice', {
             title: `战斗报告`,
             message: '本场无受伤',
             context: `掉落：${swordName}！`,
-            icon: `static/icon.png`,
+            icon: `static/sword/${getSwordId}.png`
           })
         }
       }
