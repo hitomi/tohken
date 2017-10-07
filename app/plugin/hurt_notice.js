@@ -39,7 +39,6 @@ define((require, exports, module) => {
             context: `掉落：${swordName}！`,
             swordBaseId: playerParty[0].baseId,
             icon: `static/icon.png`,
-            disableAutoClose: true
           })
         }
         else {
@@ -49,7 +48,6 @@ define((require, exports, module) => {
             message: '本场无受伤',
             context: `掉落：${swordName}！`,
             icon: `static/icon.png`,
-            disableAutoClose: true
           })
         }
       }

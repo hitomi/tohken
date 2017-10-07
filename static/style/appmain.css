@@ -238,10 +238,10 @@ a {
   background: #00860a;
 }
 .touken-info .info > .fatigue.tired:before {
-  background: #5d573d;
+  background: #8e770b;
 }
 .touken-info .info > .fatigue.tired {
-  color: #5d573d;
+  color: #8e770b;
 }
 .touken-info .info > .fatigue.very-tired:before {
   background: #ff0000;
@@ -295,12 +295,12 @@ a {
 
 .touken-info.recovery .info > .name > span, 
 .touken-info.recovery .info > .hp > span {
-  color: #146b2b;
+  color: rgba(219, 182, 16, 0.9);
 }
 
 .touken-info.damaged .info > .name > span, 
 .touken-info.damaged .info > .hp > span {
-  color: #8e770b;
+  color: rgba(172, 108, 13, 0.91);
 }
 
 .touken-info.warning .info > .name > span, 
