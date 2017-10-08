@@ -25,7 +25,7 @@ define((require, exports, module) => {
               name: sword.name,
               injury: sword.injury,
               baseId: sword.baseId,
-              battleStatusText: ['正常', '軽傷', '中傷', '重傷', 'RING_OUT', '破壞'][v.battleStatus]
+              battleStatusText: ['正常', '軽傷', '中傷', '重傷', '戰線崩壞', '破壞'][v.battleStatus]
             })
           })
           .values()
