@@ -37,8 +37,8 @@ define((require, exports, module) => {
             title: `战斗报告`,
             message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
             context: `掉落：${swordName}！`,
-            swordBaseId: playerParty[0].baseId,
-            icon: `static/icon.png`,
+            swordBaseId: getSwordId,
+            icon: `static/sword/${getSwordId}.png`,
           })
         }
         else if (getSwordId !== 0) {
@@ -47,6 +47,7 @@ define((require, exports, module) => {
             title: `战斗报告`,
             message: '本场无受伤',
             context: `掉落：${swordName}！`,
+            swordBaseId: getSwordId,
             icon: `static/sword/${getSwordId}.png`
           })
         }

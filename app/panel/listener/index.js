@@ -7,7 +7,7 @@ define((require, exports, module) => {
     static init (store) {
       // Listen Response
       chrome.devtools.network.onRequestFinished.addListener((request) => {
-        let tohken = request.request.url.match(/http:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
+        let tohken = request.request.url.match(/https?:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
         if (tohken != null) {
           let server = tohken[1]
           let path = tohken[2]
