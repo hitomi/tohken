@@ -3,7 +3,7 @@ define((require, exports, module) => {
   const TRHMasterData = require('app/core/master')
   const TRHRequestListener = chrome.devtools
     ? require('app/panel/listener/index')
-    : {}// require('app/panel/listener/debug')
+    : {} // require('app/panel/listener/debug')
 
   // Load Master Data
   TRHMasterData.load(store)
@@ -64,10 +64,25 @@ define((require, exports, module) => {
     })
   })
 
+  const Other = Vue.component('other', {
+    template: '#other'
+  })
+
+  const Extra = Vue.component('extra', {
+    template: '#extra'
+  })
+
+  const Setting = Vue.component('setting', {
+    template: '#setting'
+  })
+
   const router = new VueRouter({
     routes: [
       { path: '/', redirect: '/party' },
-      { path: '/party', components: { 'party-list-wrapper': partyListWrapper } }
+      { path: '/party', components: { 'party-list-wrapper': partyListWrapper } },
+      { path: '/other', component: Other },
+      { path: '/extra', component: Extra },
+      { path: '/setting', component: Setting }
     ]
   })
 

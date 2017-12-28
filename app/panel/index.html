@@ -42,6 +42,8 @@
     </div>
     <div class="view-content">
       <router-view name="party-list-wrapper"></router-view>
+      <!-- Default -->
+      <router-view></router-view>
     </div>
     <div v-if="!devtools" style="position: fixed; bottom: 0; right: 0; z-index: 99999;">
       <button @click="nextData" :disabled="testDataIndex === testDataCount">Next ({{testDataIndex}} / {{testDataCount}})</button>
@@ -158,7 +160,19 @@
     <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
     <li v-else>数据错误</li>
   </script>
-  
+
+  <script id="other" type="text/template">
+    <p>other</p>
+  </script>
+
+  <script id="extra" type="text/template">
+    <p>extra</p>
+  </script>
+
+  <script id="setting" type="text/template">
+    <p>setting</p>
+  </script>
+
   <!-- Vue -->
   <script src="../../vendor/vue.js"></script>
   <script src="../../vendor/vuex.js"></script>
