@@ -11,20 +11,7 @@ define((require, exports, module) => {
         if (tohken != null) {
           let server = tohken[1]
           let path = tohken[2]
-          if (server === 'static' && path.indexOf('.bin') > -1) {
-            // Load Bin Data
-            request.getContent((content, encoding) => {
-              TRHMasterData.init(content, store)
-            })
-          } else if (path.indexOf('31de83dedee2de4024a974e0370676ea') > -1) {
-            // swr_crest_s_000003u0xq7npke
-            // 31de83dedee2de4024a974e0370676ea
-            // data:image/png;base64,content
-            request.getContent((content, encoding) => {
-              console.log(content)
-              console.log(encoding)
-            })
-          } else if (server !== 'static' && path.indexOf('?uid=') > -1) {
+          if (server  !== 'static' && path.indexOf('?uid') > -1) {
             let action = path.split('?')[0]
             let postData = _.isObject(request['request']['postData'])
               ? _(request['request']['postData']['text'])
@@ -67,6 +54,12 @@ define((require, exports, module) => {
               }
               // Route
               TRHRequestRouter.route(action, jsonObj)
+            })
+          }
+        } else {
+          if(request.request.url.match(/1f1fa3d5e6cdc140f3c493457940e761\.bin/)) {
+            request.getContent((content, encoding) => {
+              TRHMasterData.init(content, store)
             })
           }
         }
