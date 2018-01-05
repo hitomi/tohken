@@ -43,6 +43,14 @@ Vue.filter('party-status', (status) => {
   ][status] || ''
 })
 
+Vue.filter('party-finished_at', (status) => {
+  return moment(status).format('hh:mm:ss')
+})
+
+Vue.filter('forge-sword_id', (status) => {
+  return _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '空')
+})
+
 Vue.filter('equip-level-cname', function (level) {
   return {
     0: 'destroyed',

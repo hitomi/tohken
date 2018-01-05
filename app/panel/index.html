@@ -25,17 +25,35 @@
         </router-link>
         <router-link class="main-menu" to="/other">
           <div class="menu-cover">
-            这些
+            本丸
+          </div>
+          <div class="menu-inner" @click="">
+            刀帐
+          </div>
+          <div class="menu-inner" @click="">
+            刀装&马
+          </div>
+          <div class="menu-inner" @click="">
+            锻刀室
+          </div>
+          <div class="menu-inner" @click="">
+            手入室
           </div>
         </router-link>
         <router-link class="main-menu" to="/extra">
           <div class="menu-cover">
-            还没
+            记录
+          </div>
+          <div class="menu-inner" @click="">
+            锻刀记录
+          </div>
+          <div class="menu-inner" @click="">
+            战斗记录
           </div>
         </router-link>
         <router-link class="main-menu" to="/setting">
           <div class="menu-cover">
-            做好
+            设置
           </div>
         </router-link>
       </div>
@@ -117,7 +135,7 @@
   <script id="party-list" type="text/template">
     <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
       <div class="party-info">
-        <div class="party-name">{{ party.party_name }} <small v-if="party.status > 1">[{{party.status | party-status}}]</small></div>
+        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[{{party.status | party-status}}][{{party.finished_at | party-finished_at}}]</small><small v-if="party.status > 2">[{{party.status | party-status}}]</small></div>
         <div class="party-level">
           A.<span>{{party.averageLevel}}</span> / T.<span>{{party.totalLevel}}</span>
         </div>
@@ -162,15 +180,46 @@
   </script>
 
   <script id="other" type="text/template">
-    <p>other</p>
+    <div>
+      <div>
+       <a href="../extra/overview/index.html" target="_blank">刀帐</a>
+      </div>
+      <div>
+        刀装&马
+      </div>
+      <div>
+        锻刀室
+        <div>{{forge.slot_no}}: <span>{{forge.sword_id || forge-sword_id}}</span><span>{{forge.finished_at}}</span></div>
+      </div>
+      <div>
+        手入室
+      </div>
+    </div>
   </script>
 
   <script id="extra" type="text/template">
-    <p>extra</p>
+    <div>
+      <div>
+        锻刀记录
+      </div>
+      <div>
+        战斗记录
+      </div>
+    </div>
   </script>
 
   <script id="setting" type="text/template">
-    <p>setting</p>
+    <div>
+      <div>
+        刀纹／q版设置
+      </div>
+      <div>
+        近侍设置
+      </div>
+      <div>
+        关于
+      </div>
+    </div>
   </script>
 
   <!-- Vue -->
