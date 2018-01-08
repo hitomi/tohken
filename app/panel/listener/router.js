@@ -100,6 +100,69 @@ define((require, exports, module) => {
           v.battleStatus = v.status
           delete v.status
         }
+        let rank = _.get(content, ['result', 'rank'])
+        let mvp = _.get(content, ['result', 'mvp'])
+        let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
+        if(rank == 'S') {
+          if(v.serial_id == leader) {
+            store.commit('swords/updateSword', {
+              serialId: v.serial_id,
+              updateData: { vvfatigue: v.vvfatigue += 3 }
+            })
+          }
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: v.vvfatigue += 4 }
+          })
+        }
+        else if(rank == 'A') {
+          if(v.serial_id == leader) {
+            store.commit('swords/updateSword', {
+              serialId: v.serial_id,
+              updateData: { vvfatigue: v.vvfatigue += 3 }
+            })
+          }
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: v.vvfatigue += 3 }
+          })
+        }
+        else if(rank == 'B') {
+          if(v.serial_id == leader) {
+            store.commit('swords/updateSword', {
+              serialId: v.serial_id,
+              updateData: { vvfatigue: v.vvfatigue += 3 }
+            })
+          }
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: v.vvfatigue += 2 }
+          })
+        }
+        else if(rank == 'C') {
+          if(v.serial_id == leader) {
+            store.commit('swords/updateSword', {
+              serialId: v.serial_id,
+              updateData: { vvfatigue: v.vvfatigue += 3 }
+            })
+          }
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: v.vvfatigue += 1 }
+          })
+        }
+        if(v.serial_id == mvp) {
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: v.vvfatigue += 10 }
+          })
+        }
+        if(v.vvfatigue >= 100) {
+          store.commit('swords/updateSword', {
+            serialId: v.serial_id,
+            updateData: { vvfatigue: 100 }
+          })
+        }
         store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v
@@ -131,6 +194,7 @@ define((require, exports, module) => {
 
     static ['sally/sally'] (content) {
       store.commit('inBattle')
+      store.commit('fatigueToVV')
       store.commit('sally/updateSally', {
         updateData: content.post_data
       })

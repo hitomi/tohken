@@ -23,6 +23,13 @@ define((require, exports, module) => {
       notInBattle (state) {
         state.inBattle = false
       },
+      fatigueToVV (state) {
+        let swords = state.swords
+        for(let sword in swords) {
+          sword.vvfatigue = sword.fatigue - 10
+          console.log(sword.serial_id + "   " + sword.vvfatigue)
+        }
+      },
       loadData (state, payload) {
         let { key, loaded } = payload
         Vue.set(state.dataLoaded, key, loaded)
