@@ -27,16 +27,13 @@
           <div class="menu-cover">
             本丸
           </div>
-          <div class="menu-inner" @click="">
-            刀帐
-          </div>
-          <div class="menu-inner" @click="">
+          <div class="menu-inner" @click="otherScroll('equip')">
             刀装&马
           </div>
-          <div class="menu-inner" @click="">
+          <div class="menu-inner" @click="otherScroll('forge')">
             锻刀室
           </div>
-          <div class="menu-inner" @click="">
+          <div class="menu-inner" @click="otherScroll('repair')">
             手入室
           </div>
         </router-link>
@@ -44,10 +41,10 @@
           <div class="menu-cover">
             记录
           </div>
-          <div class="menu-inner" @click="">
+          <div class="menu-inner" @click="otherScroll('forge-log')">
             锻刀记录
           </div>
-          <div class="menu-inner" @click="">
+          <div class="menu-inner" @click="otherScroll('battle-log')">
             战斗记录
           </div>
         </router-link>
@@ -180,11 +177,11 @@
   </script>
 
   <script id="forge-item" type="text/template">
-    <div>{{forge.slot_no}}: <span>{{forge.sword_id | sword-name}}</span><span>{{forge.finished_at | hhmmss}}</span></div>
+    <div>{{forge.slot_no}}: <span>{{forge.sword_id | sword-name}}</span><span>[{{forge.finished_at | hhmmss}}]</span></div>
   </script>
 
   <script id="repair-item" type="text/template">
-    <div>{{repair.slot_no}}: <span>{{swordSerialName(repair.sword_serial_id)}}</span><span>{{repair.finished_at | hhmmss}}</span></div>
+    <div>{{repair.slot_no}}: <span>{{swordSerialName(repair.sword_serial_id)}}</span><span>[{{repair.finished_at | hhmmss}}]</span></div>
   </script>
 
   <script id="equip-count" type="text/template">
@@ -194,17 +191,17 @@
   <script id="other" type="text/template">
     <div>
       <div>
-       <a href="../extra/overview/index.html" target="_blank">刀帐</a>
+       <!--a href="../extra/overview/index.html" target="_blank">刀帐</a-->
       </div>
-      <div>
-        刀装&nbsp;马
-        <div v-for="el in equipList">{{el.equipId}} : {{el.count}}</div>
+      <div class="title" id="equip">
+        刀装&马
+        <div v-for="el in equipList">{{el.equipId | equip-name }} : {{el.count}}</div>
       </div>
-      <div>
+      <div class="title" id="forge">
         锻刀室
         <forge-item v-for='f in forge.slot' :slot-no="f.slot_no" :key="f.slot_no"></forge-item>
       </div>
-      <div>
+      <div class="title" id="repair">
         手入室
         <repair-item v-for='r in repair.slot' :slot-no="r.slot_no" :key="r.slot_no"></repair-item>
       </div>
@@ -213,10 +210,10 @@
 
   <script id="extra" type="text/template">
     <div>
-      <div>
+      <div class="title" id="forge-log">
         锻刀记录
       </div>
-      <div>
+      <div class="title" id="battle-log">
         战斗记录
       </div>
     </div>
@@ -225,13 +222,16 @@
   <script id="setting" type="text/template">
     <div>
       <div>
-        刀纹／q版设置
+        <div class="title">
+          近侍设置
+        </div>
+        <p>请输入近侍刀帐号（远征及内番提醒将会显示近侍刀纹）</p>
       </div>
       <div>
-        近侍设置
-      </div>
-      <div>
-        关于
+        <div class="title">
+          关于
+        </div>
+        <p></p>
       </div>
     </div>
   </script>

@@ -93,6 +93,10 @@ define((require, exports, module) => {
     return _.get(TRHMasterData.getMasterData('Sword'), [status, 'name'], '空')
   })
 
+  Vue.filter('equip-name', (status) => {
+    return _.get(TRHMasterData.getMasterData('Equip'), [status, 'name'], '空')
+  })
+
   const Other = Vue.component('other', {
     template: '#other',
     computed: {
@@ -173,6 +177,10 @@ define((require, exports, module) => {
       partyScroll (i) {
         if (!$(`#party-${i}`).offset()) return
         window.scrollTo(0, $(`#party-${i}`).offset().top - 80)
+      },
+      otherScroll (name) {
+        if (!$(`#${name}`).offset()) return
+        window.scrollTo(0, $(`#${name}`).offset().top - 80)
       }
     }
   })

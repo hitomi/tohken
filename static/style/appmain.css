@@ -401,3 +401,8 @@ a {
   position: absolute;
   pointer-events: none;
 }
+
+.title {
+  font-size: 150%;
+  padding: 12px;
+}
