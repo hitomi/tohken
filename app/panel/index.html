@@ -135,7 +135,7 @@
   <script id="party-list" type="text/template">
     <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
       <div class="party-info">
-        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[{{party.status | party-status}}][{{party.finished_at | party-finished_at}}]</small><small v-if="party.status > 2">[{{party.status | party-status}}]</small></div>
+        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[{{party.status | party-status}}][{{party.finished_at | hhmmss}}]</small><small v-if="party.status > 2">[{{party.status | party-status}}]</small></div>
         <div class="party-level">
           A.<span>{{party.averageLevel}}</span> / T.<span>{{party.totalLevel}}</span>
         </div>
@@ -179,21 +179,34 @@
     <li v-else>数据错误</li>
   </script>
 
+  <script id="forge-item" type="text/template">
+    <div>{{forge.slot_no}}: <span>{{forge.sword_id | sword-name}}</span><span>{{forge.finished_at | hhmmss}}</span></div>
+  </script>
+
+  <script id="repair-item" type="text/template">
+    <div>{{repair.slot_no}}: <span>{{swordSerialName(repair.sword_serial_id)}}</span><span>{{repair.finished_at | hhmmss}}</span></div>
+  </script>
+
+  <script id="equip-count" type="text/template">
+    <div>{{}}</div>
+  </script>
+
   <script id="other" type="text/template">
     <div>
       <div>
        <a href="../extra/overview/index.html" target="_blank">刀帐</a>
       </div>
       <div>
-        刀装&马
+        刀装&nbsp;马
+        <div v-for="el in equipList">{{el.equipId}} : {{el.count}}</div>
       </div>
       <div>
         锻刀室
-        <div>{{forge}}<div>
-        <div>{{forge.slot_no}}: <span>{{forge.sword_id || forge-sword_id}}</span><span>{{forge.finished_at}}</span></div>
+        <forge-item v-for='f in forge.slot' :slot-no="f.slot_no" :key="f.slot_no"></forge-item>
       </div>
       <div>
         手入室
+        <repair-item v-for='r in repair.slot' :slot-no="r.slot_no" :key="r.slot_no"></repair-item>
       </div>
     </div>
   </script>

@@ -64,14 +64,52 @@ define((require, exports, module) => {
     })
   })
 
-  const Other = Vue.component('other', {
-    template: '#other',
+  Vue.component('forge-item', {
+    template: '#forge-item',
+    props: ['slot-no'],
     computed: Vuex.mapState({
       forge (state) {
-        console.log(state)
-        return _.get(state, ['forge', 'slot', this.slot_no],  {})
+        return _.get(state, ['forge', 'slot', this.slotNo], {})
       }
     })
+  })
+
+  Vue.component('repair-item', {
+    template: '#repair-item',
+    props: ['slot-no'],
+    computed: Vuex.mapState({
+      repair (state) {
+        return _.get(state, ['repair', 'slot', this.slotNo], {})
+      }
+    }),
+    methods: {
+      swordSerialName (serialId) {
+        return serialId ? _.get(store.state, ['swords', 'serial', serialId, 'name'], '未获取').replace(/\d+/, '') : '无'
+      }
+    }
+  })
+
+  Vue.filter('sword-name', (status) => {
+    return _.get(TRHMasterData.getMasterData('Sword'), [status, 'name'], '空')
+  })
+
+  const Other = Vue.component('other', {
+    template: '#other',
+    computed: {
+      ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair']),
+      equipList () {
+        return _(this.equip.serial)
+          .groupBy(o => o.equip_id)
+          .mapValues((v, k) => {
+            return {
+              equipId: k,
+              count: v.length
+            }
+          })
+          .values()
+          .value()
+      }
+    }
   })
 
   const Extra = Vue.component('extra', {
