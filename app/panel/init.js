@@ -65,7 +65,13 @@ define((require, exports, module) => {
   })
 
   const Other = Vue.component('other', {
-    template: '#other'
+    template: '#other',
+    computed: Vuex.mapState({
+      forge (state) {
+        console.log(state)
+        return _.get(state, ['forge', 'slot', this.slot_no],  {})
+      }
+    })
   })
 
   const Extra = Vue.component('extra', {

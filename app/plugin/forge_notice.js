@@ -8,7 +8,7 @@ define((require, exports, module) => {
         let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
         store.dispatch('notice/addNotice', {
           title: `锻刀剧透： ${swordName}`,
-          message: `结束时间：${moment(mutation.payload.updateData.finished_at).format('hh:mm:ss')}`,
+          message: `结束时间：${moment(mutation.payload.updateData.finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
           context: '请耐心等待哟（或者拍个加速？）',
           tag: getSwordId,
           renotify: true,

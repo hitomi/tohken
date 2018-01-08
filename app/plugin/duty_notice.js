@@ -18,20 +18,25 @@ define((require, exports, module) => {
             icon: `static/sword/50.png`
           })
         }
-        let check = setInterval(function isDutyFinished(){
-          if(finished_at != null && moment(finished_at).subtract(1, 'h').isBefore(Date.now())) {
-            store.dispatch('notice/addNotice', {
-              title: `内番结束！`,
-              message: `结束时间：${moment(finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
-              context: '请尽快收取！',
-              renotify: true,
-              disableAutoClose: true,
-              swordBaseId: 50,
-              icon: `static/sword/50.png`
-            })
-            clearInterval(check)
-          }
-        }, 1000)
+        if(state.duty.duty.isIntervalSet == false || state.duty.duty.isIntervalSet == null) {
+          console.log("set interval")
+          let check = setInterval(function isDutyFinished(){
+            state.duty.duty.isIntervalSet = true
+            if(finished_at != null && moment(finished_at).subtract(1, 'h').isBefore(Date.now())) {
+              store.dispatch('notice/addNotice', {
+                title: `内番结束！`,
+                message: `结束时间：${moment(finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
+                context: '请尽快收取！',
+                renotify: true,
+                disableAutoClose: true,
+                swordBaseId: 50,
+                icon: `static/sword/50.png`
+              })
+              clearInterval(check)
+              state.duty.duty.isIntervalSet = false
+            }
+          }, 1000)
+        }
       }
     })
   }

@@ -8,6 +8,7 @@ define((require, exports, module) => {
       totalLevel: null,
       averageLevel: null,
       inBattle: false,
+      isIntervalSet: false,
       slot: {
         1: {
           serial_id: null,
