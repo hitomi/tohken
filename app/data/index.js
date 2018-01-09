@@ -24,10 +24,10 @@ define((require, exports, module) => {
         state.inBattle = false
       },
       fatigueToVV (state) {
-        let swords = state.swords
-        for(let sword in swords) {
+        let swords = state.swords.serial
+        for(let s in swords) {
+          let sword = swords[s]
           sword.vvfatigue = sword.fatigue - 10
-          console.log(sword.serial_id + "   " + sword.vvfatigue)
         }
       },
       loadData (state, payload) {

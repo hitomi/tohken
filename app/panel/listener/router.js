@@ -100,69 +100,52 @@ define((require, exports, module) => {
           v.battleStatus = v.status
           delete v.status
         }
+        // How to get vvfatigue
+        v.vvfatigue = _.get(state, ['result', 'player', 'party', 'slot'])
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
-        if(rank == 'S') {
+        if(rank == 2) {
+          console.log("Rank S")
           if(v.serial_id == leader) {
-            store.commit('swords/updateSword', {
-              serialId: v.serial_id,
-              updateData: { vvfatigue: v.vvfatigue += 3 }
-            })
+            console.log("leader calculate")
+            v.vvfatigue += 3
           }
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: v.vvfatigue += 4 }
-          })
+          v.vvfatigue += 1
         }
-        else if(rank == 'A') {
+        else if(rank == 3) {
+          console.log("Rank A")
           if(v.serial_id == leader) {
-            store.commit('swords/updateSword', {
-              serialId: v.serial_id,
-              updateData: { vvfatigue: v.vvfatigue += 3 }
-            })
+            console.log("leader calculate")
+            v.vvfatigue += 3
           }
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: v.vvfatigue += 3 }
-          })
+          v.vvfatigue += 0
         }
-        else if(rank == 'B') {
+        else if(rank == 4) {
+          console.log("Rank B")
           if(v.serial_id == leader) {
-            store.commit('swords/updateSword', {
-              serialId: v.serial_id,
-              updateData: { vvfatigue: v.vvfatigue += 3 }
-            })
+            console.log("leader calculate")
+            v.vvfatigue += 3
           }
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: v.vvfatigue += 2 }
-          })
+          v.vvfatigue -= 1
         }
-        else if(rank == 'C') {
+        else if(rank == 5) {
+          console.log("Rank C")
           if(v.serial_id == leader) {
-            store.commit('swords/updateSword', {
-              serialId: v.serial_id,
-              updateData: { vvfatigue: v.vvfatigue += 3 }
-            })
+            console.log("leader calculate")
+            v.vvfatigue += 3
           }
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: v.vvfatigue += 1 }
-          })
+          v.vvfatigue -= 2
         }
         if(v.serial_id == mvp) {
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: v.vvfatigue += 10 }
-          })
+          console.log("mvp calculate")
+          v.vvfatigue += 10
         }
         if(v.vvfatigue >= 100) {
-          store.commit('swords/updateSword', {
-            serialId: v.serial_id,
-            updateData: { vvfatigue: 100 }
-          })
+          console.log(">= 100")
+          v.vvfatigue = 100
         }
+        console.log(v)
         store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v
