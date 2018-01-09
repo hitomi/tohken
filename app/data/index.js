@@ -6,6 +6,7 @@ define((require, exports, module) => {
     HurtNotice: require('app/plugin/hurt_notice'),
     DutyNotice: require('app/plugin/duty_notice'),
     ConquestNotice: require('app/plugin/conquest_notice'),
+    SaveData: require('app/plugin/save_data'),
   }
 
   return new Vuex.Store({
@@ -28,7 +29,7 @@ define((require, exports, module) => {
         let swords = state.swords.serial
         for(let s in swords) {
           let sword = swords[s]
-          sword.vvfatigue = sword.fatigue - 10
+          sword.battleFatigue = sword.fatigue - 10
         }
       },
       loadData (state, payload) {
@@ -47,7 +48,9 @@ define((require, exports, module) => {
       equip: require('./state/equip'),
       battle: require('./state/battle'),
       sally: require('./state/sally'),
-      notice: require('./state/notice')
+      notice: require('./state/notice'),
+      log: require('./state/log'),
+      config: require('./state/config')
     },
     plugins: _.values(Plugin)
   })

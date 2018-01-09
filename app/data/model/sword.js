@@ -27,7 +27,7 @@ define((require, exports, module) => {
       hide_up: null,
       loyalties: null,
       fatigue: null,
-      vvfatigue: null,
+      battleFatigue: null,
       equip_serial_id1: null,
       equip_serial_id2: null,
       equip_serial_id3: null,

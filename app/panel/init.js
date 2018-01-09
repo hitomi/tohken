@@ -4,6 +4,7 @@ define((require, exports, module) => {
   const TRHRequestListener = chrome.devtools
     ? require('app/panel/listener/index')
     : {} // require('app/panel/listener/debug')
+  const defaultConfig = require('app/data/model/config')
 
   // Load Master Data
   TRHMasterData.load(store)
@@ -121,17 +122,20 @@ define((require, exports, module) => {
   })
 
   const Setting = Vue.component('setting', {
-    template: '#setting'
-  })
-
-  Vue.component('setSecretary', {
-    template: '#setSecretary',
-    props: ['secretary'],
-    computed: Vuex.mapState({
-      setSecretary (state) {
-        return _.set(state, ['secretary'], this.secretary)
-      }
-    })
+    template: '#setting',
+    computed: {
+      ..._.mapValues(store.state.config, (v, k) => {
+          console.log(v, k)
+          return {
+            get () {
+              return store.state.config[k]
+            },
+            set (value) {
+              store.commit('config/updateConfig', { [k]: value })
+            }
+          }
+        })
+    }
   })
 
   const router = new VueRouter({
@@ -169,6 +173,19 @@ define((require, exports, module) => {
     },
     computed: {
       ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party'])
+    },
+    mounted () {
+      localforage.getItem('Config').then((data) => {
+        store.commit('config/updateConfig', data || {})
+      })
+
+      localforage.getItem('BattleLog').then((data) => {
+        if (!data) _.each(v => store.commit('log/addBattleLog', v))
+      })
+
+      localforage.getItem('SallyLog').then((data) => {
+        if (!data) _.each(v => store.commit('log/addSallyLog', v))
+      })
     },
     methods: {
       nextData () {

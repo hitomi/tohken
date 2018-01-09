@@ -127,7 +127,7 @@
       </ul>
     </div>
   </script>
-  
+
   <!-- Component Party List -->
   <script id="party-list" type="text/template">
     <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
@@ -149,7 +149,7 @@
         <div class="name">{{sword.name}} <span v-if="sword.inBattle || sword.injury">[{{sword.injury | battle-status-text}}]</span></div>
         <div class="hp">HP <span>{{sword.hp}} / {{sword.hp_max}}</span><span v-if="!sword.inBattle && (sword.injury && sword.status != 0 )">[{{sword.status | status-text}}]</span></div>
         <div class="level">Lv.{{sword.level}}<small>(next {{sword.nextExp}})</small></div>
-        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{sword.fatigueFlag | fatigue-text}} {{sword.vvfatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
+        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{sword.fatigueFlag | fatigue-text}} {{sword.battleFatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
         <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-else>{{sword.fatigueFlag | fatigue-text}} {{sword.vfatigue}} <small>{{sword.fatigueFlag | fatigue-buff}}</small></div>
         <div class="horse">{{ equipSerialName(sword.horse_serial_id) }}</div>
         <div class="equip">
@@ -185,18 +185,14 @@
     <div>{{repair.slot_no}}: <span>{{swordSerialName(repair.sword_serial_id)}}</span><span>[{{repair.finished_at | hhmmss}}]</span></div>
   </script>
 
-  <script id="equip-count" type="text/template">
-    <div>{{}}</div>
-  </script>
-
   <script id="other" type="text/template">
     <div>
       <div>
        <!--a href="../extra/overview/index.html" target="_blank">刀帐</a-->
       </div>
       <div class="title" id="equip">
-        刀装&马
-        <div v-for="el in equipList">{{el.equipId | equip-name }} : {{el.count}}</div>
+        刀装&nbsp;马
+        <div v-for="el in equipList">{{ el.equipId | equip-name }} : {{el.count}}</div>
       </div>
       <div class="title" id="forge">
         锻刀室
@@ -226,10 +222,9 @@
         <div class="title" id="setSecretary">
           近侍设置
           <p>请输入近侍刀帐号，远征及内番提醒将会显示近侍刀纹</p>
-          <input v-model="secretary" placeholder="3">
-          <p>{{secretary}}</p>
+          <input v-model="secretary">
+          <p>{{ secretary | sword-name }}</p>
         </div>
-
       </div>
       <div>
         <div class="title">

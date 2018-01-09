@@ -100,7 +100,7 @@ define((require, exports, module) => {
           v.battleStatus = v.status
           delete v.status
         }
-        v.vvfatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'vvfatigue'])
+        v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'battleFatigue'])
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
@@ -108,41 +108,41 @@ define((require, exports, module) => {
           console.log("Rank S")
           if(v.serial_id == leader) {
             console.log("leader calculate")
-            v.vvfatigue += 3
+            v.battleFatigue += 3
           }
-          v.vvfatigue += 1
+          v.battleFatigue += 1
         }
         else if(rank == 3) {
           console.log("Rank A")
           if(v.serial_id == leader) {
             console.log("leader calculate")
-            v.vvfatigue += 3
+            v.battleFatigue += 3
           }
-          v.vvfatigue += 0
+          v.battleFatigue += 0
         }
         else if(rank == 4) {
           console.log("Rank B")
           if(v.serial_id == leader) {
             console.log("leader calculate")
-            v.vvfatigue += 3
+            v.battleFatigue += 3
           }
-          v.vvfatigue -= 1
+          v.battleFatigue -= 1
         }
         else if(rank == 5) {
           console.log("Rank C")
           if(v.serial_id == leader) {
             console.log("leader calculate")
-            v.vvfatigue += 3
+            v.battleFatigue += 3
           }
-          v.vvfatigue -= 2
+          v.battleFatigue -= 2
         }
         if(v.serial_id == mvp) {
           console.log("mvp calculate")
-          v.vvfatigue += 10
+          v.battleFatigue += 10
         }
-        if(v.vvfatigue >= 100) {
+        if(v.battleFatigue >= 100) {
           console.log(">= 100")
-          v.vvfatigue = 100
+          v.battleFatigue = 100
         }
         store.commit('swords/updateSword', {
           serialId: v.serial_id,

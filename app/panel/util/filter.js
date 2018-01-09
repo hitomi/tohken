@@ -43,8 +43,8 @@ Vue.filter('party-status', (status) => {
   ][status] || ''
 })
 
-Vue.filter('hhmmss', (status) => {
-  return moment(status).format('hh:mm:ss')
+Vue.filter('hhmmss', (time) => {
+  return moment(time).format('hh:mm:ss')
 })
 
 Vue.filter('equip-level-cname', function (level) {
