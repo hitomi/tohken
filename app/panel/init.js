@@ -124,6 +124,16 @@ define((require, exports, module) => {
     template: '#setting'
   })
 
+  Vue.component('setSecretary', {
+    template: '#setSecretary',
+    props: ['secretary'],
+    computed: Vuex.mapState({
+      setSecretary (state) {
+        return _.set(state, ['secretary'], this.secretary)
+      }
+    })
+  })
+
   const router = new VueRouter({
     routes: [
       { path: '/', redirect: '/party' },

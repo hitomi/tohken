@@ -223,9 +223,11 @@
   <script id="setting" type="text/template">
     <div>
       <div>
-        <div class="title">
+        <div class="title" id="setSecretary">
           近侍设置
-          <p>请输入近侍刀帐号（远征及内番提醒将会显示近侍刀纹）</p>
+          <p>请输入近侍刀帐号，远征及内番提醒将会显示近侍刀纹</p>
+          <input v-model="secretary" placeholder="3">
+          <p>{{secretary}}</p>
         </div>
 
       </div>

@@ -14,8 +14,8 @@ define((require, exports, module) => {
             title: `内番未放置`,
             context: '请安排刀刀们干活啦！',
             disableAutoClose: true,
-            swordBaseId: 50,
-            icon: `static/sword/50.png`
+            swordBaseId: state.secretary,
+            icon: `static/sword/${state.secretary}.png`
           })
         }
         if(state.duty.duty.isIntervalSet == false || state.duty.duty.isIntervalSet == null) {
@@ -29,8 +29,8 @@ define((require, exports, module) => {
                 context: '请尽快收取！',
                 renotify: true,
                 disableAutoClose: true,
-                swordBaseId: 50,
-                icon: `static/sword/50.png`
+                swordBaseId: state.secretary,
+                icon: `static/sword/${state.secretary}.png`
               })
               clearInterval(check)
               state.duty.duty.isIntervalSet = false

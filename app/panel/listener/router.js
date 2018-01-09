@@ -100,8 +100,7 @@ define((require, exports, module) => {
           v.battleStatus = v.status
           delete v.status
         }
-        // How to get vvfatigue
-        v.vvfatigue = _.get(state, ['result', 'player', 'party', 'slot'])
+        v.vvfatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'vvfatigue'])
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
@@ -145,7 +144,6 @@ define((require, exports, module) => {
           console.log(">= 100")
           v.vvfatigue = 100
         }
-        console.log(v)
         store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v

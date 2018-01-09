@@ -13,6 +13,7 @@ define((require, exports, module) => {
     state () {
       return {
         inBattle: false,
+        secretary: 3,
         dataLoaded: {}
       }
     },
