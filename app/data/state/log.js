@@ -1,6 +1,6 @@
 define((require, exports, module) => {
   const defaultBattleLog = require('../model/battle_log')
-  const defaultSallyLog = require('../model/sally_log')
+  const defaultForgeLog = require('../model/forge_log')
   return {
     namespaced: true,
     state () {
@@ -16,9 +16,9 @@ define((require, exports, module) => {
         mergeModel(log, updateData)
         state.battle.push(log)
       },
-      addSallyLog (state, payload) {
+      addForgeLog (state, payload) {
         let { updateData } = payload
-        let log = defaultSallyLog()
+        let log = defaultForgeLog()
         mergeModel(log, updateData)
         state.battle.push(log)
       }
