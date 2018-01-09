@@ -2,7 +2,7 @@ function parseValues (v) {
   if (!isNaN(v)) {
     return _.toNumber(v)
   }
-  if (_.isString(v) && v.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/)) {
+  if (_.isString(v) && v.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)) {
     return Date.parse(`${v} GMT+0900`)
   }
   return v

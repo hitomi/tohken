@@ -50,6 +50,10 @@ define((require, exports, module) => {
     return moment(time).format('hh:mm:ss')
   })
 
+  exports.MMDDhhmmss = Vue.filter('MMDDhhmmss', (time) => {
+    return moment(time).format('MM/DD hh:mm:ss')
+  })
+
   exports.equipLevelCname = Vue.filter('equip-level-cname', function (level) {
     return {
       0: 'destroyed',

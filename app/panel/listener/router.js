@@ -19,6 +19,7 @@ define((require, exports, module) => {
     static common (content) {
       if (content.sword) {
         _.each(content.sword, (v, k) => {
+          if (!v.serial_id) return
           v.inBattle = false
           if (v.battleStatus) {
             v.status = v.battleStatus
@@ -71,6 +72,7 @@ define((require, exports, module) => {
       }
       if (content.equip) {
         _.each(content.equip, (v, k) => {
+          if (!v.serial_id) return
           store.commit('equip/updateEquip', {
             serialId: k,
             updateData: v
@@ -177,7 +179,13 @@ define((require, exports, module) => {
       store.commit('inBattle')
       store.commit('fatigueToVV')
       store.commit('sally/updateSally', {
-        updateData: content.post_data
+        updateData: content.postData
+      })
+    }
+
+    static ['forge/start'] (content) {
+      store.commit('forge/updateForge', {
+        updateData: _.extend(content, content.postData)
       })
     }
 

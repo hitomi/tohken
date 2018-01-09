@@ -5,22 +5,26 @@ define((require, exports, module) => {
     namespaced: true,
     state () {
       return {
-        battle: [],
-        sally: []
+        battle: {},
+        forge: {}
       }
     },
     mutations: {
       addBattleLog (state, payload) {
-        let { updateData } = payload
-        let log = defaultBattleLog()
-        mergeModel(log, updateData)
-        state.battle.push(log)
+        let { logId } = payload
+        if (!logId) return
+        if (!state.battle[logId]) {
+          Vue.set(state.battle, logId, defaultBattleLog())
+        }
+        mergeModel(state.battle[logId], payload)
       },
       addForgeLog (state, payload) {
-        let { updateData } = payload
-        let log = defaultForgeLog()
-        mergeModel(log, updateData)
-        state.battle.push(log)
+        let { logId } = payload
+        if (!logId) return
+        if (!state.forge[logId]) {
+          Vue.set(state.forge, logId, defaultForgeLog())
+        }
+        mergeModel(state.forge[logId], payload)
       }
     }
   }

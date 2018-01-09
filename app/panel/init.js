@@ -118,14 +118,16 @@ define((require, exports, module) => {
   })
 
   const Extra = Vue.component('extra', {
-    template: '#extra'
+    template: '#extra',
+    computed: {
+      ...Vuex.mapState(['log'])
+    }
   })
 
   const Setting = Vue.component('setting', {
     template: '#setting',
     computed: {
       ..._.mapValues(store.state.config, (v, k) => {
-          console.log(v, k)
           return {
             get () {
               return store.state.config[k]
@@ -177,11 +179,11 @@ define((require, exports, module) => {
       })
 
       localforage.getItem('BattleLog').then((data) => {
-        if (!data) _.each(v => store.commit('log/addBattleLog', v))
+        if (data) _.each(data, v => store.commit('log/addBattleLog', v))
       })
 
-      localforage.getItem('SallyLog').then((data) => {
-        if (!data) _.each(v => store.commit('log/addSallyLog', v))
+      localforage.getItem('ForgeLog').then((data) => {
+        if (data) _.each(data, v => store.commit('log/addForgeLog', v))
       })
     },
     methods: {

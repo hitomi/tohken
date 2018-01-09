@@ -326,11 +326,59 @@
 
   <script id="extra" type="text/template">
     <div>
-      <div class="title" id="forge-log">
-        锻刀记录
+      <div class="title" id="forge-log">· 锻刀記錄 ·</div>
+      <div class="data-table">
+        <table style="max-width: 500px;">
+          <thead>
+            <tr>
+              <th>番号</th>
+              <th>刀名</th>
+              <th>木炭</th>
+              <th>玉鋼</th>
+              <th>冷却</th>
+              <th>砥石</th>
+              <th>御札</th>
+              <th>结束时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="forge in log.forge">
+              <td>{{ forge.sword_id || '-' }}</td>
+              <td>{{ forge.sword_id | sword-name }}</td>
+              <td>{{ forge.charcoal || '-' }}</td>
+              <td>{{ forge.steel || '-' }}</td>
+              <td>{{ forge.coolant || '-' }}</td>
+              <td>{{ forge.file || '-' }}</td>
+              <td>{{ forge.use_assist || '-' }}</td>
+              <td>{{ forge.finished_at | MMDDhhmmss }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="title" id="battle-log">
-        战斗记录
+      <div class="title" id="battle-log">· 交戦記録 ·</div>
+      <div class="data-table">
+        <table style="max-width: 500px;">
+          <thead>
+            <tr>
+              <th>部隊</th>
+              <th>番号</th>
+              <th>刀名</th>
+              <th>时代</th>
+              <th>地域</th>
+              <th>评价</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="battle in log.battle">
+              <td>{{ battle.party_no || '-' }}</td>
+              <td>{{ battle.get_sword_id || '-' }}</td>
+              <td>{{ battle.get_sword_id | sword-name }}</td>
+              <td>{{ battle.episode_id || '-' }}</td>
+              <td>{{ battle.field_id || '-' }}</td>
+              <td>{{ battle.rank || '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </script>

@@ -4,6 +4,15 @@ define((require, exports, module) => {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'battle/updateBattle') {
         let { updateData } = mutation.payload
+        store.commit('log/addBattleLog', {
+          logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
+          party_no: state.sally.party_no,
+          get_sword_id: updateData.result.get_sword_id,
+          episode_id: state.sally.episode_id,
+          field_id: state.sally.field_id,
+          rank: updateData.result.rank,
+          mvp: updateData.result.mvp,
+        })
         let resultParty = _(_.get(updateData, ['result', 'player', 'party', 'slot']))
           .values()
           .keyBy(o => o.serial_id)
