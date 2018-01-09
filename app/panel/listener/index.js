@@ -20,7 +20,7 @@ define((require, exports, module) => {
                 .map(o => o.split('='))
               : {}
             request.getContent((content, encoding) => {
-              let jsonObj = JSON.parse(content)
+              let jsonObj = JSON.parse(content) || {}
               jsonObj['postData'] = _.isArray(postData) ? _.fromPairs(postData) : postData
               if (_(jsonObj).pick(['iv', 'data']).keys().value().length === 2) {
                 // Need decrypt

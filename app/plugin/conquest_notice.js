@@ -16,8 +16,8 @@ define((require, exports, module) => {
                 context: '请尽快收取！',
                 renotify: false,
                 disableAutoClose: true,
-                swordBaseId: state.secretary,
-                icon: `static/sword/${state.secretary}.png`
+                swordBaseId: state.config.secretary,
+                icon: `static/sword/${state.config.secretary}.png`
               })
               clearInterval(check)
               party.isIntervalSet = false

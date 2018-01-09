@@ -1,24 +1,15 @@
 define((require, exports, module) => {
   const store = require('app/data/index')
   const TRHMasterData = require('app/core/master')
-  const TRHRequestListener = chrome.devtools
-    ? require('app/panel/listener/index')
-    : {} // require('app/panel/listener/debug')
+  const TRHRequestListener = require('app/panel/listener/index')
   const defaultConfig = require('app/data/model/config')
+  const filters = require('app/panel/util/filter')
 
   // Load Master Data
   TRHMasterData.load(store)
 
   // Start Request Listener
   TRHRequestListener.init(store)
-
-  const partyListWrapper = {
-    template: `
-      <div class="party-list-wrapper">
-      <party-list v-for="i in 4" :key="i" :party-no="i"></party-list>
-      </div>
-    `
-  }
 
   Vue.component('notice-content', {
     template: '#notice-template',
@@ -47,12 +38,7 @@ define((require, exports, module) => {
       sword (state) {
         return _.get(state, ['swords', 'serial', this.swordSerialId], {})
       }
-    }),
-    methods: {
-      equipSerialName (serialId) {
-        return serialId ? _.get(store.state, ['equip', 'serial', serialId, 'name'], '未获取').replace(/\d+/, '') : '无'
-      }
-    }
+    })
   })
 
   Vue.component('equip-item', {
@@ -82,37 +68,51 @@ define((require, exports, module) => {
       repair (state) {
         return _.get(state, ['repair', 'slot', this.slotNo], {})
       }
-    }),
-    methods: {
-      swordSerialName (serialId) {
-        return serialId ? _.get(store.state, ['swords', 'serial', serialId, 'name'], '未获取').replace(/\d+/, '') : '无'
-      }
-    }
+    })
   })
 
-  Vue.filter('sword-name', (status) => {
-    return _.get(TRHMasterData.getMasterData('Sword'), [status, 'name'], '空')
-  })
-
-  Vue.filter('equip-name', (status) => {
-    return _.get(TRHMasterData.getMasterData('Equip'), [status, 'name'], '空')
-  })
+  const partyListWrapper = {
+    template: `
+      <div class="party-list-wrapper">
+      <party-list v-for="i in 4" :key="i" :party-no="i"></party-list>
+      </div>
+    `
+  }
 
   const Other = Vue.component('other', {
     template: '#other',
+    data () {
+      return {
+        option: {
+          info: false,
+          value: false,
+          equip: false
+        }
+      }
+    },
     computed: {
       ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair']),
       equipList () {
-        return _(this.equip.serial)
+        let allEquips = _(this.equip.serial)
+          .mapValues((v, k) => {
+            let sword = _.find(store.state.swords.serial, o => o.horse_serial_id == k)
+            return _.extend(v, {
+              owner: sword ? sword.name : '-'
+            })
+          })
           .groupBy(o => o.equip_id)
           .mapValues((v, k) => {
-            return {
-              equipId: k,
-              count: v.length
-            }
+            let owners = _(v).map(o => o.owner).filter(o => o != '-').value().join(',')
+            return _.extend({
+              count: v.length,
+              owner: owners
+            }, _.get(TRHMasterData.getMasterData('Equip'), [k], {}))
           })
           .values()
           .value()
+        let equip = _.filter(allEquips, o => o.equipId < 10000)
+        let horse = _.filter(allEquips, o => o.equipId >= 10000)
+        return { equip , horse }
       }
     }
   })
@@ -166,10 +166,7 @@ define((require, exports, module) => {
     store,
     router,
     data: {
-      testDataCount: TRHRequestListener.testDataCount,
-      testDataIndex: 0,
-      devtools: !!chrome.devtools,
-      rec: false
+      devtools: !!chrome.devtools
     },
     computed: {
       ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party'])
@@ -188,24 +185,7 @@ define((require, exports, module) => {
       })
     },
     methods: {
-      nextData () {
-        TRHRequestListener.nextData(this.testDataIndex++)
-      },
-      autoData: () => TRHRequestListener.autoData(),
-      dataRec () {
-        this.rec ? TRHRequestListener.stopRec() : TRHRequestListener.startRec()
-        this.rec = !this.rec
-      },
-      dataExport () {
-        this.rec = !this.rec
-        TRHRequestListener.stopRec()
-        TRHRequestListener.exportRec()
-      },
-      partyScroll (i) {
-        if (!$(`#party-${i}`).offset()) return
-        window.scrollTo(0, $(`#party-${i}`).offset().top - 80)
-      },
-      otherScroll (name) {
+      scroll (name) {
         if (!$(`#${name}`).offset()) return
         window.scrollTo(0, $(`#${name}`).offset().top - 80)
       }

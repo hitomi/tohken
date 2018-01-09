@@ -2,14 +2,8 @@ define((require, exports, module) => {
   return (store) => {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'duty/updateDuty') {
-        let finished_at = mutation.payload.updateData.finished_at
-        let horse_id2 = mutation.payload.updateData.horse_id2
-        let horse_id1 = mutation.payload.updateData.horse_id1
-        let field_id1 = mutation.payload.updateData.field_id1
-        let field_id2 = mutation.payload.updateData.field_id2
-        let bout_id1 = mutation.payload.updateData.bout_id1 
-        let bout_id2 = mutation.payload.updateData.bout_id2
-        if(horse_id1 == null && horse_id2 == null && field_id1 == null && field_id2 == null && bout_id1 == null && bout_id2 == null ) {
+        let { finished_at, horse_id2, horse_id1, field_id1, field_id2, bout_id1, bout_id2 } = mutation.payload.updateData
+        if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull)) {
           store.dispatch('notice/addNotice', {
             title: `内番未放置`,
             context: '请安排刀刀们干活啦！',
@@ -29,8 +23,8 @@ define((require, exports, module) => {
                 context: '请尽快收取！',
                 renotify: true,
                 disableAutoClose: true,
-                swordBaseId: state.secretary,
-                icon: `static/sword/${state.secretary}.png`
+                swordBaseId: state.config.secretary,
+                icon: `static/sword/${state.config.secretary}.png`
               })
               clearInterval(check)
               state.duty.duty.isIntervalSet = false

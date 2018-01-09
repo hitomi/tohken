@@ -94,19 +94,25 @@ define((require, exports, module) => {
         return '❀'.repeat(this.rarity)
       },
       get typeName () {
-        return TRH.SwordType[this.type]
+        let type = _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'type'], 0)
+        return TRH.SwordType[type]
       },
       get styleName () {
-        return TRH.SwordStyle[this.styleId] ? TRH.SwordStyle[this.styleId] : '-'
+        let styleId = _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'styleId'], 0)
+        return TRH.SwordStyle[styleId] ? TRH.SwordStyle[styleId] : '-'
       },
       get rangeName () {
-        return TRH.SwordRange[this.type]
+        let type = _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'type'], 0)
+        return TRH.SwordRange[type]
       },
       get protectName () {
         return this.protect ? '锁' : '-'
       },
       get evoName () {
         return ['普通', '特', '特二', '特三'][this.evol_num]
+      },
+      get equipSlot () {
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'equipSlot'], 3)
       },
       get equips () {
         return [
