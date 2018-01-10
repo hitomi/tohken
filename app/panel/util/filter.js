@@ -63,6 +63,17 @@ define((require, exports, module) => {
     }[level]
   })
 
+  exports.rankName = Vue.filter('rank-name', (rank) => {
+    return [
+      '0',
+      '1',
+      'S',
+      'A',
+      'B',
+      'C'
+    ][rank] || ''
+  })
+
   exports.swordName = Vue.filter('sword-name', (swordId) => {
     return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'name'], '-') : '空'
   })

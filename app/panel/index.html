@@ -375,7 +375,7 @@
               <td>{{ battle.get_sword_id | sword-name }}</td>
               <td>{{ battle.episode_id || '-' }}</td>
               <td>{{ battle.field_id || '-' }}</td>
-              <td>{{ battle.rank || '-' }}</td>
+              <td>{{ battle.rank | rank-name }}</td>
             </tr>
           </tbody>
         </table>
@@ -395,8 +395,8 @@
         <div class="title" style="text-align: left;">关于</div>
         <ul>
           <li>
-          <p>（甩锅）大佬：<a href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</a></p>
-          <p>（接锅）萌新：<a href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</a></p>
+          <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
+          <p>（接锅）萌新：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
           </li>
           <li>
             <b>版本：v1.1.0</b>
