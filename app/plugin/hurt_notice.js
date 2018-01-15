@@ -10,6 +10,8 @@ define((require, exports, module) => {
           get_sword_id: updateData.result.get_sword_id,
           episode_id: state.sally.episode_id,
           field_id: state.sally.field_id,
+          layer_num: state.sally.layer_num,
+          square_id: state.sally.square_id,
           rank: updateData.result.rank,
           mvp: updateData.result.mvp,
         })

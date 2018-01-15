@@ -10,6 +10,7 @@ define((require, exports, module) => {
       exp: null,
       next_exp: null,
       evol_num: null,
+      symbol: null,
       hp: null,
       hp_max: null,
       atk: null,
@@ -40,7 +41,7 @@ define((require, exports, module) => {
       created_at: null,
       inBattle: false,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·极' : '')
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
       },
       get baseId () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'baseId'], 0)
@@ -99,7 +100,10 @@ define((require, exports, module) => {
       },
       get styleName () {
         let styleId = _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'styleId'], 0)
-        return TRH.SwordStyle[styleId] ? TRH.SwordStyle[styleId] : '-'
+        if(styleId==0)
+          return '-'
+        else
+          return TRH.SwordStyle[styleId] ? TRH.SwordStyle[styleId] : styleId
       },
       get rangeName () {
         let type = _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'type'], 0)
@@ -109,7 +113,15 @@ define((require, exports, module) => {
         return this.protect ? '锁' : '-'
       },
       get evoName () {
-        return ['普通', '特', '特二', '特三'][this.evol_num]
+        if(this.symbol==0)
+          return '普通'
+        if(this.symbol==2)
+          return '極'
+        if(this.symbol==1){
+          if(this.sword_id==this.baseId)
+            return '特'
+          else return ['', '特', '特二', '特三'][this.sword_id-this.baseId]
+        }
       },
       get equipSlot () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'equipSlot'], 3)

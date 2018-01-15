@@ -46,6 +46,18 @@ define((require, exports, module) => {
     ][status] || ''
   })
 
+  exports.amuletName = Vue.filter('amulet-name', (itemId) => {
+    return [
+    '-',
+    '守',
+    '极守'
+    ][itemId] || ''
+  })
+
+  exports.getNotFlg = Vue.filter('not-flg', (flg) =>{
+    return ['○', ''][flg]
+  })
+
   exports.hhmmss = Vue.filter('hhmmss', (time) => {
     return moment(time).format('hh:mm:ss')
   })
@@ -66,11 +78,12 @@ define((require, exports, module) => {
   exports.rankName = Vue.filter('rank-name', (rank) => {
     return [
       '0',
-      '1',
+      '一騎',
       'S',
       'A',
       'B',
-      'C'
+      'C',
+      '敗北'
     ][rank] || ''
   })
 

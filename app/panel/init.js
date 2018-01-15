@@ -91,7 +91,7 @@ define((require, exports, module) => {
       }
     },
     computed: {
-      ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair']),
+      ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair', 'item', 'album']),
       equipList () {
         let allEquips = _(this.equip.serial)
           .mapValues((v, k) => {
@@ -160,7 +160,7 @@ define((require, exports, module) => {
 
   Vue.component('resource-panel', {
     template: '#resource-panel',
-    computed: Vuex.mapState(['resource', 'player'])
+    computed: Vuex.mapState(['resource', 'player', 'item'])
   })
 
   return new Vue({
@@ -179,11 +179,54 @@ define((require, exports, module) => {
       })
 
       localforage.getItem('BattleLog').then((data) => {
-        if (data) _.each(data, v => store.commit('log/addBattleLog', v))
+        //console.log(data)
+        if (data) _.each(data, (v,k) => store.commit('log/addBattleLog', v))
       })
 
       localforage.getItem('ForgeLog').then((data) => {
+        //console.log(data)
         if (data) _.each(data, v => store.commit('log/addForgeLog', v))
+      })
+
+      localforage.getItem('Resource').then((data) => {
+        if (data) store.commit('resource/updateResource', {
+          updateData: data
+        })
+      })
+
+      localforage.getItem('Equip').then((data) => {
+        if (data.serial) _.each(data.serial, v => store.commit('equip/updateEquip', {
+          serialId: v.serial_id, 
+          updateData: v
+        }))
+      })
+
+      localforage.getItem('Swords').then((data) => {
+        if (data.serial) _.each(data.serial, v => store.commit('swords/updateSword', {
+          serialId: v.serial_id,
+          updateData: v
+        }))
+      })
+
+      localforage.getItem('Party').then((data) => {
+        console.log(data)
+        if (data.parties) _.each(data.parties, v => store.commit('party/updateParty', {
+          partyNo: v.party_no,
+          updateData: v
+        }))
+      })
+
+      localforage.getItem('Item').then((data) => {
+        if(data.consumable) _.each(data.consumable, (v, k) => store.commit('item/updateItem', {
+          consumableId: k,
+          updateData: v
+        }))
+      })
+
+      localforage.getItem('Player').then((data) => {
+        if(data) store.commit('player/updatePlayer', {
+          updateData: data
+        })
       })
     },
     methods: {

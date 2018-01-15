@@ -39,6 +39,9 @@
           <div class="menu-inner" @click="scroll('all-swords')">
             刀帳
           </div>
+          <div class="menu-inner" @click="scroll('item')">
+            所持道具
+          </div>
         </router-link>
         <router-link class="main-menu" to="/extra">
           <div class="menu-cover">
@@ -110,7 +113,7 @@
       <ul>
         <li>
           <div class="k">审神者</div>
-          <div class="v">{{ player.name || '暂未获取' }}  <small>(Lv.{{ player.level || 'N/A' }})</small></div>
+          <div class="v">{{ player.name || '' }}  <small>(Lv.{{ player.level || 'N/A' }})</small></div>
         </li>
       </ul>
       <ul class="fr">
@@ -119,6 +122,8 @@
         <li><div class="k">冷却</div><div class="v">{{ resource.coolant || 'N/A' }}</div></li>
         <li><div class="k">砥石</div><div class="v">{{ resource.file || 'N/A' }}</div></li>
         <li><div class="k">依頼</div><div class="v">{{ resource.bill || 'N/A' }}</div></li>
+        <li><div class="k">手伝</div><div class="v">{{ item.consumable["8"]["num"] || 'N/A' }}</div></li>
+        <li><div class="k">小判</div><div class="v">{{ resource.money || 'N/A'}}</div></li>
       </ul>
     </div>
   </script>
@@ -141,7 +146,7 @@
     <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname">
       <img :src="sword.baseId | sword-pattern" alt="空" class="pattern">
       <div class="info">
-        <div class="name">{{ sword.name }} <span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
+        <div class="name">{{ sword.name }}<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
         <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && (sword.injury && sword.status != 0 )">[{{ sword.status | status-text }}]</span></div>
         <div class="level">Lv.{{ sword.level }}<small>(next {{ sword.nextExp }})</small></div>
         <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{ sword.fatigueFlag | fatigue-text }} {{ sword.battleFatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>
@@ -245,6 +250,7 @@
           </tbody>
         </table>
       </div>
+
       <div class="title" id="forge">
         · 锻刀室 ·
         <forge-item v-for='f in forge.slot' :slot-no="f.slot_no" :key="f.slot_no"></forge-item>
@@ -254,6 +260,28 @@
         <repair-item v-for='r in repair.slot' :slot-no="r.slot_no" :key="r.slot_no"></repair-item>
       </div>
       <div class="title" id="all-swords">· 刀帳 ·</div>
+      <div class="title"><small>图鉴收集</small></div>
+      <div class="data-table" v-if="album.serial">
+        <table  v-if="album.serial">
+          <thead>
+            <tr>
+              <th>番号</th>
+              <th>刀名</th>
+              <th>真剑未收</th>
+              <th>内番未收</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for='sw in album.serial' v-if="!sw.all_img_flg">
+            <td>{{ sw.sword_id }}</td>
+            <td>{{ sw.name }}</td>
+            <td>{{ sw.serious_img_flg | not-flg }}</td>
+            <td>{{ sw.work_img_flg | not-flg }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="title"><small>所持刀剣</small></div>
       <div class="data-table all-swords">
         <div class="option">
           <span class="switcher" :class="{active: !option.info}" @click="option.info = !option.info">信息</span>
@@ -285,7 +313,7 @@
                 <th>疲劳</th>
                 <th v-if="option.equip">刀装位</th>
                 <th v-if="option.equip">刀装</th>
-                <!-- <th v-if="option.equip">御守</th> -->
+                <th v-if="option.equip">御守</th>
                 <th v-if="option.equip">马</th>
                 <th v-if="option.info">锁</th>
               </tr>
@@ -310,16 +338,35 @@
                 <td v-if="option.value">{{sword.hide}} <em v-if="sword.hide_up > 0">(+{{sword.hide_up}})</em></td>
                 <td v-if="option.value" v-text="sword.rangeName"></td>
                 <td v-if="option.value" v-text="sword.loyalties"></td>
-                <td v-text="sword.fatigue"></td>
+                <td v-text="sword.vfatigue"></td>
                 <td v-if="option.equip" v-text="sword.equipSlot"></td>
                 <td v-if="option.equip">{{ sword.equips | all-equip-serial-name }}</td>
-                <!-- <td v-if="option.equip" v-text="sword._item"></td> -->
+                <td v-if="option.equip">{{ sword.item_id | amulet-name}}</td>
                 <td v-if="option.equip">{{ sword.horse_serial_id | equip-serial-name }}</td>
                 <td v-if="option.info" v-text="sword.protectName"></td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="title" id="item">· 所持道具一覧 ·</div>
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>持有数</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="con in item.consumable" v-if="con.num">
+              <td>{{ con.name }}</td>
+              <td>{{ con.num || '-' }}</td>
+              <td><small>{{ con.description || '-' }}</small></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </script>
@@ -361,20 +408,20 @@
           <thead>
             <tr>
               <th>部隊</th>
-              <th>番号</th>
               <th>刀名</th>
-              <th>时代</th>
-              <th>地域</th>
+              <th>时代-地域</th>
+              <th>层数</th>
+              <th>战斗点ID<th>
               <th>评价</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="battle in log.battle">
               <td>{{ battle.party_no || '-' }}</td>
-              <td>{{ battle.get_sword_id || '-' }}</td>
               <td>{{ battle.get_sword_id | sword-name }}</td>
-              <td>{{ battle.episode_id || '-' }}</td>
-              <td>{{ battle.field_id || '-' }}</td>
+              <td>{{ battle.episode_id || '-' }}-{{ battle.field_id || '-' }}</td>
+              <td>{{ battle.layer_num }}</td>
+              <td>{{ battle.square_id }}</td>
               <td>{{ battle.rank | rank-name }}</td>
             </tr>
           </tbody>
@@ -397,24 +444,33 @@
           <li>
           <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
           <p>（接锅）萌新：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
+          <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u>（你可以叫我哲也）</p>
           </li>
           <li>
-            <b>版本：v1.1.0</b>
-            <p>此版本不存在像以前一样的魔改功能了（当然如果你是程序员大佬那么不用我说你也知道怎么魔改）</p>
-            <p>暂时一劳永逸。不用添加新刀数据，但是刀纹还是要主动添加的。</p>
+            <b>版本：v1.1.1</b>
+            <p>增加了联队战和演练的战况更新（然而联队战即将结束）</p>
+            <p>增加了加速以及小判显示，物品列表显示，刀剑列表御守佩戴情况显示</p>
+            <p>添加了刀帐立绘收集不全列表（需要先点开刀账）</p>
+            <p>不用每次都重进结成了，战斗中关闭插件（理论上）也可以载入数据</p>
+            <p>（当然我建议你还是进一次结成界面以防未知bug）</p>
+            <p>修正了战斗记录每次都重新记的bug</p>
+            <p>修改了战斗记录的形式，显示战斗点id和层数，取消获得刀剑刀帐号表示</p>
+            <p>远征不间断提醒bug（疑似）修复成功</p>
           </li>
           <li>
             <b>之后版本希望添加的功能：</b>
-            <p>连队战疲劳及伤害更新，最终战报（包括魂数及掉落）</p>
-            <p>花札最终战报（包括玉数及乐器）</p>
-            <p>敌刀剧透（其实不太想做这个毕竟我用不上x看你们的需求了）</p>
+            <p>敌刀剧透以及具体数据（甚至敌刀图鉴）</p>
+            <p>刀名自定义魔改</p>
+            <p>刀纹自动更新</p>
+            <p>演练对手装备以及马情况透视</p>
+            <p>各种提醒以及剧透的开关</p>
           </li>
         </ul>
       </div>
 
     </div>
   </script>
-
+  
   <!-- Vue -->
   <script src="../../vendor/vue.js"></script>
   <script src="../../vendor/vuex.js"></script>
@@ -431,6 +487,8 @@
   <script src="../../vendor/mode-ecb.js"></script>
   <script src="../../vendor/lib-typedarrays.js"></script>
   <script src="../../vendor/pad-nopadding-min.js"></script>
+  <!--MD5-->
+  <script src="../../vendor/jquery.md5.js"></script>
   <!-- Data -->
   <script src="../../vendor/FileSaver.js"></script>
   <script src="../../vendor/localforage.min.js"></script>

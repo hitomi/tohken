@@ -6,7 +6,7 @@ define((require, exports, module) => {
       equip_id: null,
       soldier: null,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Equip'), [this.equip_id, 'name'], '暂未获取')
+        return _.get(TRHMasterData.getMasterData('Equip'), [this.equip_id, 'name'], '-')
       },
       get hp () {
         return this.soldier

@@ -9,6 +9,11 @@ define((require, exports, module) => {
           .filter(_.isNumber)
           .map(o => _.get(state, ['swords', 'serial', o, 'level']))
           .filter(_.isNumber)
+          .filter(o => {
+            if(o==0)
+              return false
+            else return true
+          })
           .value()
         let totalLevel = Math.floor(_.sum(swordLevels))
         let averageLevel = Math.floor(_.mean(swordLevels))

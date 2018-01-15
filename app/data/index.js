@@ -50,7 +50,9 @@ define((require, exports, module) => {
       sally: require('./state/sally'),
       notice: require('./state/notice'),
       log: require('./state/log'),
-      config: require('./state/config')
+      config: require('./state/config'),
+      item: require('./state/item'),
+      album: require('./state/album')
     },
     plugins: _.values(Plugin)
   })

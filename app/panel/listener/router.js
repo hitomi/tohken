@@ -4,6 +4,8 @@ define((require, exports, module) => {
     static route (action, content) {
       // Log
       console.log(action)
+      //console.log(content)
+      //console.log(content.postData)
       // Common
       this.common(content)
       // Route
@@ -18,8 +20,9 @@ define((require, exports, module) => {
 
     static common (content) {
       if (content.sword) {
+        if(!content.sword.serial_id){
         _.each(content.sword, (v, k) => {
-          if (!v.serial_id) return
+          if (v.serial_id!=null){
           v.inBattle = false
           if (v.battleStatus) {
             v.status = v.battleStatus
@@ -28,12 +31,21 @@ define((require, exports, module) => {
           store.commit('swords/updateSword', {
             serialId: k,
             updateData: v
-          })
-        })
+          })}
+        })}
       }
       if (content.resource) {
         store.commit('resource/updateResource', {
           updateData: content.resource
+        })
+      }
+      if (content.currency) {
+        store.commit('resource/updateResource', {
+          updateData: content.currency
+        })
+      } else if (content.money) {
+        store.commit('resource/updateResource', {
+          updateData: _.pick(content, ['money'])
         })
       }
       if (content.party) {
@@ -79,6 +91,28 @@ define((require, exports, module) => {
           })
         })
       }
+      if (content.item_list) {
+        _.each(content.item_list, (v, k) => {
+          store.commit('item/updateItem', {
+            consumableId: k,
+            updateData: v
+          })
+        })
+      } else if(content.item) {
+        _.each(content.item_list, (v, k) => {
+          store.commit('item/updateItem', {
+            consumableId: k,
+            updateData: v
+          })
+        })
+      }
+    }
+    static ['battle/practicebattle'](content){
+      this['battle/battle'] (content)
+    }
+
+    static ['battle/alloutbattle'](content){
+      this['battle/battle'] (content)
     }
 
     static ['battle/battle'] (content) {
@@ -106,7 +140,15 @@ define((require, exports, module) => {
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
-        if(rank == 2) {
+        if(rank == 1) {
+          console.log("Rank ONE_ON_ONE")
+          if(v.serial_id == leader) {
+            console.log("leader calculate")
+            v.battleFatigue += 3
+          }
+          v.battleFatigue += 1
+        }
+        else if(rank == 2) {
           console.log("Rank S")
           if(v.serial_id == leader) {
             console.log("leader calculate")
@@ -174,15 +216,29 @@ define((require, exports, module) => {
     static ['home'] (content) {
       store.commit('notInBattle')
     }
-
+    
     static ['sally/sally'] (content) {
       store.commit('inBattle')
       store.commit('fatigueToVV')
       store.commit('sally/updateSally', {
         updateData: content.postData
       })
+      console.log(content.postData)
+      store.commit('sally/updateSally', {
+        updateData: content
+      })
     }
-
+    static ['sally/eventsally'] (content) {
+      this['sally/sally'] (content)
+    }
+    static ['sally/forward'] (content) {
+      store.commit('sally/updateSally', {
+        updateData: _.pick(content, ['square_id'])
+      })
+    }
+    static ['sally/eventforward'] (content) {
+      this['sally/forward'](content)
+    }
     static ['forge/start'] (content) {
       store.commit('forge/updateForge', {
         updateData: _.extend(content, content.postData)
@@ -203,6 +259,13 @@ define((require, exports, module) => {
     }
 
     static ['equip/removeequip'] (content) {
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
+    static ['equip/removeall'] (content) {
       store.commit('swords/updateSword', {
         serialId: content.sword.serial_id,
         updateData: content.sword
@@ -236,6 +299,21 @@ define((require, exports, module) => {
       _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
         store.commit('party/updateParty', {
           partyNo: k,
+          updateData: v
+        })
+      })
+    }
+
+    static ['user/profile'] (content) {
+      store.commit('player/updatePlayer', {
+          updateData: content
+        })
+    }
+
+    static ['album/list'] (content) {
+      _.each(content.sword, (v, k)=>{
+        store.commit('album/updateAlbum', {
+          swordId: v.sword_id,
           updateData: v
         })
       })

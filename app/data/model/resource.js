@@ -11,6 +11,7 @@ define((require, exports, module) => {
         max_resource: null,
         status: null,
         recovered_at: null,
+        money: null,
         get test () {
           return this.recovered_at
         }

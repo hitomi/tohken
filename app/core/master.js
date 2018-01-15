@@ -10,7 +10,7 @@ define((require, exports, module) => {
         // TRHMasterData.SwordLevel = require('data/SwordLevelMaster1507123959924')
         // TRHMasterData.Sword = require('data/SwordMaster1507123959937')
         // TRHMasterData.Equip = require('data/EquipMaster1507123959946')
-        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip'], k => {
+        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable'], k => {
           store.commit('loadData', {
             key: k,
             loaded: true
@@ -21,7 +21,8 @@ define((require, exports, module) => {
         UserLevel: localforage.getItem('UserLevelMaster'),
         SwordLevel: localforage.getItem('SwordLevelMaster'),
         Sword: localforage.getItem('SwordMaster'),
-        Equip: localforage.getItem('EquipMaster')
+        Equip: localforage.getItem('EquipMaster'),
+        Consumable: localforage.getItem('ConsumableMaster')
       }).then((saved) => {
         console.log('loadLocal')
         _.each(saved, (v, k) => {
@@ -34,7 +35,6 @@ define((require, exports, module) => {
         })
       })
     }
-
     // Init data from Game Resource
     static init (content, store) {
       TRHMasterData.masterData = null
@@ -58,6 +58,7 @@ define((require, exports, module) => {
       jsonText = jsonText.substr(0, jsonText.lastIndexOf('}') + 1)
       // To Object
       let dataObj = JSON.parse(jsonText)
+      console.log(dataObj);
       // Take useful part
       TRHMasterData.masterData = dataObj
       // level_master
@@ -68,17 +69,52 @@ define((require, exports, module) => {
       TRHMasterData.Sword = null
       // equip_master
       TRHMasterData.Equip = null
+      // consumable_master
+      TRHMasterData.Consumable = null
+      //voice
+      TRHMasterData.Voice = null
       // wait promise
       return Promise.all([
         TRHMasterData.initUserLevelMaster(store),
         TRHMasterData.initSwordLevelMaster(store),
         TRHMasterData.initSwordMaster(store),
-        TRHMasterData.initEquipMaster(store)
+        TRHMasterData.initEquipMaster(store),
+        TRHMasterData.initConsumableMaster(store),
+        //TRHMasterData.initIcons(store)
+        //魔改voice抓取
+        //TRHMasterData.initVoiceMaster(store)
       ]).then(() => {
         console.log('done', store)
       })
     }
-
+    // Init Icons
+    /*static initIcons(store) {
+      if (TRHMasterData.masterData === null) return
+      return hex_md5("swr_crest_s_000003u0xq7npke")
+        .then(() => {
+          console.log('IconDone')
+        })
+    }*/
+    static initVoiceMaster(store){
+      if (TRHMasterData.masterData === null) return
+        TRHMasterData.Voice = _(TRHMasterData.masterData.voice_master)
+          .split('\n')
+          .map((line) => {
+            let arr = line.split(',')
+            let obj ={}
+            obj['swordId'] = _.toInteger(arr[0])
+            obj['type'] = _.toInteger(arr[1])
+            obj['text'] = arr[3]
+            obj['fileName'] = arr[4]
+            return obj
+          })
+          .keyBy('fileName')
+          .value()
+        /*_.each(TRHMasterData.Voice, k => {
+          return console.log("curl -o "+k.fileName+".mp3 http://static.touken-ranbu.jp/s/"+$.md5(k.fileName+"u0xq7npke")+".mp3")
+        })*/
+        return console.log("voiceDone")
+    }
     // Init User Level Data
     static initUserLevelMaster (store) {
       if (TRHMasterData.masterData === null) return
@@ -254,6 +290,46 @@ define((require, exports, module) => {
           console.log('err', err)
           store.commit('loadData', {
             key: 'Equip',
+            loaded: false
+          })
+        })
+    }
+
+    //Init Consumable Data
+    static initConsumableMaster (store) {
+      if (TRHMasterData.masterData === null) return
+      TRHMasterData.Consumable = _(TRHMasterData.masterData.consumable_master)
+        .split('\n')
+        .map((line) => {
+          let arr = line.split(',')
+          let obj = {}
+          obj['consumableId'] = _.toInteger(arr[0])
+          obj['baseId'] = _.toInteger(arr[1])
+          obj['name'] = arr[2]
+          obj['description'] = arr[3]
+          obj['type'] = _.toInteger(arr[4])
+          obj['value'] = _.toInteger(arr[5])
+          obj['limitNum'] = _.toInteger(arr[6])
+          //flg of available?
+          obj['flg'] = _.toInteger(arr[7])
+          //abandoned but exist??
+          obj['unknown'] = _.toInteger(arr[8])
+          return obj
+        })
+        .keyBy('consumableId')
+        .value()
+      return localforage.setItem('ConsumableMaster', TRHMasterData.Consumable)
+        .then(() => {
+          console.log(TRHMasterData.Consumable)
+          store.commit('loadData', {
+            key: 'Consumable',
+            loaded: true
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+          store.commit('loadData', {
+            key: 'Consumable',
             loaded: false
           })
         })
