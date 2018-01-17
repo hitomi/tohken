@@ -113,6 +113,10 @@ define((require, exports, module) => {
         let equip = _.filter(allEquips, o => o.equipId < 10000)
         let horse = _.filter(allEquips, o => o.equipId >= 10000)
         return { equip , horse }
+      },
+      enemyList () {
+        let enemy = TRHMasterData.getMasterData('Sword')
+        return enemy
       }
     }
   })
