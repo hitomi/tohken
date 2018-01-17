@@ -5,7 +5,6 @@ define((require, exports, module) => {
       // Log
       console.log(action)
       //console.log(content)
-      //console.log(content.postData)
       // Common
       this.common(content)
       // Route
@@ -86,7 +85,7 @@ define((require, exports, module) => {
         _.each(content.equip, (v, k) => {
           if (!v.serial_id) return
           store.commit('equip/updateEquip', {
-            serialId: k,
+            serialId: v.serial_id,
             updateData: v
           })
         })
@@ -223,7 +222,7 @@ define((require, exports, module) => {
       store.commit('sally/updateSally', {
         updateData: content.postData
       })
-      console.log(content.postData)
+      //console.log(content.postData)
       store.commit('sally/updateSally', {
         updateData: content
       })
