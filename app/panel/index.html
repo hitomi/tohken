@@ -175,7 +175,7 @@
   <!-- Component Equip Item -->
   <script id="equip-item" type="text/template">
     <li v-if="equip === null">空</li>
-    <li v-else-if="equip.serial_id" :class="equip.level | equip-level-cname">{{ equip.name | equip-name-format }} [{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}]</li>
+    <li v-else-if="equip.serial_id" :class="equip.hp==0 ? destroyed : equip.level | equip-level-cname">{{ equip.name | equip-name-format }} [{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}]</li>
     <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
     <li v-else>数据错误</li>
   </script>
