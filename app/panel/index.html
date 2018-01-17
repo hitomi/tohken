@@ -42,6 +42,9 @@
           <div class="menu-inner" @click="scroll('item')">
             所持道具
           </div>
+          <!--<div class="menu-inner" @click="scroll('enemy-list')">
+            敵数値一覧
+          </div>-->
         </router-link>
         <router-link class="main-menu" to="/extra">
           <div class="menu-cover">
@@ -351,7 +354,7 @@
       </div>
       <div class="title" id="item">· 所持道具一覧 ·</div>
       <div class="data-table">
-        <table>
+        <table style="max-width: 500px;">
           <thead>
             <tr>
               <th>名称</th>
@@ -368,6 +371,43 @@
           </tbody>
         </table>
       </div>
+      <!--<div class="title" id="enemy-list">· 敵数値一覧 ·</div>
+      <div class="data-table">
+        <table style="max-width: 500px;">
+          <thead>
+            <tr>
+              <th>番号</th>
+              <th>刀名</th>
+              <th>稀有度</th>
+              <th>生存</th>
+              <th>打撃</th>
+              <th>統率</th>
+              <th>機動</th>
+              <th>衝力</th>
+              <th>偵察</th>
+              <th>隠蔽</th>
+              <th>必殺</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="sword in enemyList" :key="sword.swordId" v-if="sword.swordId>=100000">
+              <td>{{sword.swordId}}</td>
+              <td>{{sword.name}}</td>
+              <td>{{sword.rarity}}</td>
+              <td>{{sword.hp}}</td>
+              <td>{{sword.atk}}</td>
+              <td>{{sword.def}}</td>
+              <td>{{sword.mobile}}</td>
+              <td>{{sword.back}}</td>
+              <td>{{sword.scout}}</td>
+              <td>{{sword.hide}}</td>
+              <td>{{sword.loyalties}}</td>
+              <td>{{sword.alias}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>-->
     </div>
   </script>
 
@@ -411,7 +451,7 @@
               <th>刀名</th>
               <th>时代-地域</th>
               <th>层数</th>
-              <th>战斗点ID<th>
+              <th>战斗点ID</th>
               <th>评价</th>
             </tr>
           </thead>
