@@ -175,7 +175,7 @@
   <!-- Component Equip Item -->
   <script id="equip-item" type="text/template">
     <li v-if="equip === null">空</li>
-    <li v-else-if="equip.serial_id" :class="equip.hp==0 ? destroyed : equip.level | equip-level-cname">{{ equip.name | equip-name-format }} [{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}]</li>
+    <li v-else-if="equip.serial_id" :class="equip.hp === 0 ? 0 : equip.level | equip-level-cname">{{ equip.name | equip-name-format }} [{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}]</li>
     <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
     <li v-else>数据错误</li>
   </script>
@@ -492,7 +492,7 @@
             <p>增加了加速以及小判显示，物品列表显示，刀剑列表御守佩戴情况显示</p>
             <p>添加了刀帐立绘收集不全列表（需要先点开刀账）</p>
             <p>不用每次都重进结成了，战斗中关闭插件（理论上）也可以载入数据</p>
-            <p>（当然我建议你还是进一次结成界面以防未知bug）</p>
+            <p>（建议还是尽量进一次结成防止意外bug）</p>
             <p>修正了战斗记录每次都重新记的bug</p>
             <p>修改了战斗记录的形式，显示战斗点id和层数，取消获得刀剑刀帐号表示</p>
             <p>远征不间断提醒bug（疑似）修复成功</p>
