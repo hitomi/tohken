@@ -14,6 +14,9 @@ define((require, exports, module) => {
           Vue.set(state.consumable, consumableId, defaultItemModel())
         }
         mergeModel(state.consumable[consumableId], updateData)
+      },
+      clear (state) {
+        state.consumable = {}
       }
     }
   }

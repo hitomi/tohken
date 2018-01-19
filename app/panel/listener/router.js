@@ -6,6 +6,7 @@ define((require, exports, module) => {
       console.log(action)
       //console.log(content)
       // Common
+      if(action!='party/list')
       this.common(content)
       // Route
       if (_.isFunction(this[action])) {
@@ -106,6 +107,13 @@ define((require, exports, module) => {
         })
       }
     }
+    static ['party/list'](content){
+      store.commit('swords/clear')
+      store.commit('equip/clear')
+      store.commit('item/clear')
+      this.common(content)
+    }
+
     static ['battle/practicebattle'](content){
       this['battle/battle'] (content)
     }

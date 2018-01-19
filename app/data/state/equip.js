@@ -14,6 +14,9 @@ define((require, exports, module) => {
           Vue.set(state.serial, serialId, defaultEquipModel())
         }
         mergeModel(state.serial[serialId], updateData)
+      },
+      clear (state) {
+        state.serial = {}
       }
     }
   }

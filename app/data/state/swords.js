@@ -15,6 +15,10 @@ define((require, exports, module) => {
           Vue.set(state.serial, serialId, defaultSwordModel())
         }
         mergeModel(state.serial[serialId], updateData)
+      },
+      clear (state) {
+        state.serial = {}
+        state.inBattleSwords = []
       }
     }
   }
