@@ -482,11 +482,11 @@
       </div>
       <div>
         <div class="title" style="text-align: left;" id="setNotice">· 提醒设置 ·</div>
-        <p><span>远征提醒</span>  <span class="setNotice" :class="{ active: conquest_notice == true }" @click="setConfig('conquest_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: conquest_notice == false }" @click="setConfig('conquest_notice', false)">[关闭]</span> </p> 
-        <p><span>内番提醒</span>  <span class="setNotice" :class="{ active: duty_notice == true }" @click="setConfig('duty_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: duty_notice == false }" @click="setConfig('duty_notice', false)">[关闭]</span></p>
-        <p><span>锻刀提醒</span>  <span class="setNotice" :class="{ active: forge_notice == true }" @click="setConfig('forge_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: forge_notice == false }" @click="setConfig('forge_notice', false)">[关闭]</span></p>
-        <p><span>战斗提醒</span>  <span class="setNotice" :class="{ active: hurt_notice == true }" @click="setConfig('hurt_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: hurt_notice == false }" @click="setConfig('hurt_notice', false)">[关闭]</span></p>
-        <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice == true }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: repair_notice == false }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
+        <p><span>远征提醒</span>  <span class="setNotice" :class="{ active: conquest_notice }" @click="setConfig('conquest_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !conquest_notice }" @click="setConfig('conquest_notice', false)">[关闭]</span> </p> 
+        <p><span>内番提醒</span>  <span class="setNotice" :class="{ active: duty_notice }" @click="setConfig('duty_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !duty_notice }" @click="setConfig('duty_notice', false)">[关闭]</span></p>
+        <p><span>锻刀提醒</span>  <span class="setNotice" :class="{ active: forge_notice }" @click="setConfig('forge_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !forge_notice }" @click="setConfig('forge_notice', false)">[关闭]</span></p>
+        <p><span>战斗提醒</span>  <span class="setNotice" :class="{ active: hurt_notice }" @click="setConfig('hurt_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !hurt_notice }" @click="setConfig('hurt_notice', false)">[关闭]</span></p>
+        <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !repair_notice }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
       </div>
       <div>
         <div class="title" style="text-align: left;">· 关于 ·</div>
@@ -497,8 +497,22 @@
           <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u>（你可以叫我哲也）</p>
           </li>
           <li>
+            <b>版本：v1.1.2</b>
+            <p>解决出战后马的状态显示bug</p>
+            <p>战斗中刀装损失后颜色改变</p>
+            <p>改变插件宽度时资源栏显示会改变（尽量缩在一行）</p>
+            <p>各种提醒以及剧透的开关</p>
+            <p>锻刀记录和战斗记录可清除（清除后需要重新加载刷新）</p>
+          </li>
+          <li>
+            <b>现存问题：</b>
+            <p>疲劳49以下的bug应该还没修复（……）</p>
+            <p>演练记录显示有误（这个应该能将就看）</p>
+            <p>演练后疲劳有误（重新进入结成刷新即可）</p>
+          </li>
+          <li>
             <b>版本：v1.1.1</b>
-            <p>增加了联队战和演练的战况更新（然而联队战即将结束）</p>
+            <p>增加了联队战和演练的战况更新</p>
             <p>增加了加速以及小判显示，物品列表显示，刀剑列表御守佩戴情况显示</p>
             <p>添加了刀帐立绘收集不全列表（需要先点开刀账）</p>
             <p>不用每次都重进结成了，战斗中关闭插件（理论上）也可以载入数据</p>
@@ -509,11 +523,9 @@
           </li>
           <li>
             <b>之后版本希望添加的功能：</b>
-            <p>敌刀剧透以及具体数据（甚至敌刀图鉴）</p>
             <p>刀名自定义魔改</p>
             <p>刀纹自动更新</p>
             <p>演练对手装备以及马情况透视</p>
-            <p>各种提醒以及剧透的开关</p>
           </li>
         </ul>
       </div>

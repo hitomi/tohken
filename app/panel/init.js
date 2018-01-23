@@ -149,7 +149,7 @@ define((require, exports, module) => {
     },
     methods: {
       setConfig (name, value) {
-        store.commit('config/updateConfig', { [name]: value })
+        this[name] = value 
       }
     }
   })
