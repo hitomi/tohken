@@ -476,6 +476,10 @@ tbody td:nth-child(even) {
   opacity: 0
 }
 
+.setNotice.active {
+  color: rgb(255, 59, 59);
+}
+
 @media (max-width: 350px) {
   .resource > ul.fr > li:nth-last-child(-n+2) { 
     display: none; 

@@ -125,6 +125,11 @@ define((require, exports, module) => {
     template: '#extra',
     computed: {
       ...Vuex.mapState(['log'])
+    },
+    methods: {
+      removeLog (name) {
+        localforage.removeItem(`${name}`)
+      }
     }
   })
 
@@ -141,6 +146,11 @@ define((require, exports, module) => {
             }
           }
         })
+    },
+    methods: {
+      setConfig (name, value) {
+        store.commit('config/updateConfig', { [name]: value })
+      }
     }
   })
 

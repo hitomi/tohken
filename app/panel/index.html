@@ -414,6 +414,7 @@
   <script id="extra" type="text/template">
     <div>
       <div class="title" id="forge-log">· 锻刀記錄 ·</div>
+      <div style="text-align: center;" @click="removeLog('ForgeLog')">[清除記録]</div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -443,6 +444,7 @@
         </table>
       </div>
       <div class="title" id="battle-log">· 交戦記録 ·</div>
+      <div style="text-align: center;" @click="removeLog('BattleLog')">[清除記録]</div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -473,13 +475,21 @@
   <script id="setting" type="text/template">
     <div class="setting-container">
       <div>
-        <div class="title" style="text-align: left;" id="setSecretary">近侍设置</div>
+        <div class="title" style="text-align: left;" id="setSecretary">· 近侍设置 ·</div>
         <p>请输入近侍刀帐号，远征及内番提醒将会显示近侍刀纹</p>
         <input v-model="secretary">
         <p>{{ secretary | sword-name }}</p>
       </div>
       <div>
-        <div class="title" style="text-align: left;">关于</div>
+        <div class="title" style="text-align: left;" id="setNotice">· 提醒设置 ·</div>
+        <p><span>远征提醒</span>  <span class="setNotice" :class="{ active: conquest_notice == true }" @click="setConfig('conquest_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: conquest_notice == false }" @click="setConfig('conquest_notice', false)">[关闭]</span> </p> 
+        <p><span>内番提醒</span>  <span class="setNotice" :class="{ active: duty_notice == true }" @click="setConfig('duty_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: duty_notice == false }" @click="setConfig('duty_notice', false)">[关闭]</span></p>
+        <p><span>锻刀提醒</span>  <span class="setNotice" :class="{ active: forge_notice == true }" @click="setConfig('forge_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: forge_notice == false }" @click="setConfig('forge_notice', false)">[关闭]</span></p>
+        <p><span>战斗提醒</span>  <span class="setNotice" :class="{ active: hurt_notice == true }" @click="setConfig('hurt_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: hurt_notice == false }" @click="setConfig('hurt_notice', false)">[关闭]</span></p>
+        <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice == true }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: repair_notice == false }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
+      </div>
+      <div>
+        <div class="title" style="text-align: left;">· 关于 ·</div>
         <ul>
           <li>
           <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
