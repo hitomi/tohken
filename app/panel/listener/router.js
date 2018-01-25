@@ -116,6 +116,10 @@ define((require, exports, module) => {
       store.commit('forge/clear')
     }
 
+    static ['repair'](content){
+      store.commit('repair/clear')
+    }
+
     static ['battle/practicebattle'](content){
       this['battle/battle'] (content)
     }
