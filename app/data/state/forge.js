@@ -14,6 +14,9 @@ define((require, exports, module) => {
           Vue.set(state.slot, slotNo, defaultForgeModel())
         }
         mergeModel(state.slot[slotNo], updateData)
+      },
+      clear (state) {
+        state.slot = {}
       }
     }
   }

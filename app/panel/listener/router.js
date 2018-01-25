@@ -4,14 +4,14 @@ define((require, exports, module) => {
     static route (action, content) {
       // Log
       console.log(action)
-      //console.log(content)
-      // Common
-      if(action!='party/list')
-      this.common(content)
+      console.log(content)
       // Route
       if (_.isFunction(this[action])) {
         this[action](content)
       }
+      // Common
+      //if(action!='party/list')
+      this.common(content)
     }
 
     static updatePartyBattleStatus (partyNo, inBattle) {
@@ -22,7 +22,6 @@ define((require, exports, module) => {
       if (content.sword) {
         if(!content.sword.serial_id){
         _.each(content.sword, (v, k) => {
-          if (v.serial_id!=null){
           v.inBattle = false
           if (v.battleStatus) {
             v.status = v.battleStatus
@@ -31,7 +30,7 @@ define((require, exports, module) => {
           store.commit('swords/updateSword', {
             serialId: k,
             updateData: v
-          })}
+          })
         })}
       }
       if (content.resource) {
@@ -111,7 +110,10 @@ define((require, exports, module) => {
       store.commit('swords/clear')
       store.commit('equip/clear')
       store.commit('item/clear')
-      this.common(content)
+    }
+
+    static ['forge'](content){
+      store.commit('forge/clear')
     }
 
     static ['battle/practicebattle'](content){
@@ -248,6 +250,7 @@ define((require, exports, module) => {
     }
     static ['forge/start'] (content) {
       store.commit('forge/updateForge', {
+        slotNo: content.slot_no,
         updateData: _.extend(content, content.postData)
       })
     }
