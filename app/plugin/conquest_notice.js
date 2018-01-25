@@ -12,11 +12,11 @@ define((require, exports, module) => {
           if(party.isIntervalSet == false || party.isIntervalSet == null) {
             let check = setInterval(function isConquestFinished(){
               party.isIntervalSet = true
-              if(status == 2 && moment(finished_at).subtract(1, 'h').isBefore(Date.now())) {
+              if(status == 2 && moment(parseValues(finished_at)).isBefore(Date.now())) {
                 if(party.isNoticed == false || party.isNoticed == null){
                 store.dispatch('notice/addNotice', {
                   title: `${party_name}远征结束！`,
-                  message: `结束时间：${moment(finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
+                  message: `结束时间：${moment(parseValues(finished_at)).format('hh:mm:ss')}`,
                   context: '请尽快收取！',
                   renotify: false,
                   disableAutoClose: true,

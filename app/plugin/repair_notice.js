@@ -7,7 +7,7 @@ define((require, exports, module) => {
           let sword = _.get(state, ['swords', 'serial', swordSerialId])
           store.dispatch('notice/addNotice', {
             title: `${sword.name} 手入中`,
-            message: `结束时间：${moment(mutation.payload.updateData.finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
+            message: `结束时间：${moment(parseValues(mutation.payload.updateData.finished_at)).format('hh:mm:ss')}`,
             context: '请耐心等待哟（或者拍个加速？）',
             tag: sword.baseId,
             renotify: true,

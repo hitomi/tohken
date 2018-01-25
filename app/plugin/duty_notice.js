@@ -17,10 +17,10 @@ define((require, exports, module) => {
             console.log("set interval")
             let check = setInterval(function isDutyFinished(){
               state.duty.duty.isIntervalSet = true
-              if(finished_at != null && moment(finished_at).subtract(1, 'h').isBefore(Date.now())) {
+              if(finished_at != null && moment(parseValues(finished_at)).isBefore(Date.now())) {
                 store.dispatch('notice/addNotice', {
                   title: `内番结束！`,
-                  message: `结束时间：${moment(finished_at).subtract(1, 'h').format('hh:mm:ss')}`,
+                  message: `结束时间：${moment(parseValues(finished_at)).format('hh:mm:ss')}`,
                   context: '请尽快收取！',
                   renotify: true,
                   disableAutoClose: true,
