@@ -481,7 +481,6 @@
           <thead>
             <tr>
               <th>部隊</th>
-              <th>敵ID</th>
               <th>敵名</th>
               <th>敵LV</th>
               <th>評価</th>
@@ -491,9 +490,8 @@
           <tbody>
             <tr v-for="battle in log.practice">
               <td>{{ battle.party_no || '-' }}</td>
-              <td>{{ battle.enemy_id || '-' }}</td>
               <td>{{ battle.enemy_name || '-' }}</td>
-              <td>{{ battle.enemy_level }}</td>
+              <td>Lv.{{ battle.enemy_level }}</td>
               <td>{{ battle.rank | rank-name }}</td>
               <td>{{ battle.now | MMDDhhmmss }}</td>
             </tr>
