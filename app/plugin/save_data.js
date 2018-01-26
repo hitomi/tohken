@@ -9,6 +9,10 @@ define((require, exports, module) => {
         console.log(state.log.forge)
         localforage.setItem('ForgeLog', state.log.forge)
       }
+      if (mutation.type === 'log/addPracticeLog') {
+        console.log(state.log.practice)
+        localforage.setItem('PracticeLog', state.log.practice)
+      }
       if (mutation.type === 'config/updateConfig') {
         localforage.setItem('Config', state.config)
       }
