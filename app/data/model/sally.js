@@ -5,7 +5,8 @@ define((require, exports, module) => {
       field_id: null,
       party_no: null,
       layer_num: null,
-      square_id: null
+      square_id: null,
+      target_id: null
     }
   }
 })

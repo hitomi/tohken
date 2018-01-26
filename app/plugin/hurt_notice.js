@@ -3,8 +3,9 @@ define((require, exports, module) => {
   return (store) => {
     store.subscribe((mutation, state) => {
       if (state.config.hurt_notice == true) {
-        if (mutation.type === 'battle/updateBattle') {
+        if (mutation.type === 'battle/updateBattle' || mutation.type === 'battle/updatePracticeBattle') {
           let { updateData } = mutation.payload
+          if(mutation.type === 'battle/updateBattle'){
           store.commit('log/addBattleLog', {
             logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
             party_no: state.sally.party_no,
@@ -15,7 +16,19 @@ define((require, exports, module) => {
             square_id: state.sally.square_id,
             rank: updateData.result.rank,
             mvp: updateData.result.mvp,
-          })
+            now: updateData.now
+          })}
+          if(mutation.type === 'battle/updatePracticeBattle'){
+          store.commit('log/addPracticeLog', {
+            logId: `${state.sally.party_no}#${state.sally.target_id}@${moment(updateData.now).unix()}`,
+            party_no: state.sally.party_no,
+            enemy_id: state.sally.target_id,
+            enemy_name: updateData.enemy.name,
+            enemy_level: updateData.enemy.level,
+            rank: updateData.result.rank,
+            mvp: updateData.result.mvp,
+            now: updateData.now
+          })}
           let resultParty = _(_.get(updateData, ['result', 'player', 'party', 'slot']))
             .values()
             .keyBy(o => o.serial_id)

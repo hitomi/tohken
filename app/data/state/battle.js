@@ -20,6 +20,9 @@ define((require, exports, module) => {
       },
       updateBattle (state, payload) {
         // Hook Only, Nothing To Do
+      },
+      updatePracticeBattle (state, payload) {
+        // Hook Only, Nothing To Do
       }
     }
   }

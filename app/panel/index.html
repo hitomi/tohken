@@ -56,6 +56,9 @@
           <div class="menu-inner" @click="scroll('battle-log')">
             交戦記録
           </div>
+          <div class="menu-inner" @click="scroll('practice-log')">
+            演練記録
+          </div>
         </router-link>
         <router-link class="main-menu" to="/setting">
           <div class="menu-cover">
@@ -354,19 +357,19 @@
       </div>
       <div class="title" id="item">· 所持道具一覧 ·</div>
       <div class="data-table">
-        <table style="max-width: 500px;">
+        <table>
           <thead>
             <tr>
               <th>名称</th>
               <th>持有数</th>
-              <th>备注</th>
+              <th>持有上限</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="con in item.consumable" v-if="con.num">
               <td>{{ con.name }}</td>
               <td>{{ con.num || '-' }}</td>
-              <td><small>{{ con.description || '-' }}</small></td>
+              <td>{{ con.limitNum || '-'}}</td>
             </tr>
           </tbody>
         </table>
@@ -451,10 +454,11 @@
             <tr>
               <th>部隊</th>
               <th>刀名</th>
-              <th>时代-地域</th>
-              <th>层数</th>
-              <th>战斗点ID</th>
-              <th>评价</th>
+              <th>時代-地域</th>
+              <th>階数</th>
+              <th>戦闘地ID</th>
+              <th>評価</th>
+              <th>戦闘時点</th>
             </tr>
           </thead>
           <tbody>
@@ -465,6 +469,33 @@
               <td>{{ battle.layer_num }}</td>
               <td>{{ battle.square_id }}</td>
               <td>{{ battle.rank | rank-name }}</td>
+              <td>{{ battle.now | MMDDhhmmss }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="title" id="practice-log">· 演練記録 ·</div>
+      <div style="text-align: center;" @click="removeLog('PracticeLog')">[清除記録]</div>
+      <div class="data-table">
+        <table style="max-width: 500px;">
+          <thead>
+            <tr>
+              <th>部隊</th>
+              <th>敵ID</th>
+              <th>敵名</th>
+              <th>敵LV</th>
+              <th>評価</th>
+              <th>戦闘時点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="battle in log.practice">
+              <td>{{ battle.party_no || '-' }}</td>
+              <td>{{ battle.enemy_id || '-' }}</td>
+              <td>{{ battle.enemy_name || '-' }}</td>
+              <td>{{ battle.enemy_level }}</td>
+              <td>{{ battle.rank | rank-name }}</td>
+              <td>{{ battle.now | MMDDhhmmss }}</td>
             </tr>
           </tbody>
         </table>

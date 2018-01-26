@@ -121,8 +121,76 @@ define((require, exports, module) => {
       store.commit('repair/clear')
     }
 
+    static ['battle/practicescout'](content){
+      store.commit('inBattle')
+      store.commit('sally/updateSally', {
+        updateData: content.postData
+      })
+    }
+
     static ['battle/practicebattle'](content){
-      this['battle/battle'] (content)
+      store.commit('inBattle')
+      store.commit('party/updateParty', {
+        partyNo: content.result.player.party.partyNo,
+        updateData: { inBattle: true }
+      })
+      store.commit('battle/updateBattleResult', {
+        updateData: content.result
+      })
+      store.commit('battle/updateBattlePlayer', {
+        updateData: content.player
+      })
+      store.commit('battle/updatePracticeBattle', {
+        updateData: content
+      })
+      _.each(_.values(_.get(content, ['result', 'player', 'party', 'slot'])), (v, k) => {
+        v.inBattle = true
+        if (v.status) {
+          v.battleStatus = v.status
+          delete v.status
+        }
+        v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'battleFatigue'])
+        let rank = _.get(content, ['result', 'rank'])
+        let mvp = _.get(content, ['result', 'mvp'])
+        let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
+        if(rank < 6){
+          console.log("Rank Win")
+          if(v.serial_id == leader) {
+            console.log("leader calculate")
+            v.battleFatigue += 3
+          }
+          if(v.serial_id == mvp) {
+            console.log("mvp calculate")
+            v.battleFatigue += 10
+          }
+        }
+        if(v.battleFatigue >= 100) {
+          console.log(">= 100")
+          v.battleFatigue = 100
+        }
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id,
+          updateData: v
+        })
+      })
+      _.each(_.values(_.get(content, ['player', 'party'])), (v, k) => {
+        let equipUpdate = [{
+          serial_id: v.equip_serial_id1,
+          soldier: v.soldier1
+        }, {
+          serial_id: v.equip_serial_id2,
+          soldier: v.soldier2
+        }, {
+          serial_id: v.equip_serial_id3,
+          soldier: v.soldier3
+        }]
+        _.each(_.filter(equipUpdate, o => !isNaN(o.serial_id)), (v) => {
+          store.commit('equip/updateEquip', {
+            serialId: v.serial_id,
+            updateData: v
+          })
+        })
+      })
     }
 
     static ['battle/alloutbattle'](content){
@@ -193,6 +261,10 @@ define((require, exports, module) => {
             v.battleFatigue += 3
           }
           v.battleFatigue -= 2
+        }
+        else if(rank == 6) {
+          console.log("Rank D")
+          v.battleFatigue -= 3
         }
         if(v.serial_id == mvp) {
           console.log("mvp calculate")

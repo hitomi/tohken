@@ -202,6 +202,11 @@ define((require, exports, module) => {
         if (data) _.each(data, v => store.commit('log/addForgeLog', v))
       })
 
+      localforage.getItem('PracticeLog').then((data) => {
+        //console.log(data)
+        if (data) _.each(data, v => store.commit('log/addPracticeLog', v))
+      })
+
       localforage.getItem('Resource').then((data) => {
         if (data) store.commit('resource/updateResource', {
           updateData: data
