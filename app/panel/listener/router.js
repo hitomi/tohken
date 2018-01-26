@@ -22,6 +22,7 @@ define((require, exports, module) => {
       if (content.sword) {
         if(!content.sword.serial_id){
         _.each(content.sword, (v, k) => {
+          if(v.serial_id)
           v.inBattle = false
           if (v.battleStatus) {
             v.status = v.battleStatus
@@ -30,7 +31,7 @@ define((require, exports, module) => {
           store.commit('swords/updateSword', {
             serialId: k,
             updateData: v
-          })
+          })}
         })}
       }
       if (content.resource) {
