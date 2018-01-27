@@ -16,7 +16,7 @@ define((require, exports, module) => {
           if (getSwordId) {
             store.dispatch('notice/addNotice', {
               title: `锻刀剧透： ${swordName}`,
-              message: `结束时间：${time.format('hh:mm:ss')}`,
+              message: `结束时间：${time.format('HH:mm:ss')}`,
               context: time.isBefore() ? '已经結束了呦！' : '请耐心等待哟（或者拍个加速？）',
               tag: getSwordId,
               renotify: true,
@@ -26,7 +26,7 @@ define((require, exports, module) => {
           } else {
             store.dispatch('notice/addNotice', {
               title: `锻刀剧透等待中`,
-              message: `结束时间：${time.format('hh:mm:ss')}`,
+              message: `结束时间：${time.format('HH:mm:ss')}`,
               context: '需要重新进入锻刀页面才能看到呦',
               tag: getSwordId,
               renotify: true,

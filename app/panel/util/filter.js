@@ -59,11 +59,11 @@ define((require, exports, module) => {
   })
 
   exports.hhmmss = Vue.filter('hhmmss', (time) => {
-    return moment(time).format('hh:mm:ss')
+    return moment(time).format('HH:mm:ss')
   })
 
   exports.MMDDhhmmss = Vue.filter('MMDDhhmmss', (time) => {
-    return moment(time).format('MM/DD hh:mm:ss')
+    return moment(time).format('MM/DD HH:mm:ss')
   })
 
   exports.equipLevelCname = Vue.filter('equip-level-cname', function (level) {

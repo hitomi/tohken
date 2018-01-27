@@ -20,7 +20,7 @@ define((require, exports, module) => {
               if(finished_at != null && moment(parseValues(finished_at)).isBefore(Date.now())) {
                 store.dispatch('notice/addNotice', {
                   title: `内番结束！`,
-                  message: `结束时间：${moment(parseValues(finished_at)).format('hh:mm:ss')}`,
+                  message: `结束时间：${moment(parseValues(finished_at)).format('HH:mm:ss')}`,
                   context: '请尽快收取！',
                   renotify: true,
                   disableAutoClose: true,

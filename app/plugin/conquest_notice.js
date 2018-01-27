@@ -16,7 +16,7 @@ define((require, exports, module) => {
                 if(party.isNoticed == false || party.isNoticed == null){
                 store.dispatch('notice/addNotice', {
                   title: `${party_name}远征结束！`,
-                  message: `结束时间：${moment(parseValues(finished_at)).format('hh:mm:ss')}`,
+                  message: `结束时间：${moment(parseValues(finished_at)).format('HH:mm:ss')}`,
                   context: '请尽快收取！',
                   renotify: false,
                   disableAutoClose: true,
