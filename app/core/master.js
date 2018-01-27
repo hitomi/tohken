@@ -10,7 +10,7 @@ define((require, exports, module) => {
         // TRHMasterData.SwordLevel = require('data/SwordLevelMaster1507123959924')
         // TRHMasterData.Sword = require('data/SwordMaster1507123959937')
         // TRHMasterData.Equip = require('data/EquipMaster1507123959946')
-        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable'], k => {
+        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable', 'FieldSquare', "EventSquare"], k => {
           store.commit('loadData', {
             key: k,
             loaded: true
@@ -22,7 +22,9 @@ define((require, exports, module) => {
         SwordLevel: localforage.getItem('SwordLevelMaster'),
         Sword: localforage.getItem('SwordMaster'),
         Equip: localforage.getItem('EquipMaster'),
-        Consumable: localforage.getItem('ConsumableMaster')
+        Consumable: localforage.getItem('ConsumableMaster'),
+        FieldSquare: localforage.getItem('FieldSquareMaster'),
+        EventSquare: localforage.getItem('EventSquareMaster')
       }).then((saved) => {
         console.log('loadLocal')
         _.each(saved, (v, k) => {
@@ -71,8 +73,10 @@ define((require, exports, module) => {
       TRHMasterData.Equip = null
       // consumable_master
       TRHMasterData.Consumable = null
-      //voice
-      TRHMasterData.Voice = null
+      // field_square_master
+      TRHMasterData.FieldSquare = null
+      // event_square_master
+      TRHMasterData.EventSquare = null
       // wait promise
       return Promise.all([
         TRHMasterData.initUserLevelMaster(store),
@@ -80,40 +84,11 @@ define((require, exports, module) => {
         TRHMasterData.initSwordMaster(store),
         TRHMasterData.initEquipMaster(store),
         TRHMasterData.initConsumableMaster(store),
-        //TRHMasterData.initIcons(store)
-        //魔改voice抓取
-        //TRHMasterData.initVoiceMaster(store)
+        TRHMasterData.initFieldSquareMaster(store),
+        TRHMasterData.initEventSquareMaster(store)
       ]).then(() => {
         console.log('done', store)
       })
-    }
-    // Init Icons
-    /*static initIcons(store) {
-      if (TRHMasterData.masterData === null) return
-      return hex_md5("swr_crest_s_000003u0xq7npke")
-        .then(() => {
-          console.log('IconDone')
-        })
-    }*/
-    static initVoiceMaster(store){
-      if (TRHMasterData.masterData === null) return
-        TRHMasterData.Voice = _(TRHMasterData.masterData.voice_master)
-          .split('\n')
-          .map((line) => {
-            let arr = line.split(',')
-            let obj ={}
-            obj['swordId'] = _.toInteger(arr[0])
-            obj['type'] = _.toInteger(arr[1])
-            obj['text'] = arr[3]
-            obj['fileName'] = arr[4]
-            return obj
-          })
-          .keyBy('fileName')
-          .value()
-        /*_.each(TRHMasterData.Voice, k => {
-          return console.log("curl -o "+k.fileName+".mp3 http://static.touken-ranbu.jp/s/"+$.md5(k.fileName+"u0xq7npke")+".mp3")
-        })*/
-        return console.log("voiceDone")
     }
     // Init User Level Data
     static initUserLevelMaster (store) {
@@ -330,6 +305,112 @@ define((require, exports, module) => {
           console.log('err', err)
           store.commit('loadData', {
             key: 'Consumable',
+            loaded: false
+          })
+        })
+    }
+
+    //Init Square Data
+    static initFieldSquareMaster (store) {
+      if (TRHMasterData.masterData === null) return
+      TRHMasterData.FieldSquare = _(TRHMasterData.masterData.field_square_master)
+        .split('\n')
+        .map((line) => {
+          let arr = line.split(',')
+          let obj = {}
+          obj['episodeId'] = _.toInteger(arr[0])
+          obj['fieldId'] = _.toInteger(arr[1])
+          obj['layerNum'] = _.toInteger(arr[2])
+          obj['squareId'] = _.toInteger(arr[3])
+          obj['category'] = _.toInteger(arr[4])
+          obj['itemType'] = _.toInteger(arr[5])
+          obj['itemId'] = _.toInteger(arr[6])
+          obj['itemNum'] = _.toInteger(arr[7])
+          obj['bgmId'] = _.toInteger(arr[8])
+          return obj
+        })
+        .groupBy('episodeId')
+        .mapValues((val) => {
+          return _(val)
+            .groupBy('fieldId')
+            .mapValues((v) => {
+              return _(v)
+                .groupBy('layerNum')
+                .mapValues((vv) =>{
+                  return _(vv)
+                    .keyBy('squareId')
+                    .value()
+                })
+                .value()
+            })
+            .value()
+        })
+        .value()
+      return localforage.setItem('FieldSquareMaster', TRHMasterData.FieldSquare)
+        .then(() => {
+          console.log(TRHMasterData.FieldSquare)
+          store.commit('loadData', {
+            key: 'FieldSquare',
+            loaded: true
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+          store.commit('loadData', {
+            key: 'FieldSquare',
+            loaded: false
+          })
+        })
+    }
+
+    //Init Event Square Data
+    static initEventSquareMaster (store) {
+      if (TRHMasterData.masterData === null) return
+      TRHMasterData.EventSquare = _(TRHMasterData.masterData.event_square_master)
+        .split('\n')
+        .map((line) => {
+          let arr = line.split(',')
+          let obj = {}
+          obj['episodeId'] = _.toInteger(arr[0])*(-1)
+          obj['fieldId'] = _.toInteger(arr[1])
+          obj['layerNum'] = _.toInteger(arr[2])
+          obj['squareId'] = _.toInteger(arr[3])
+          obj['category'] = _.toInteger(arr[4])
+          obj['itemType'] = _.toInteger(arr[5])
+          obj['itemId'] = _.toInteger(arr[6])
+          obj['itemNum'] = _.toInteger(arr[7])
+          obj['bgmId'] = _.toInteger(arr[8])
+          return obj
+        })
+        .groupBy('episodeId')
+        .mapValues((val) => {
+          return _(val)
+            .groupBy('fieldId')
+            .mapValues((v) => {
+              return _(v)
+                .groupBy('layerNum')
+                .mapValues((vv) =>{
+                  return _(vv)
+                    .keyBy('squareId')
+                    .value()
+                })
+                .value()
+            })
+            .value()
+        })
+        .value()
+      return localforage.setItem('EventSquareMaster', TRHMasterData.EventSquare)
+        .then(() => {
+          console.log(TRHMasterData.EventSquare)
+          store.commit('loadData', {
+            key: 'EventSquare',
+            loaded: true
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+          store.commit('loadData', {
+            key: 'EventSquare',
             loaded: false
           })
         })
