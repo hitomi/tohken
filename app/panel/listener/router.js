@@ -149,7 +149,7 @@ define((require, exports, module) => {
           v.battleStatus = v.status
           delete v.status
         }
-        v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'battleFatigue'])
+        v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.serial_id, 'vfatigue'])
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
