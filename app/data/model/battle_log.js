@@ -1,4 +1,5 @@
 define((require, exports, module) => {
+  let TRHMasterData = require('app/core/master')
   return () => {
     return {
       logId: null,
@@ -10,7 +11,13 @@ define((require, exports, module) => {
       layer_num: null,
       rank: null,
       mvp: null,
-      now: null
+      now: null,
+      get category(){
+        if(this.episode_id>0)
+          return _.get(TRHMasterData.getMasterData('FieldSquare'),[this.episode_id, this.field_id, this.layer_num, this.square_id, 'category'],0)
+        else
+          return _.get(TRHMasterData.getMasterData('EventSquare'),[this.episode_id, this.field_id, this.layer_num, this.square_id, 'category'],0)
+      }
     }
   }
 })
