@@ -467,7 +467,8 @@
               <td>{{ battle.get_sword_id | sword-name }}</td>
               <td>{{ battle.episode_id || '-' }}-{{ battle.field_id || '-' }}</td>
               <td>{{ battle.layer_num }}</td>
-              <td>{{ battle.square_id }}</td>
+              <td v-if="battle.category === 3" style="color: red;">{{ battle.square_id }}</td>
+              <td v-else>{{ battle.square_id }}</td>
               <td>{{ battle.rank | rank-name }}</td>
               <td>{{ battle.now | MMDDhhmmss }}</td>
             </tr>
