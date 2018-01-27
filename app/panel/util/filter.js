@@ -103,6 +103,10 @@ define((require, exports, module) => {
     return _.get(store.state, ['equip', 'serial', serialId, 'name'], '-').replace(/\d+/, '')
   })
 
+  exports.PracticeEnemyEquipName = Vue.filter('practice-enemy-equip-serial-name', (serialId) => {
+    return _.get(store.state, ['practice_enemy', 'enemy_equip', serialId, 'name'], '-').replace(/\d+/, '')
+  })
+
   exports.allEquipSerialName = Vue.filter('all-equip-serial-name', (serialIds) => {
     return _.map(serialIds, (serialId) => _.get(store.state, ['equip', 'serial', serialId, 'name'], '-').replace(/\d+/, '')).join(' / ')
   })

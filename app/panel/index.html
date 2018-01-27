@@ -23,6 +23,17 @@
             <small v-else>暂未获取</small>
           </div>
         </router-link>
+        <router-link class="main-menu" to="/enemy">
+          <div class="menu-cover">
+            敵情報
+          </div>
+          <div class="menu-inner" @click="scroll('battle')">
+            戦闘
+          </div>
+          <div class="menu-inner" @click="scroll('practice')">
+            演練
+          </div>
+        </router-link>
         <router-link class="main-menu" to="/other">
           <div class="menu-cover">
             本丸
@@ -63,6 +74,12 @@
         <router-link class="main-menu" to="/setting">
           <div class="menu-cover">
             設定
+          </div>
+          <div class="menu-inner" @click="scroll('setSecretary')">
+            設定
+          </div>
+          <div class="menu-inner" @click="scroll('about')">
+            关于
           </div>
         </router-link>
       </div>
@@ -189,6 +206,43 @@
 
   <script id="repair-item" type="text/template">
     <div>{{ repair.slot_no }}: <span>{{ repair.sword_serial_id | sword-serial-name }}</span><span>[{{ repair.finished_at | hhmmss }}]</span></div>
+  </script>
+
+  <script id="enemy" type='text/template'>
+    <div>
+      <div class="title" id="battle">· 戦闘 ·</div>
+      <div>[TODO]</div>
+      <div class="title" id="practice">· 演練 ·</div>
+      <div v-if="practice_enemy_party != null" v-for="enemy_sword in practice_enemy_party.slot">
+        <div v-if="enemy_sword.serial_id" class="touken-info">
+          <img :src="practice_enemy_sword[enemy_sword.serial_id].baseId | sword-pattern" alt="空" class="pattern">
+          <div class="info">
+            <div class="name">{{ practice_enemy_sword[enemy_sword.serial_id].name }}</div>
+            <div class="hp">HP <span>{{ practice_enemy_sword[enemy_sword.serial_id].hp_max }} / {{ practice_enemy_sword[enemy_sword.serial_id].hp_max }}</span></div>
+            <div class="level">Lv.{{ practice_enemy_sword[enemy_sword.serial_id].level }}</div>
+            <div class="fatigue" :class="practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-cname" >{{ practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-text }} {{ practice_enemy_sword[enemy_sword.serial_id].vfatigue }} <small>{{ practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-buff }}</small></div>
+            <div class="horse">{{ practice_enemy_sword[enemy_sword.serial_id].horse_serial_id | practice-enemy-equip-serial-name }}</div>
+            <div class="equip">
+              <ul v-for="equip in practice_enemy_sword[enemy_sword.serial_id].equips">
+                <li v-if="equip === null">空</li>
+                <li v-else-if="equip === 0">空</li>
+                <li v-else-if="practice_enemy_equip[equip].serial_id" :class="practice_enemy_equip[equip].level | equip-level-cname">{{ practice_enemy_equip[equip].name | equip-name-format }} </li>
+                <li v-else>数据错误</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--{{practice_enemy_sword[enemy_sword.serial_id].name}}-->
+        <div class="touken-info" v-else-if="enemy_sword.serial_id === null">
+          <img src="../../static/sword/0.png" alt="空" class="pattern">
+          <div class="info"><div class="name">暂无队员</div></div>
+        </div>
+        <div class="touken-info danger" v-else>
+          <img src="../../static/sword/0.png" alt="空" class="pattern">
+          <div class="info"><div class="name">数据错误</div></div>
+        </div>
+      </div>
+    </div>
   </script>
 
   <script id="other" type="text/template">
@@ -519,7 +573,7 @@
         <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !repair_notice }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
       </div>
       <div>
-        <div class="title" style="text-align: left;">· 关于 ·</div>
+        <div class="title" style="text-align: left;" id="about">· 关于 ·</div>
         <ul>
           <li>
           <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>

@@ -121,6 +121,27 @@ define((require, exports, module) => {
       store.commit('repair/clear')
     }
 
+    static ['practice/offer'](content){
+      _.each(content.enemy_equip, (v,k) => {
+        store.commit('practice_enemy/updatePracticeEquip', { 
+          serialId: k, 
+          updateData: v
+        })
+      })
+      _.each(content.enemy_sword, (v,k) => {
+        store.commit('practice_enemy/updatePracticeSword', {
+          serialId: k, 
+          updateData: v
+        })
+      })
+      _.each(content.enemy_party, (v,k) => {
+        store.commit('practice_enemy/updatePracticeParty', {
+          partyNo: k, 
+          updateData: v
+        })
+      })
+    }
+
     static ['battle/practicescout'](content){
       store.commit('inBattle')
       store.commit('sally/updateSally', {

@@ -79,6 +79,21 @@ define((require, exports, module) => {
     `
   }
 
+  const Enemy = Vue.component('enemy', {
+    template: '#enemy',
+    computed: Vuex.mapState({
+      practice_enemy_equip (state){
+        return _.get(state, ['practice_enemy','enemy_equip'], {})
+      },
+      practice_enemy_sword (state){
+        return _.get(state, ['practice_enemy','enemy_sword'], {})
+      },
+      practice_enemy_party (state){
+        return _.get(state, ['practice_enemy','enemy_party','1'], {})
+      }
+    })
+  })
+
   const Other = Vue.component('other', {
     template: '#other',
     data () {
@@ -158,6 +173,7 @@ define((require, exports, module) => {
     routes: [
       { path: '/', redirect: '/party' },
       { path: '/party', components: { 'party-list-wrapper': partyListWrapper } },
+      { path: '/enemy', component: Enemy },
       { path: '/other', component: Other },
       { path: '/extra', component: Extra },
       { path: '/setting', component: Setting }

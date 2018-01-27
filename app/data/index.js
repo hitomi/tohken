@@ -52,7 +52,8 @@ define((require, exports, module) => {
       log: require('./state/log'),
       config: require('./state/config'),
       item: require('./state/item'),
-      album: require('./state/album')
+      album: require('./state/album'),
+      practice_enemy: require('./state/practice_enemy')
     },
     plugins: _.values(Plugin)
   })
