@@ -237,6 +237,10 @@
           <img src="../../static/sword/0.png" alt="空" class="pattern">
           <div class="info"><div class="name">暂无队员</div></div>
         </div>
+        <div class="touken-info" v-else-if="enemy_sword.serial_id === 0">
+          <img src="../../static/sword/0.png" alt="空" class="pattern">
+          <div class="info"><div class="name">暂无队员</div></div>
+        </div>
         <div class="touken-info danger" v-else>
           <img src="../../static/sword/0.png" alt="空" class="pattern">
           <div class="info"><div class="name">数据错误</div></div>
