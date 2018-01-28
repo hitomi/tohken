@@ -230,6 +230,9 @@ define((require, exports, module) => {
       store.commit('battle/updateBattlePlayer', {
         updateData: content.player
       })
+      store.commit('battle/updateBattleEnemy', {
+        updateData: content.enemy
+      })
       store.commit('battle/updateBattle', {
         updateData: content
       })
@@ -342,6 +345,11 @@ define((require, exports, module) => {
       store.commit('sally/updateSally', {
         updateData: _.pick(content, ['square_id'])
       })
+      store.commit('battle/clearBattleScout')
+      store.commit('battle/updateBattleScout', {
+        updateData: content.scout
+      })
+      store.commit('battle/clearBattleEnemy')
     }
     static ['sally/eventforward'] (content) {
       this['sally/forward'](content)

@@ -211,9 +211,53 @@
   <script id="enemy" type='text/template'>
     <div>
       <div class="title" id="battle">· 戦闘 ·</div>
-      <div>[TODO]</div>
+      <div style="text-align:center">
+        <div>出阵地图：{{sally.episode_id || '-'}}-{{sally.field_id || '-'}}</div>
+        <div>层数：{{sally.layer_num || '-'}}</div>
+        <div v-if="sally.category===3">战斗点ID：<span style="color: red;">{{sally.square_id || '-'}}</span></div>
+        <div v-else>战斗点ID：{{sally.square_id || '-'}}</div>
+        <div>敌方队伍：</div>
+      </div>
+      <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0" class="party-list">
+        <div v-for="enemy_sword in battle_enemy.party" v-if="enemy_sword.sword_id!=null && enemy_sword.sword_id!=0">
+          <div class="touken-info" style="min-width: 474px;">
+            <img :src="enemy_sword.sword_id | enemy-sword-pattern" alt="空" class="enemyPattern">
+            <div class="info" style="left: 198px">
+              <div class="name">{{ enemy_sword.sword_id | sword-name}}<small>({{enemy_sword.sword_id}})</small></div>
+              <div class="hp">HP {{ enemy_sword.sword_id | sword-hp}}</div>
+              <div class="level"></div>
+              <div class="level"></div>
+              <div class="equip">
+                <ul>
+                  <li v-if="enemy_sword.equip_id1===null || enemy_sword.equip_id1===0">空</li>
+                  <li v-else :class="enemy_sword.equip_id1 | equip-level-name">{{ enemy_sword.equip_id1 | equip-name | equip-name-format}}</li>
+                </ul>
+                <ul>
+                  <li v-if="enemy_sword.equip_id2===null || enemy_sword.equip_id2===0">空</li>
+                  <li v-else :class="enemy_sword.equip_id2 | equip-level-name">{{ enemy_sword.equip_id2 | equip-name | equip-name-format}}</li>
+                </ul>
+                <ul>
+                  <li v-if="enemy_sword.equip_id3===null || enemy_sword.equip_id3===0">空</li>
+                  <li v-else :class="enemy_sword.equip_id3 | equip-level-name">{{ enemy_sword.equip_id3 | equip-name | equip-name-format}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="battle_scout.enemy[0]!=null && battle_scout.enemy[0]!=0" class="party-list">
+        <div v-for="enemy_sword_id in battle_scout.enemy" v-if="enemy_sword_id!=null && enemy_sword_id!=0">
+          <div class="touken-info" style="min-width: 474px;">
+            <img :src="enemy_sword_id | enemy-sword-pattern" alt="空" class="enemyPattern">
+            <div class="info" style="left: 198px">
+              <div class="name">{{ enemy_sword_id | sword-name}}({{enemy_sword_id}})</div>
+              <div class="hp">HP {{ enemy_sword_id | sword-hp}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="title" id="practice">· 演練 ·</div>
-      <div v-if="practice_enemy_party != null" v-for="enemy_sword in practice_enemy_party.slot">
+      <div v-if="practice_enemy_party != null" v-for="enemy_sword in practice_enemy_party.slot" class="party-list">
         <div v-if="enemy_sword.serial_id" class="touken-info">
           <img :src="practice_enemy_sword[enemy_sword.serial_id].baseId | sword-pattern" alt="空" class="pattern">
           <div class="info">

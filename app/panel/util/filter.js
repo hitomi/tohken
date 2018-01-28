@@ -34,6 +34,12 @@ define((require, exports, module) => {
     return swordId ? '../../static/sword/' + swordId + '.png' : '../../static/sword/0.png'
   })
 
+  exports.EnemySwordPattern = Vue.filter('enemy-sword-pattern', function (swordId) {
+    let imageId = _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'imageId'], 0)
+    let rarity = _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'rarity'], 0)
+    return swordId ? '../../static/enemy/' + imageId + '_' + rarity + '.png' : '../../static/sword/0.png'
+  })
+
   exports.swordObject = Vue.filter('sword-object', function (serialId) {
     return serialId
   })
@@ -66,6 +72,16 @@ define((require, exports, module) => {
     return moment(time).format('MM/DD HH:mm:ss')
   })
 
+  exports.equipLevelName = Vue.filter('equip-level-name', function (equip_id) {
+    let level = _.get(TRHMasterData.getMasterData('Equip'), [equip_id, 'rarity'], 0)
+    return {
+      0: 'destroyed',
+      1: 'n',
+      3: 'r',
+      5: 'sr'
+    }[level]
+  })
+
   exports.equipLevelCname = Vue.filter('equip-level-cname', function (level) {
     return {
       0: 'destroyed',
@@ -89,6 +105,10 @@ define((require, exports, module) => {
 
   exports.swordName = Vue.filter('sword-name', (swordId) => {
     return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'name'], '-') : '空'
+  })
+
+  exports.swordHp = Vue.filter('sword-hp', (swordId) => {
+    return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'hp'], '-') : '0'
   })
 
   exports.equipName = Vue.filter('equip-name', (equipId) => {

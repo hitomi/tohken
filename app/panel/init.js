@@ -82,6 +82,15 @@ define((require, exports, module) => {
   const Enemy = Vue.component('enemy', {
     template: '#enemy',
     computed: Vuex.mapState({
+      sally (state){
+        return _.get(state, ['sally'], {})
+      },
+      battle_scout (state){
+        return _.get(state, ['battle','scout'], {})
+      },
+      battle_enemy (state){
+        return _.get(state, ['battle','enemy'], {})
+      },
       practice_enemy_equip (state){
         return _.get(state, ['practice_enemy','enemy_equip'], {})
       },
