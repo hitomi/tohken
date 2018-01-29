@@ -181,7 +181,7 @@ a {
 }
 
 .party-info .party-name {
-  font-size: 130%;
+  font-size: 150%;
 }
 
 .touken-info {
@@ -412,7 +412,8 @@ a {
 }
 
 .title {
-  font-size: 150%;
+  font-size: 200%;
+  font-weight:bold;
   padding: 12px;
   text-align: center;
 }

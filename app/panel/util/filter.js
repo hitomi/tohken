@@ -40,6 +40,10 @@ define((require, exports, module) => {
     return swordId ? '../../static/enemy/' + imageId + '_' + rarity + '.png' : '../../static/sword/0.png'
   })
 
+  exports.MapPattern = Vue.filter('map-pattern', function (mapId) {
+    return mapId ? '../../static/map/' + mapId + '.jpg' : ''
+  })
+
   exports.swordObject = Vue.filter('sword-object', function (serialId) {
     return serialId
   })
