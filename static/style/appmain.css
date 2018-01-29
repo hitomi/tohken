@@ -179,9 +179,12 @@ a {
 .party-info {
   padding: 8px;
 }
-
 .party-info .party-name {
   font-size: 150%;
+}
+.party-info .mapPattern {
+  width: 60%;
+  height: 60%;
 }
 
 .touken-info {
