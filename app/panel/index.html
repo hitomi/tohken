@@ -167,7 +167,7 @@
   <!-- Component Sword Item -->
   <script id="sword-item" type="text/template">
     <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname">
-      <img :src="sword.baseId | sword-pattern" alt="空" class="pattern">
+      <img :src="sword.sword_id | sword-pattern" alt="空" class="pattern">
       <div class="info">
         <div class="name">{{ sword.name }}<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
         <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && (sword.injury && sword.status != 0 )">[{{ sword.status | status-text }}]</span></div>
@@ -266,7 +266,7 @@
       <div class="title" id="practice">· 演練 ·</div>
       <div v-if="practice_enemy_party != null" v-for="enemy_sword in practice_enemy_party.slot" class="party-list">
         <div v-if="enemy_sword.serial_id" class="touken-info">
-          <img :src="practice_enemy_sword[enemy_sword.serial_id].baseId | sword-pattern" alt="空" class="pattern">
+          <img :src="practice_enemy_sword[enemy_sword.serial_id].sword_id | sword-pattern" alt="空" class="pattern">
           <div class="info">
             <div class="name">{{ practice_enemy_sword[enemy_sword.serial_id].name }}</div>
             <div class="level">Lv.{{ practice_enemy_sword[enemy_sword.serial_id].level }}</div>
