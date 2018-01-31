@@ -216,7 +216,7 @@
       <div class="title" id="battle">· 戦闘 ·</div>
       <div class="party-info">
       <div>出阵地图：{{sally.episode_id || '-'}}-{{sally.field_id || '-'}}</div>
-      <img :src="sally.episode_id + '_' + sally.field_id + '_' + sally.layer_num | map-pattern" alt="空" class="mapPattern">
+      <img v-if="sally.episode_id != null && sally.field_id != null && sally.layer_num != null" :src="sally.episode_id + '_' + sally.field_id + '_' + sally.layer_num | map-pattern" alt="空" class="mapPattern">
       <div>
         <div style="float:left; width:50%;">层数：{{sally.layer_num || '-'}}</div>
         <div v-if="sally.category===3" style="float:left; width:50%;">战斗点ID：<span style="color: red;">{{sally.square_id || '-'}}(Boss)</span></div>
@@ -639,6 +639,11 @@
             <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
             <p>（接锅）萌新：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
             <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u>（你可以叫我哲也）</p>
+            </li>
+            <li>
+              <b>版本：v1.1.4</b>
+              <p>记录导出</p>
+              <p>修改了远征提醒有误的bug</p>
             </li>
             <li>
               <b>版本：v1.1.3</b>

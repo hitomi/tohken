@@ -15,7 +15,7 @@ chrome.devtools.inspectedWindow.eval('window.location.href', {}, function (resul
           message: {
             title: '欢迎使用婶婶忙~',
             message: '请在新出现的面板中进入【婶婶忙】选项卡',
-            context: '构建版本：v1.1.3'
+            context: '构建版本：v1.1.4'
           }
         })
       }
