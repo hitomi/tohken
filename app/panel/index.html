@@ -521,7 +521,8 @@
     <div>
       <div class="logo"></div>
       <div class="title" id="forge-log">· 锻刀記錄 ·</div>
-      <div style="text-align: center;" @click="removeLog('ForgeLog')">[清除記録]</div>
+      <div style="text-align: right; float:left; width:50%;" @click="removeLog('ForgeLog')">[清除記録]</div>
+      <div style="text-align: left; float:left; width:50%;" @click="saveLog('ForgeLog')">[导出記録]</div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -551,7 +552,8 @@
         </table>
       </div>
       <div class="title" id="battle-log">· 交戦記録 ·</div>
-      <div style="text-align: center;" @click="removeLog('BattleLog')">[清除記録]</div>
+      <div style="text-align: right; float:left; width:50%;" @click="removeLog('BattleLog')">[清除記録]</div>
+      <div style="text-align: left; float:left; width:50%;" @click="saveLog('BattleLog')">[导出記録]</div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -581,7 +583,8 @@
         </table>
       </div>
       <div class="title" id="practice-log">· 演練記録 ·</div>
-      <div style="text-align: center;" @click="removeLog('PracticeLog')">[清除記録]</div>
+      <div style="text-align: right; float:left; width:50%;" @click="removeLog('PracticeLog')">[清除記録]</div>
+      <div style="text-align: left; float:left; width:50%;" @click="saveLog('PracticeLog')">[导出記録]</div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>

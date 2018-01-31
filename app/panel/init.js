@@ -153,6 +153,40 @@ define((require, exports, module) => {
     methods: {
       removeLog (name) {
         localforage.removeItem(`${name}`)
+      },
+      saveLog (name) {
+        if(name == 'ForgeLog') {
+          ForgeLog = "\"番号\",\"刀名\",\"木炭\",\"玉鋼\",\"冷却材\",\"砥石\",\"御札\",\"结束时间\""
+          _.forEach(_.get(store.state, ['log','forge']), function(_this) {
+            ForgeLog += "\n\"'" + (_this.sword_id ? _this.sword_id : '-') + "\",\"'" + (_this.sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.charcoal ? _this.charcoal : '-') + "\",\"'" + (_this.steel ? _this.steel : '-') + "\",\"'" + (_this.coolant ? _this.coolant : '-') + "\",\"'" + (_this.file ? _this.file : '-') + "\",\"'" + (_this.use_assist ? _this.use_assist : '-') + "\",\"'" + (moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
+          })
+          blob = new Blob([ForgeLog], {
+            type: "text/plain;charset=utf-8"
+          });
+          saveAs(blob, "TRHForge" + (Date.now()) + ".csv");
+        }
+        else if(name == 'BattleLog') {
+          BattleLog = "\"部隊\",\"刀名\",\"時代-地域\",\"階数\",\"戦闘地ID\",\"評価\",\"戦闘時点\""
+          _.forEach(_.get(store.state, ['log','battle']), function(_this) {
+            rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
+            BattleLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.get_sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.get_sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "\",\"'" + (_this.layer_num ? _this.layer_num : '-') + "\",\"'" + (_this.square_id ? _this.square_id : '-') + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
+          })
+          blob = new Blob([BattleLog], {
+            type: "text/plain;charset=utf-8"
+          });
+          saveAs(blob, "TRHBattle" + (Date.now()) + ".csv");
+        }
+        else if(name == 'PracticeLog') {
+          PracticeLog = "\"部隊\",\"敵名\",\"敵LV\",\"評価\",\"戦闘時点\""
+          _.forEach(_.get(store.state, ['log','practice']), function(_this) {
+            rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
+            PracticeLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.enemy_name ? _this.enemy_name : '-') + "\",\"'" + "Lv." + (_this.enemy_level) + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
+          })
+          blob = new Blob([PracticeLog], {
+            type: "text/plain;charset=utf-8"
+          });
+          saveAs(blob, "TRHPractice" + (Date.now()) + ".csv");
+        }
       }
     }
   })
