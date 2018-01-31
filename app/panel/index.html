@@ -224,6 +224,8 @@
       </div>
       
       <div class="party-name">敌方队伍：</div>
+      <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0">阵型：{{ battle_enemy.formation_id | formation-name }}</div>
+      <div v-else-if="battle_scout.enemy[0]!=null && battle_scout.enemy[0]!=0">阵型：{{ battle_scout.formation_id | formation-name }}</div>
       <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0" class="party-list">
         <div v-for="enemy_sword in battle_enemy.party" v-if="enemy_sword.sword_id!=null && enemy_sword.sword_id!=0">
           <div class="touken-info" style="min-width: 474px;">

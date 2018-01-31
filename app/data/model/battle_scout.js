@@ -1,6 +1,7 @@
 define((require, exports, module) => {
 	return() => {
 		return {
+			formation_id: null,
 			enemy: {
 				0: null,
 				1: null,

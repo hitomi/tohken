@@ -107,6 +107,18 @@ define((require, exports, module) => {
     ][rank] || ''
   })
 
+  exports.formationName = Vue.filter('formation-name', (formationId) => {
+    return {
+      0: '不明',
+      1: '魚鱗陣',
+      2: '鶴翼陣',
+      3: '方陣',
+      4: '横隊陣',
+      5: '雁行陣',
+      6: '逆行陣'
+    }[formationId] || ''
+  })
+
   exports.swordName = Vue.filter('sword-name', (swordId) => {
     return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'name'], '-') : '空'
   })
