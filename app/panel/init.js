@@ -253,11 +253,14 @@ define((require, exports, module) => {
       })
 
       localforage.getItem('Party').then((data) => {
-        console.log(data)
-        if (data.parties) _.each(data.parties, v => store.commit('party/updateParty', {
-          partyNo: v.party_no,
-          updateData: v
-        }))
+        if (data.parties) _.each(data.parties, v => {
+          v.isIntervalSet = false
+          v.isNoticed = false
+          store.commit('party/updateParty', {
+            partyNo: v.party_no,
+            updateData: v
+          })
+        })
       })
 
       localforage.getItem('Item').then((data) => {

@@ -7,8 +7,6 @@ define((require, exports, module) => {
           let status = mutation.payload.updateData.status
           let finished_at = mutation.payload.updateData.finished_at
           let party = _.get(state, ['party', 'parties', mutation.payload.updateData.party_no])
-  
-          //party.isIntervalSet = false
           if(party.isIntervalSet == false || party.isIntervalSet == null) {
             let check = setInterval(function isConquestFinished(){
               party.isIntervalSet = true
@@ -24,15 +22,16 @@ define((require, exports, module) => {
                   icon: `static/sword/${state.config.secretary}.png`
                 })
                 party.isNoticed = true
-                //console.log(party)
                 }
-                clearInterval(check)
                 party.isIntervalSet = false
-              } else {
                 clearInterval(check)
-                party.isIntervalSet = false
+              } else if (status == 2) {
                 party.isNoticed = false
-                //console.log(party)
+              }
+              if(status != 2){
+                party.isNoticed = false
+                party.isIntervalSet = false
+                clearInterval(check)
               }
             }, 1000)
           }
