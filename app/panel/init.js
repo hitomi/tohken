@@ -99,6 +99,10 @@ define((require, exports, module) => {
       },
       practice_enemy_party (state){
         return _.get(state, ['practice_enemy','enemy_party','1'], {})
+      },
+      enemyList () {
+        let enemy = TRHMasterData.getMasterData('Sword')
+        return enemy
       }
     })
   })
