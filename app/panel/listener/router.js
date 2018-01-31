@@ -161,6 +161,9 @@ define((require, exports, module) => {
       store.commit('battle/updateBattlePlayer', {
         updateData: content.player
       })
+      store.commit('player/updatePlayer', {
+        updateData: content.player
+      })
       store.commit('battle/updatePracticeBattle', {
         updateData: content
       })
@@ -228,6 +231,9 @@ define((require, exports, module) => {
         updateData: content.result
       })
       store.commit('battle/updateBattlePlayer', {
+        updateData: content.player
+      })
+      store.commit('player/updatePlayer', {
         updateData: content.player
       })
       store.commit('battle/updateBattleEnemy', {
