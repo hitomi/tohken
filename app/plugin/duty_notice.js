@@ -4,7 +4,7 @@ define((require, exports, module) => {
       if (state.config.duty_notice == true) {
         if (mutation.type === 'duty/updateDuty') {
           let { finished_at, horse_id2, horse_id1, field_id1, field_id2, bout_id1, bout_id2 } = mutation.payload.updateData
-          if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull)) {
+          if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull) || mutation.payload.updateData.length == 0) {
             store.dispatch('notice/addNotice', {
               title: `内番未放置`,
               context: '请安排刀刀们干活啦！',
