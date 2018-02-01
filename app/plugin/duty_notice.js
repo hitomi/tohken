@@ -9,8 +9,8 @@ define((require, exports, module) => {
               title: `内番未放置`,
               context: '请安排刀刀们干活啦！',
               disableAutoClose: true,
-              swordBaseId: state.secretary,
-              icon: `static/sword/${state.secretary}.png`
+              swordBaseId: state.config.secretary,
+              icon: `static/sword/${state.config.secretary}.png`
             })
           }
           if(state.duty.duty.isIntervalSet == false || state.duty.duty.isIntervalSet == null) {
