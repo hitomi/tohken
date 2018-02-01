@@ -466,5 +466,16 @@ define((require, exports, module) => {
         })
       })
     }
+
+    static ['produce/start'](content){
+      store.commit('equip/updateEquip', {
+        serialId: content.serial_id,
+        updateData: content
+      })
+    }
+
+    static ['produce'](content){
+      store.commit('equip/clear')
+    }
   }
 })
