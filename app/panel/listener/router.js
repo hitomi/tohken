@@ -457,5 +457,14 @@ define((require, exports, module) => {
         updateData: content.result
       })
     }
+
+    static ['party/partyreplacement'](content){
+      _.each(_.pick(content, [1, 2, 3, 4]), (v, k) => {
+        store.commit('party/updateParty', {
+          partyNo: k,
+          updateData: v
+        })
+      })
+    }
   }
 })
