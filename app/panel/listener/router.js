@@ -451,5 +451,11 @@ define((require, exports, module) => {
         })
       })
     }
+
+    static ['conquest/complete'](content) {
+      store.commit('player/updatePlayer', {
+        updateData: content.result
+      })
+    }
   }
 })
