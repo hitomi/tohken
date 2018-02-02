@@ -94,7 +94,6 @@ define((require, exports, module) => {
                 equipstring += _.get(TRHMasterData.getMasterData('Equip'), [v.equip[2], 'name'], '-') + ' '
               if(v.equip[3]!=null)
                 equipstring += _.get(TRHMasterData.getMasterData('Equip'), [v.equip[3], 'name'], '-') + ' '
-              equipstring += '\n'
               return {
                 serial_id: v.serial_id,
                 name: sword.name,
@@ -105,14 +104,24 @@ define((require, exports, module) => {
             .value()
           if (playerParty.length) {
             let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
-            if (swordName)
-            store.dispatch('notice/addNotice', {
-              title: `战斗报告`,
-              message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
-              context: `掉落：${swordName}！`,
-              swordBaseId: getSwordId,
-              icon: `static/sword/${getSwordId}.png`,
-            })
+            if (swordName){
+              if (playerEquips.length)
+              store.dispatch('notice/addNotice', {
+                title: `战斗报告`,
+                message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
+                context: `掉落：${swordName}！`,
+                swordBaseId: getSwordId,
+                icon: `static/sword/${getSwordId}.png`,
+              })
+              else
+              store.dispatch('notice/addNotice', {
+                title: `战斗报告`,
+                message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
+                context: `掉落：${swordName}！`,
+                swordBaseId: getSwordId,
+                icon: `static/sword/${getSwordId}.png`,
+              })
+            }
           }
           else if (playerEquips.length) {
             let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
