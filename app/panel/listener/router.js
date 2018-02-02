@@ -477,5 +477,20 @@ define((require, exports, module) => {
     static ['produce'](content){
       store.commit('equip/clear')
     }
+
+    static ['sally/eventresume'](content){
+      let eventContent = {
+        episode_id: null,
+        field_id: null,
+        layer_num: null
+      }
+      eventContent.episode_id = content.event_id*(-1)
+      eventContent.field_id = content.field_id
+      eventContent.layer_num = content.layer_num
+      store.commit('sally/updateSally', {
+        updateData: eventContent
+      })
+      this['sally/sally'] (content)
+    }
   }
 })
