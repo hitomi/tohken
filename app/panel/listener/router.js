@@ -492,5 +492,16 @@ define((require, exports, module) => {
       })
       this['sally/sally'] (content)
     }
+
+    static ['equip/destroy'] (content) {
+      let serial_ids = _(content.postData.serial_ids)
+        .split('%2C')
+        .value()
+      _.each(serial_ids, v => {
+        store.commit('equip/deleteEquip', {
+          serialId: v
+        })
+      })
+    }
   }
 })

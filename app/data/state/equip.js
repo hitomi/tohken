@@ -17,6 +17,10 @@ define((require, exports, module) => {
       },
       clear (state) {
         state.serial = {}
+      },
+      deleteEquip (state, payload) {
+        let {serialId} = payload
+        Vue.delete(state.serial, serialId)
       }
     }
   }
