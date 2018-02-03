@@ -19,6 +19,10 @@ define((require, exports, module) => {
       clear (state) {
         state.serial = {}
         state.inBattleSwords = []
+      },
+      deleteSword (state, payload) {
+        let {serialId} = payload
+        Vue.delete(state.serial, serialId)
       }
     }
   }

@@ -503,5 +503,27 @@ define((require, exports, module) => {
         })
       })
     }
+
+    static ['sword/dismantle'] (content) {
+      let serial_ids = _(content.postData.serial_id)
+        .split('%2C')
+        .value()
+      _.each(serial_ids, v => {
+        store.commit('swords/deleteSword', {
+          serialId: v
+        })
+      })
+    }
+
+    static ['composition/compose'] (content) {
+      let serial_ids = _(content.postData.material_id)
+        .split('%2C')
+        .value()
+      _.each(serial_ids, v => {
+        store.commit('swords/deleteSword', {
+          serialId: v
+        })
+      })
+    }
   }
 })
