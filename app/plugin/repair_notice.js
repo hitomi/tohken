@@ -6,9 +6,9 @@ define((require, exports, module) => {
           let swordSerialId = mutation.payload.updateData.sword_serial_id
           let sword = _.get(state, ['swords', 'serial', swordSerialId])
           store.dispatch('notice/addNotice', {
-            title: `${sword.name} 手入中`,
+            title: `手入刀剑：${sword.name} `,
             message: `结束时间：${moment(parseValues(mutation.payload.updateData.finished_at)).format('MM/DD HH:mm:ss')}`,
-            context: '请耐心等待哟（或者拍个加速？）',
+            context: moment(parseValues(mutation.payload.updateData.finished_at)).isBefore() ? '已经結束了呦！' : '请耐心等待哟（或者拍个加速？）',
             tag: sword.baseId,
             renotify: true,
             swordBaseId: sword.baseId,
