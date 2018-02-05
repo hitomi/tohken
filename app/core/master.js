@@ -10,7 +10,7 @@ define((require, exports, module) => {
         // TRHMasterData.SwordLevel = require('data/SwordLevelMaster1507123959924')
         // TRHMasterData.Sword = require('data/SwordMaster1507123959937')
         // TRHMasterData.Equip = require('data/EquipMaster1507123959946')
-        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable', 'FieldSquare', "EventSquare"], k => {
+        _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable', 'FieldSquare', "Event", "EventLayer", "EventSquare"], k => {
           store.commit('loadData', {
             key: k,
             loaded: true
@@ -24,6 +24,8 @@ define((require, exports, module) => {
         Equip: localforage.getItem('EquipMaster'),
         Consumable: localforage.getItem('ConsumableMaster'),
         FieldSquare: localforage.getItem('FieldSquareMaster'),
+        Event: localforage.getItem('EventMaster'),
+        EventLayer: localforage.getItem('EventLayerMaster'),
         EventSquare: localforage.getItem('EventSquareMaster')
       }).then((saved) => {
         console.log('loadLocal')
@@ -60,7 +62,7 @@ define((require, exports, module) => {
       jsonText = jsonText.substr(0, jsonText.lastIndexOf('}') + 1)
       // To Object
       let dataObj = JSON.parse(jsonText)
-      console.log(dataObj);
+      //console.log(dataObj);
       // Take useful part
       TRHMasterData.masterData = dataObj
       // level_master
@@ -75,6 +77,10 @@ define((require, exports, module) => {
       TRHMasterData.Consumable = null
       // field_square_master
       TRHMasterData.FieldSquare = null
+      // event_master
+      TRHMasterData.Event = null
+      // event_layer_master
+      TRHMasterData.EventLayer = null
       // event_square_master
       TRHMasterData.EventSquare = null
       // wait promise
@@ -85,6 +91,8 @@ define((require, exports, module) => {
         TRHMasterData.initEquipMaster(store),
         TRHMasterData.initConsumableMaster(store),
         TRHMasterData.initFieldSquareMaster(store),
+        TRHMasterData.initEventMaster(store),
+        TRHMasterData.initEventLayerMaster(store),
         TRHMasterData.initEventSquareMaster(store)
       ]).then(() => {
         console.log('done', store)
@@ -281,14 +289,14 @@ define((require, exports, module) => {
           obj['consumableId'] = _.toInteger(arr[0])
           obj['baseId'] = _.toInteger(arr[1])
           obj['name'] = arr[2]
-          obj['description'] = arr[3]
+          //obj['description'] = arr[3]
           obj['type'] = _.toInteger(arr[4])
           obj['value'] = _.toInteger(arr[5])
           obj['limitNum'] = _.toInteger(arr[6])
           //flg of available?
-          obj['flg'] = _.toInteger(arr[7])
+          //obj['flg'] = _.toInteger(arr[7])
           //abandoned but exist??
-          obj['unknown'] = _.toInteger(arr[8])
+          //obj['unknown'] = _.toInteger(arr[8])
           return obj
         })
         .keyBy('consumableId')
@@ -358,6 +366,81 @@ define((require, exports, module) => {
           console.log('err', err)
           store.commit('loadData', {
             key: 'FieldSquare',
+            loaded: false
+          })
+        })
+    }
+
+    //Init Event Data
+    static initEventMaster (store) {
+      if (TRHMasterData.masterData === null) return
+      TRHMasterData.Event = _(TRHMasterData.masterData.event_master)
+        .split('\n')
+        .map((line) => {
+          let arr = line.split(',')
+          let obj = {}
+          obj['episodeId'] = _.toInteger(arr[0])*(-1)
+          obj['name'] = arr[1]
+          obj['type'] = _.toInteger(arr[3])
+          return obj
+        })
+        .keyBy('episodeId')
+        .value()
+      return localforage.setItem('EventMaster', TRHMasterData.Event)
+        .then(() => {
+          console.log(TRHMasterData.Event)
+          store.commit('loadData', {
+            key: 'Event',
+            loaded: true
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+          store.commit('loadData', {
+            key: 'Event',
+            loaded: false
+          })
+        })
+    }
+
+    //Init Event Layer Data
+    static initEventLayerMaster (store) {
+      if (TRHMasterData.masterData === null) return
+      TRHMasterData.EventLayer = _(TRHMasterData.masterData.event_layer_master)
+        .split('\n')
+        .map((line) => {
+          let arr = line.split(',')
+          let obj = {}
+          obj['episodeId'] = _.toInteger(arr[0])*(-1)
+          obj['fieldId'] = _.toInteger(arr[1])
+          obj['layerNum'] = _.toInteger(arr[2])
+          obj['map'] = _.toInteger(arr[4])
+          return obj
+        })
+        .groupBy('episodeId')
+        .mapValues((val) => {
+          return _(val)
+            .groupBy('fieldId')
+            .mapValues((v) => {
+              return _(v)
+                .keyBy('layerNum')
+                .value()
+            })
+            .value()
+        })
+        .value()
+      return localforage.setItem('EventLayerMaster', TRHMasterData.EventLayer)
+        .then(() => {
+          console.log(TRHMasterData.EventLayer)
+          store.commit('loadData', {
+            key: 'EventLayer',
+            loaded: true
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+          store.commit('loadData', {
+            key: 'EventLayer',
             loaded: false
           })
         })

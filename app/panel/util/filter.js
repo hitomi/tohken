@@ -41,7 +41,14 @@ define((require, exports, module) => {
   })
 
   exports.MapPattern = Vue.filter('map-pattern', function (mapId) {
-    return mapId ? '../../static/map/' + mapId + '.jpg' : null
+    let [episodeId , fieldId , layerNum] = mapId.split('_')
+    if(episodeId > 0)
+      return '../../static/map/' + episodeId + '_' + fieldId + '_' + layerNum + '.jpg'
+    else if (episodeId < 0){
+      let type = _.get(TRHMasterData.getMasterData('Event'), [episodeId, 'type'], 0)
+      let map = _.get(TRHMasterData.getMasterData('EventLayer'), [episodeId, fieldId, layerNum, 'map'], 0)
+      return '../../static/map/event' +  '_' + type + '_' + map + '.jpg'
+    }
   })
 
   exports.swordObject = Vue.filter('sword-object', function (serialId) {
