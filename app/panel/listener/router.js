@@ -99,7 +99,7 @@ define((require, exports, module) => {
           })
         })
       } else if(content.item) {
-        _.each(content.item_list, (v, k) => {
+        _.each(content.item, (v, k) => {
           store.commit('item/updateItem', {
             consumableId: k,
             updateData: v
