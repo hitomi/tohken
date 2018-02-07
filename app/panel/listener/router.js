@@ -94,14 +94,14 @@ define((require, exports, module) => {
       if (content.item_list) {
         _.each(content.item_list, (v, k) => {
           store.commit('item/updateItem', {
-            consumableId: k,
+            consumableId: v.consumable_id,
             updateData: v
           })
         })
       } else if(content.item) {
         _.each(content.item, (v, k) => {
           store.commit('item/updateItem', {
-            consumableId: k,
+            consumableId: v.comsumable_id,
             updateData: v
           })
         })
