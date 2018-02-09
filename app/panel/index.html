@@ -222,7 +222,6 @@
         <div v-if="sally.category===3" style="float:left; width:50%;">战斗点ID：<span style="color: red;">{{sally.square_id || '-'}}(Boss)</span></div>
         <div v-else style="float:left; width:50%;">战斗点ID：{{sally.square_id || '-'}}</div>
       </div>
-      
       <div class="party-name">敌方队伍：</div>
       <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0">阵型：{{ battle_enemy.formation_id | formation-name }}</div>
       <div v-else-if="battle_scout.enemy[0]!=null && battle_scout.enemy[0]!=0">阵型：{{ battle_scout.formation_id | formation-name }}</div>
@@ -624,6 +623,13 @@
     </div>
   </script>
 
+  <script id="config-switch-temple" type="text/template">
+    <span>
+      <span class="setNotice" :class="{ active: attrValue }" @click="on()">[开启]</span>
+      <span class="setNotice" :class="{ active: !attrValue }" @click="off()">[关闭]</span>
+    </span>
+  </script>
+
   <script id="setting" type="text/template">
     <div class="setting-container">
       <div>
@@ -638,12 +644,12 @@
       <div>
         <div class="title" id="setNotice">· 提醒设置 ·</div>
         <div style="padding: 8px;">
-          <p><span>远征提醒</span>  <span class="setNotice" :class="{ active: conquest_notice }" @click="setConfig('conquest_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !conquest_notice }" @click="setConfig('conquest_notice', false)">[关闭]</span> </p> 
-          <p><span>内番提醒</span>  <span class="setNotice" :class="{ active: duty_notice }" @click="setConfig('duty_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !duty_notice }" @click="setConfig('duty_notice', false)">[关闭]</span></p>
-          <p><span>锻刀提醒</span>  <span class="setNotice" :class="{ active: forge_notice }" @click="setConfig('forge_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !forge_notice }" @click="setConfig('forge_notice', false)">[关闭]</span></p>
-          <p><span>战斗提醒</span>  <span class="setNotice" :class="{ active: hurt_notice }" @click="setConfig('hurt_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !hurt_notice }" @click="setConfig('hurt_notice', false)">[关闭]</span></p>
-          <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !repair_notice }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
-          <p><span>修行提醒</span>  <span class="setNotice" :class="{ active: evolution_notice }" @click="setConfig('evolution_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !evolution_notice }" @click="setConfig('evolution_notice', false)">[关闭]</span></p>
+          <p>远征提醒： <config-switch attr="conquest_notice" /></p>
+          <p>内番提醒： <config-switch attr="duty_notice" /></p>
+          <p>锻刀提醒： <config-switch attr="forge_notice" /></p>
+          <p>战斗提醒： <config-switch attr="hurt_notice" /></p>
+          <p>手入提醒： <config-switch attr="repair_notice" /></p>
+          <p>修行提醒： <config-switch attr="evolution_notice" /></p>
         </div>
       </div>
       <div>
@@ -651,9 +657,9 @@
         <div style="padding: 8px;">
           <ul>
             <li>
-            <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
-            <p>（接锅）萌新：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
-            <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u></p>
+              <p>现役背锅：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
+              <p>现役背锅：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u></p>
+              <p>退隐山林：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
             </li>
             <li>
               <b>版本：v1.1.4</b>
@@ -707,7 +713,7 @@
 
     </div>
   </script>
-  
+
   <!-- Vue -->
   <script src="../../vendor/vue.js"></script>
   <script src="../../vendor/vuex.js"></script>

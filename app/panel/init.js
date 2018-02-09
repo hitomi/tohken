@@ -71,6 +71,24 @@ define((require, exports, module) => {
     })
   })
 
+  Vue.component('config-switch', {
+    template: '#config-switch-temple',
+    props: ['attr'],
+    computed: {
+      attrValue () {
+        return store.state.config[this.attr]
+      }
+    },
+    methods: {
+      on () {
+        store.commit('config/updateConfig', { [this.attr]: true })
+      },
+      off () {
+        store.commit('config/updateConfig', { [this.attr]: false })
+      }
+    }
+  })
+
   const partyListWrapper = {
     template: `
       <div class="party-list-wrapper">
@@ -208,11 +226,6 @@ define((require, exports, module) => {
             }
           }
         })
-    },
-    methods: {
-      setConfig (name, value) {
-        this[name] = value 
-      }
     }
   })
 
@@ -278,7 +291,7 @@ define((require, exports, module) => {
 
       localforage.getItem('Equip').then((data) => {
         if (data.serial) _.each(data.serial, v => store.commit('equip/updateEquip', {
-          serialId: v.serial_id, 
+          serialId: v.serial_id,
           updateData: v
         }))
       })
