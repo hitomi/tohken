@@ -27,7 +27,7 @@ define((require, exports, module) => {
                   store.dispatch('notice/addNotice', {
                     title: `${sword_name}的第三封修行书信已经收到！`,
                     message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时刷新游戏阅读哦！',
+                    context: '记得及时阅读哦！',
                     renotify: true,
                     disableAutoClose: true,
                     swordBaseId: sword_id,
@@ -37,7 +37,7 @@ define((require, exports, module) => {
                   store.dispatch('notice/addNotice', {
                     title: `${sword_name}的第二封修行书信已经收到！`,
                     message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时刷新游戏阅读哦！',
+                    context: '记得及时阅读哦！',
                     renotify: true,
                     disableAutoClose: true,
                     swordBaseId: sword_id,
@@ -47,7 +47,7 @@ define((require, exports, module) => {
                   store.dispatch('notice/addNotice', {
                     title: `${sword_name}的第一封修行书信已经收到！`,
                     message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时刷新游戏阅读哦！',
+                    context: '记得及时阅读哦！',
                     renotify: true,
                     disableAutoClose: true,
                     swordBaseId: sword_id,
