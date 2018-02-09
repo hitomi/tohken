@@ -42,10 +42,7 @@
             刀装&amp;馬
           </div>
           <div class="menu-inner" @click="scroll('forge')">
-            锻刀室
-          </div>
-          <div class="menu-inner" @click="scroll('repair')">
-            手入室
+            锻刀&amp;手入
           </div>
           <div class="menu-inner" @click="scroll('all-swords')">
             刀帳
@@ -371,7 +368,7 @@
         · 锻刀室 ·
         <forge-item v-for='f in forge.slot' :slot-no="f.slot_no" :key="f.slot_no"></forge-item>
       </div>
-      <div class="title" id="repair">
+      <div class="title">
         · 手入室 ·
         <repair-item v-for='r in repair.slot' :slot-no="r.slot_no" :key="r.slot_no"></repair-item>
       </div>
