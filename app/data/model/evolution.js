@@ -4,7 +4,8 @@ define((require, exports, module) => {
       back: {
         0:{
           serial_id: null,
-          finished_at: null
+          finished_at: null,
+          isIntervalSet: false
         }
       }
     }

@@ -643,6 +643,7 @@
           <p><span>锻刀提醒</span>  <span class="setNotice" :class="{ active: forge_notice }" @click="setConfig('forge_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !forge_notice }" @click="setConfig('forge_notice', false)">[关闭]</span></p>
           <p><span>战斗提醒</span>  <span class="setNotice" :class="{ active: hurt_notice }" @click="setConfig('hurt_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !hurt_notice }" @click="setConfig('hurt_notice', false)">[关闭]</span></p>
           <p><span>手入提醒</span>  <span class="setNotice" :class="{ active: repair_notice }" @click="setConfig('repair_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !repair_notice }" @click="setConfig('repair_notice', false)">[关闭]</span></p>
+          <p><span>修行提醒</span>  <span class="setNotice" :class="{ active: evolution_notice }" @click="setConfig('evolution_notice', true)">[开启]</span>  <span class="setNotice" :class="{ active: !evolution_notice }" @click="setConfig('evolution_notice', false)">[关闭]</span></p>
         </div>
       </div>
       <div>
@@ -652,7 +653,7 @@
             <li>
             <p>（甩锅）大佬：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
             <p>（接锅）萌新：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
-            <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u>（你可以叫我哲也）</p>
+            <p>（第三棒）渣渣：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u></p>
             </li>
             <li>
               <b>版本：v1.1.4</b>
@@ -662,6 +663,9 @@
               <p>增加索敌阵型提示</p>
               <p>刀纹读取修正</p>
               <p>审神者信息bug修正</p>
+              <p>修行时间显示及推送</p>
+              <p>物品列表与小判及时刷新</p>
+              <p>活动地图一劳永逸式添加</p>
             </li>
             <li>
               <b>版本：v1.1.3</b>
@@ -696,7 +700,6 @@
               <b>之后版本希望添加的功能：</b>
               <p>刀名自定义魔改</p>
               <p>刀纹自动更新</p>
-              <p>活动地图绘制</p>
             </li>
           </ul>
         </div>

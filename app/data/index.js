@@ -7,6 +7,7 @@ define((require, exports, module) => {
     DutyNotice: require('app/plugin/duty_notice'),
     ConquestNotice: require('app/plugin/conquest_notice'),
     SaveData: require('app/plugin/save_data'),
+    EvolutionNotice: require('app/plugin/evolution_notice')
   }
 
   return new Vuex.Store({
