@@ -1,5 +1,6 @@
 define((require, exports, module) => {
   const store = require('app/data/index')
+  const TRHMasterData = require('app/core/master')
   return class TRHRequestRouter {
     static route (action, content) {
       // Log
@@ -491,6 +492,44 @@ define((require, exports, module) => {
         updateData: eventContent
       })
       this['sally/sally'] (content)
+    }
+
+    static ['mission/reward'] (content) {
+      _.each(content.item, v => {
+        if(v.item_type == 1){
+          let updateItem = {
+            consumable_id: null,
+            num: null
+          }
+          updateItem.consumable_id = v.item_id
+          updateItem.num = v.item_num
+          store.commit('item/addItem', {
+            consumableId: updateItem.consumable_id, 
+            updateData: updateItem
+          })
+        }
+        if(v.item_type == 4){
+          let updateMoney = {
+            money: null
+          }
+          updateMoney.money = v.item_num
+          store.commit('resource/addMoney', {
+            updateData: updateMoney
+          })
+        }
+      })
+    }
+
+    static ['item/use'] (content) {
+      let item_num = _.get(store.state, ['item', 'consumable', content.postData.consumable_id, 'num'], 0)
+      let item_value = _.get(TRHMasterData.getMasterData('Consumable'), [content.postData.consumable_id, 'value'], 0)
+      let updateMoney = {
+        money: null
+      }
+      updateMoney.money = item_num * item_value
+      store.commit('resource/addMoney', {
+        updateData: updateMoney
+      })
     }
 
     static ['equip/destroy'] (content) {

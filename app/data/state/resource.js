@@ -9,6 +9,11 @@ define((require, exports, module) => {
       updateResource (state, payload) {
         let { updateData } = payload
         mergeModel(state, updateData)
+      },
+      addMoney (state, payload) {
+        let { updateData } = payload
+        if (state.money) { updateData.money += state.money }
+        mergeModel(state, updateData)
       }
     }
   }
