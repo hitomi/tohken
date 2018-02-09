@@ -145,7 +145,7 @@
         <li><div class="k">冷却</div><div class="v">{{ resource.coolant || 'N/A' }}</div></li>
         <li><div class="k">砥石</div><div class="v">{{ resource.file || 'N/A' }}</div></li>
         <li><div class="k">依頼</div><div class="v">{{ resource.bill || 'N/A' }}</div></li>
-        <li><div class="k">手伝</div><div class="v">{{ item.consumable["8"]["num"] || 'N/A' }}</div></li>
+        <li><div class="k">手伝</div><div class="v">{{ (item.consumable["8"] && item.consumable["8"]["num"]) || 'N/A' }}</div></li>
         <li><div class="k">小判</div><div class="v">{{ resource.money || 'N/A'}}</div></li>
       </ul>
     </div>

@@ -1,44 +1,31 @@
 define((require, exports, module) => {
   return (store) => {
     store.subscribe((mutation, state) => {
-      if (mutation.type === 'log/addBattleLog') {
-        console.log(state.log.battle)
-        localforage.setItem('BattleLog', state.log.battle)
-      }
-      if (mutation.type === 'log/addForgeLog') {
-        console.log(state.log.forge)
-        localforage.setItem('ForgeLog', state.log.forge)
-      }
-      if (mutation.type === 'log/addPracticeLog') {
-        console.log(state.log.practice)
-        localforage.setItem('PracticeLog', state.log.practice)
-      }
-      if (mutation.type === 'config/updateConfig') {
-        localforage.setItem('Config', state.config)
-      }
-      if (mutation.type === 'swords/updateSword') {
-        localforage.setItem('Swords', state.swords)
-      }
-      if (mutation.type === 'resource/updateResource'){
-        localforage.setItem('Resource', state.resource)
-      }
-      if (mutation.type === 'party/updateParty'){
-        localforage.setItem('Party', state.party)
-      }
-      if (mutation.type === 'equip/updateEquip'){
-        localforage.setItem('Equip', state.equip)
-      }
-      if (mutation.type === 'player/updatePlayer'){
-        localforage.setItem('Player', state.player)
-      }
-      if (mutation.type === 'item/updateItem'){
-        localforage.setItem('Item', state.item)
-      }
-      if (mutation.type === 'duty/updateDuty'){
-        localforage.setItem('Duty', state.duty)
-      }
-      if (mutation.type === 'evolution/updateEvolution'){
-        localforage.setItem('Evolution',state.evolution)
+      switch (mutation.type) {
+        case 'log/addBattleLog':
+          return localforage.setItem('BattleLog', state.log.battle)
+        case 'log/addForgeLog':
+          return localforage.setItem('ForgeLog', state.log.forge)
+        case 'log/addPracticeLog':
+          return localforage.setItem('PracticeLog', state.log.practice)
+        case 'config/updateConfig':
+          return localforage.setItem('Config', state.config)
+        case 'swords/updateSword':
+          return localforage.setItem('Swords', state.swords)
+        case 'resource/updateResource':
+          return localforage.setItem('Resource', state.resource)
+        case 'party/updateParty':
+          return localforage.setItem('Party', state.party)
+        case 'equip/updateEquip':
+          return localforage.setItem('Equip', state.equip)
+        case 'player/updatePlayer':
+          return localforage.setItem('Player', state.player)
+        case 'item/updateItem':
+          return localforage.setItem('Item', state.item)
+        case 'duty/updateDuty':
+          return localforage.setItem('Duty', state.duty)
+        case 'evolution/updateEvolution':
+          return localforage.setItem('Evolution',state.evolution)
       }
     })
   }
