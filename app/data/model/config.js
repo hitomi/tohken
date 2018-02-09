@@ -7,7 +7,8 @@ define((require, exports, module) => {
       forge_notice: true,
       hurt_notice: true,
       repair_notice: true,
-      evolution_notice: true
+      evolution_notice: true,
+      debug_mode: false
     }
   }
 })

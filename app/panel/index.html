@@ -8,6 +8,7 @@
 </head>
 <body>
   <div id="app">
+    <debug-tools v-if="config.debug_mode"></debug-tools>
     <div class="top-nav">
       <resource-panel></resource-panel>
       <div class="switch-tab">
@@ -623,7 +624,26 @@
     </div>
   </script>
 
-  <script id="config-switch-temple" type="text/template">
+  <script id="debug-tools-template" type="text/template">
+    <div id="debug-cover">
+      <div v-if="!debug.config.replayMode">
+        <button :disabled="debug.config.replayMode" @click="startRecord">{{ debug.config.inRecordMode ? `Stop Record (${debug.records.length})` : `Start Record` }}</button>
+        <button :disabled="debug.config.inRecordMode || debug.config.replayMode" @click="replayMode">Replay Mode</button>
+      </div>
+      <div v-if="debug.config.replayMode">
+        <button :disabled="!debug.config.replayMode || debug.config.inRecordMode || !debug.records.length" @click="playNext">Next ({{ debug.records.length }})</button>
+        <button :disabled="!debug.config.replayMode || debug.config.inRecordMode || !debug.records.length" @click="autoPlay">Auto Play</button>
+      </div>
+      <div v-if="debug.config.replayMode">
+        <button disabled>Load Record：</button> <input type="file" :disabled="!debug.config.replayMode" accept=".json" @change="loadRecord" />
+      </div>
+      <div>
+        <button disabled>Load Master：</button> <input type="file" @change="loadMasterData" accept=".bin" />
+      </div>
+    </div>
+  </script>
+
+  <script id="config-switch-template" type="text/template">
     <span>
       <span class="setNotice" :class="{ active: attrValue }" @click="on()">[开启]</span>
       <span class="setNotice" :class="{ active: !attrValue }" @click="off()">[关闭]</span>
@@ -660,6 +680,10 @@
               <p>现役背锅：<u href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</u></p>
               <p>现役背锅：<u href="https://weibo.com/u/3516818005/" target="_blank">@FnEnustik</u></p>
               <p>退隐山林：<u href="http://weibo.com/moelynn" target="_blank">@毫无存在感的凌</u></p>
+            </li>
+            <li>
+              <p>调试模式： <config-switch attr="debug_mode" /></p>
+              <p>清空存储数据(谨慎操作)</p>
             </li>
             <li>
               <b>版本：v1.1.4</b>

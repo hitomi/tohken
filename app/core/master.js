@@ -6,10 +6,6 @@ define((require, exports, module) => {
     // Load data from local cache
     static load (store) {
       if (!chrome.devtools) {
-        // TRHMasterData.UserLevel = require('data/UserLevelMaster1507123959917')
-        // TRHMasterData.SwordLevel = require('data/SwordLevelMaster1507123959924')
-        // TRHMasterData.Sword = require('data/SwordMaster1507123959937')
-        // TRHMasterData.Equip = require('data/EquipMaster1507123959946')
         _.each(['UserLevel', 'SwordLevel', 'Sword', 'Equip', 'Consumable', 'FieldSquare', "Event", "EventLayer", "EventSquare"], k => {
           store.commit('loadData', {
             key: k,

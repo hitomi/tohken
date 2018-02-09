@@ -11,6 +11,45 @@ define((require, exports, module) => {
   // Start Request Listener
   TRHRequestListener.init(store)
 
+  Vue.component('debug-tools', {
+    template: '#debug-tools-template',
+    computed: Vuex.mapState(['debug']),
+    methods: {
+      startRecord () {
+        store.commit(this.debug.config.inRecordMode ? 'debug/stopRecord' : 'debug/startRecord')
+      },
+      loadMasterData (ev) {
+        const file = ev.target.files[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = function(e) {
+          let contents = e.target.result.replace('data:application/octet-stream;base64,', '')
+          TRHMasterData.init(contents, store)
+        }
+        reader.readAsDataURL(file)
+      },
+      loadRecord (ev) {
+        const file = ev.target.files[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = function(e) {
+          let contents = e.target.result
+          store.commit('debug/loadRecord', JSON.parse(contents))
+        }
+        reader.readAsText(file)
+      },
+      replayMode () {
+        store.commit('debug/replayMode')
+      },
+      playNext () {
+        store.commit('debug/nextRecord', TRHRequestListener)
+      },
+      autoPlay () {
+        store.commit('debug/autoRecord', TRHRequestListener)
+      }
+    }
+  })
+
   Vue.component('notice-content', {
     template: '#notice-template',
     computed: Vuex.mapState(['notice']),
@@ -72,7 +111,7 @@ define((require, exports, module) => {
   })
 
   Vue.component('config-switch', {
-    template: '#config-switch-temple',
+    template: '#config-switch-template',
     props: ['attr'],
     computed: {
       attrValue () {
@@ -261,7 +300,7 @@ define((require, exports, module) => {
       devtools: !!chrome.devtools
     },
     computed: {
-      ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party'])
+      ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party', 'config'])
     },
     mounted () {
       localforage.getItem('Config').then((data) => {

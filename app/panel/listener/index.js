@@ -1,12 +1,13 @@
 define((require, exports, module) => {
   const TRHMasterData = require('app/core/master')
   const TRHRequestRouter = require('./router')
-  let recData = []
-  let recStatus = false
   return class TRHRequestListener {
     static init (store) {
       // Listen Response
       chrome.devtools.network.onRequestFinished.addListener((request) => {
+        if (store.state.debug.config.replayMode) {
+          return
+        }
         let tohken = request.request.url.match(/https?:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
         if (tohken != null) {
           let server = tohken[1]
@@ -45,8 +46,8 @@ define((require, exports, module) => {
                 // Assign
                 _.assign(jsonObj, dataObj)
               }
-              if (recStatus) {
-                recData.push({
+              if (store.state.debug.config.inRecordMode) {
+                store.commit('debug/addRecord', {
                   url: request.request.url,
                   time: Date.now(),
                   content: _.omit(_.cloneDeep(jsonObj), ['data', 'iv'])
@@ -65,18 +66,10 @@ define((require, exports, module) => {
         }
       })
     }
-    static startRec () {
-      recData = []
-      recStatus = true
-    }
-    static stopRec () {
-      recStatus = false
-    }
-    static exportRec () {
-      let blob = new Blob([`define((require, exports, module) => { return ${JSON.stringify(recData)} })`], {
-        type: 'text/plain;charset=utf-8'
-      })
-      saveAs(blob, 'DataRec' + (Date.now()) + '.js')
+    static runDebugData (data) {
+      let tohken = data.url.match(/https?:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
+      let path = tohken[2]
+      TRHRequestRouter.route(path, data.content)
     }
   }
 })

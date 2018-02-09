@@ -489,7 +489,13 @@ tbody td:nth-child(even) {
 }
 
 @media (max-width: 350px) {
-  .resource > ul.fr > li:nth-last-child(-n+2) { 
-    display: none; 
+  .resource > ul.fr > li:nth-last-child(-n+2) {
+    display: none;
   }
+}
+
+#debug-cover {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
 }
