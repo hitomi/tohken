@@ -13,10 +13,10 @@ define((require, exports, module) => {
               icon: `static/sword/${state.config.secretary}.png`
             })
           }
-          if(state.duty.duty.isIntervalSet == false || state.duty.duty.isIntervalSet == null) {
+          if(state.duty.isIntervalSet == false || state.duty.isIntervalSet == null) {
             console.log("set interval")
             let check = setInterval(function isDutyFinished(){
-              state.duty.duty.isIntervalSet = true
+              state.duty.isIntervalSet = true
               if(finished_at != null && moment(parseValues(finished_at)).isBefore(Date.now())) {
                 store.dispatch('notice/addNotice', {
                   title: `内番结束！`,
@@ -28,7 +28,7 @@ define((require, exports, module) => {
                   icon: `static/sword/${state.config.secretary}.png`
                 })
                 clearInterval(check)
-                state.duty.duty.isIntervalSet = false
+                state.duty.isIntervalSet = false
               }
             }, 1000)
           }

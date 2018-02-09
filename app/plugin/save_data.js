@@ -34,6 +34,12 @@ define((require, exports, module) => {
       if (mutation.type === 'item/updateItem'){
         localforage.setItem('Item', state.item)
       }
+      if (mutation.type === 'duty/updateDuty'){
+        localforage.setItem('Duty', state.duty)
+      }
+      if (mutation.type === 'evolution/updateEvolution'){
+        localforage.setItem('Evolution',state.evolution)
+      }
     })
   }
 })

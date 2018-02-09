@@ -119,7 +119,7 @@ define((require, exports, module) => {
       }
     },
     computed: {
-      ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair', 'item', 'album']),
+      ...Vuex.mapState(['swords', 'party', 'equip', 'forge', 'repair', 'item', 'album', 'duty', 'evolution']),
       equipList () {
         let allEquips = _(this.equip.serial)
           .mapValues((v, k) => {
@@ -310,6 +310,21 @@ define((require, exports, module) => {
 
       localforage.getItem('Player').then((data) => {
         if(data) store.commit('player/updatePlayer', {
+          updateData: data
+        })
+      })
+
+      localforage.getItem('Duty').then((data) => {
+        if(data) {
+          data.isIntervalSet = false
+          store.commit('duty/updateDuty', {
+            updateData: data
+          })
+        }
+      })
+
+      localforage.getItem('Evolution').then((data) => {
+        if(data) store.commit('evolution/updateEvolution', {
           updateData: data
         })
       })

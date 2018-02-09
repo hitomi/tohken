@@ -50,6 +50,9 @@
           <div class="menu-inner" @click="scroll('all-swords')">
             刀帳
           </div>
+          <div class="menu-inner" @click="scroll('duty')">
+            内番&amp;修行
+          </div>
           <div class="menu-inner" @click="scroll('item')">
             所持道具
           </div>
@@ -460,6 +463,16 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="title" id="duty">· 内番 ·</div>
+      <div v-if="duty.finished_at != null" style="text-align:center;">结束时间：{{duty.finished_at | hhmmss}}</div>
+      <div class="title">· 修行 ·</div>
+      <div style="text-align:center;">
+        <div v-if="evolution.back[0].finished_at == null">修行数据为空。若您有正在修行的刀剑，请刷新游戏以获取数据</div>
+        <div v-else>
+          <div>修行刀剑：{{evolution.back[0].serial_id | sword-serial-name}}</div>
+          <div>归来时间：{{evolution.back[0].finished_at | MMDDhhmmss}}</div>
         </div>
       </div>
       <div class="title" id="item">· 所持道具一覧 ·</div>

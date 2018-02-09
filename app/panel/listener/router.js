@@ -83,6 +83,11 @@ define((require, exports, module) => {
           updateData: content.duty
         })
       }
+      if (content.evolution) {
+        store.commit('evolution/updateEvolution', {
+          updateData: content.evolution
+        })
+      }
       if (content.equip) {
         _.each(content.equip, (v, k) => {
           if (!v.serial_id) return
