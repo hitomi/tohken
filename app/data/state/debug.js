@@ -7,7 +7,7 @@ define((require, exports, module) => {
         config: {
           localMode: !chrome.devtools,
           inRecordMode: false,
-          replayMode: !!chrome.devtools
+          replayMode: !chrome.devtools
         },
         control: {
           playIndex: 0,
