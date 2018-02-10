@@ -24,36 +24,7 @@ define((require, exports, module) => {
                   })
                   clearInterval(check)
                   state.evolution.back[0].isIntervalSet = false
-                } else if (finished_at.add(-1,'days').isBefore(Date.now())) {
-                  store.dispatch('notice/addNotice', {
-                    title: `${sword_name}的第三封修行书信已经收到！`,
-                    message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时阅读哦！',
-                    renotify: true,
-                    disableAutoClose: true,
-                    swordBaseId: sword_id,
-                    icon: `static/sword/${sword_id}.png`
-                  })
-                } else if (finished_at.add(-2,'days').isBefore(Date.now())) {
-                  store.dispatch('notice/addNotice', {
-                    title: `${sword_name}的第二封修行书信已经收到！`,
-                    message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时阅读哦！',
-                    renotify: true,
-                    disableAutoClose: true,
-                    swordBaseId: sword_id,
-                    icon: `static/sword/${sword_id}.png`
-                  })
-                } else if (finished_at.add(-3,'days').isBefore(Date.now())) {
-                  store.dispatch('notice/addNotice', {
-                    title: `${sword_name}的第一封修行书信已经收到！`,
-                    message: `收取时间：${finished_at.format('HH:mm:ss')}`,
-                    context: '记得及时阅读哦！',
-                    renotify: true,
-                    disableAutoClose: true,
-                    swordBaseId: sword_id,
-                    icon: `static/sword/${sword_id}.png`
-                  })
+                  console.log(finished_at.format())
                 }
               } else {
                 clearInterval(check)
