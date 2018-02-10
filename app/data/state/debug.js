@@ -5,8 +5,9 @@ define((require, exports, module) => {
       return {
         records: [],
         config: {
+          localMode: !chrome.devtools,
           inRecordMode: false,
-          replayMode: false
+          replayMode: !!chrome.devtools
         },
         control: {
           playIndex: 0,

@@ -496,6 +496,6 @@ tbody td:nth-child(even) {
 
 #debug-cover {
   position: fixed;
-  z-index: 9999;
+  z-index: 99999;
   bottom: 0;
 }

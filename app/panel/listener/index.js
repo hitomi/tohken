@@ -4,7 +4,7 @@ define((require, exports, module) => {
   return class TRHRequestListener {
     static init (store) {
       // Listen Response
-      chrome.devtools.network.onRequestFinished.addListener((request) => {
+      chrome.devtools && chrome.devtools.network.onRequestFinished.addListener((request) => {
         if (store.state.debug.config.replayMode) {
           return
         }

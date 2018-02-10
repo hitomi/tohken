@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="app">
-    <debug-tools v-if="config.debug_mode"></debug-tools>
+    <debug-tools v-if="config.debug_mode || debug.config.localMode"></debug-tools>
     <div class="top-nav">
       <resource-panel></resource-panel>
       <div class="switch-tab">

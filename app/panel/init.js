@@ -300,7 +300,7 @@ define((require, exports, module) => {
       devtools: !!chrome.devtools
     },
     computed: {
-      ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party', 'config'])
+      ...Vuex.mapState(['inBattle', 'dataLoaded', 'swords', 'party', 'config', 'debug'])
     },
     mounted () {
       localforage.getItem('Config').then((data) => {
@@ -329,21 +329,21 @@ define((require, exports, module) => {
       })
 
       localforage.getItem('Equip').then((data) => {
-        if (data.serial) _.each(data.serial, v => store.commit('equip/updateEquip', {
+        if (data && data.serial) _.each(data.serial, v => store.commit('equip/updateEquip', {
           serialId: v.serial_id,
           updateData: v
         }))
       })
 
       localforage.getItem('Swords').then((data) => {
-        if (data.serial) _.each(data.serial, v => store.commit('swords/updateSword', {
+        if (data && data.serial) _.each(data.serial, v => store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v
         }))
       })
 
       localforage.getItem('Party').then((data) => {
-        if (data.parties) _.each(data.parties, v => {
+        if (data && data.parties) _.each(data.parties, v => {
           v.isIntervalSet = false
           v.isNoticed = false
           store.commit('party/updateParty', {
@@ -354,7 +354,7 @@ define((require, exports, module) => {
       })
 
       localforage.getItem('Item').then((data) => {
-        if(data.consumable) _.each(data.consumable, (v, k) => store.commit('item/updateItem', {
+        if(data && data.consumable) _.each(data.consumable, (v, k) => store.commit('item/updateItem', {
           consumableId: k,
           updateData: v
         }))
