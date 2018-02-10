@@ -7,8 +7,14 @@ define((require, exports, module) => {
     },
     mutations: {
       updateEvolution (state, payload) {
+        console.log(payload)
+        if (payload.back == null) {
+          Vue.set(state, defaultEvolutionModel())
+        }
+        else {
         let {updateData} = payload
         mergeModel(state, updateData)
+        }
       }
     }
   }
