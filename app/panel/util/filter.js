@@ -7,7 +7,7 @@ define((require, exports, module) => {
   })
 
   exports.statusText = Vue.filter('status-text', function (statusId) {
-    return ['通常', '手入', 'ADSENCE', '远征'][statusId]
+    return ['-', '手入', '修行', '远征'][statusId]
   })
 
   exports.statusCname = Vue.filter('status-cname', function (statusId) {
