@@ -171,7 +171,7 @@
       <img :src="sword.sword_id | sword-pattern" alt="空" class="pattern">
       <div class="info">
         <div class="name">{{ sword.name }}<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
-        <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && sword.status == 1">[{{ sword.status | status-text }}]</span></div>
+        <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && sword.status == 1" style="color:blue;">[{{ sword.status | status-text }}]</span></div>
         <div class="level">Lv.{{ sword.level }}<small>(next {{ sword.nextExp }})</small></div>
         <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{ sword.fatigueFlag | fatigue-text }} {{ sword.battleFatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>
         <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-else>{{ sword.fatigueFlag | fatigue-text }} {{ sword.vfatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>
