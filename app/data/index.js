@@ -31,6 +31,7 @@ define((require, exports, module) => {
         for(let s in swords) {
           let sword = swords[s]
           sword.battleFatigue = sword.fatigue - 10
+          if(sword.battleFatigue <= 0) sword.battleFatigue = 0
         }
       },
       loadData (state, payload) {

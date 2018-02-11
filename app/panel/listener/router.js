@@ -310,6 +310,10 @@ define((require, exports, module) => {
           console.log(">= 100")
           v.battleFatigue = 100
         }
+        if(v.battleFatigue <= 0) {
+          console.log("<= 0")
+          v.battleFatigue = 0
+        }
         store.commit('swords/updateSword', {
           serialId: v.serial_id,
           updateData: v
