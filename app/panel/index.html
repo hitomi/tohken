@@ -429,7 +429,6 @@
                 <th v-if="option.equip">御守</th>
                 <th v-if="option.equip">马</th>
                 <th v-if="option.info">锁</th>
-                <th>状态</th>
               </tr>
             </thead>
             <tbody>
@@ -458,7 +457,6 @@
                 <td v-if="option.equip">{{ sword.item_id | amulet-name}}</td>
                 <td v-if="option.equip">{{ sword.horse_serial_id | equip-serial-name }}</td>
                 <td v-if="option.info" v-text="sword.protectName"></td>
-                <td>{{sword.status | status-text}}</td>
               </tr>
             </tbody>
           </table>

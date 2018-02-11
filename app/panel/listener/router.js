@@ -568,6 +568,10 @@ define((require, exports, module) => {
           serialId: v
         })
       })
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id, 
+        updateData: content.sword
+      })
     }
   }
 })
