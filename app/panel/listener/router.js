@@ -506,7 +506,21 @@ define((require, exports, module) => {
       store.commit('sally/updateSally', {
         updateData: eventContent
       })
-      this['sally/sally'] (content)
+      store.commit('inBattle')
+      store.commit('sally/updateSally', {
+        updateData: content.postData
+      })
+      //console.log(content.postData)
+      store.commit('sally/updateSally', {
+        updateData: content
+      })
+      let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
+      _.each(party.slot, (v, k)=>{
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id, 
+          updateData: {inBattle: true}
+        })
+      })
     }
 
     static ['mission/reward'] (content) {
