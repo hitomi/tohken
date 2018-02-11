@@ -451,7 +451,8 @@
                 <td v-if="option.value">{{sword.hide}} <em v-if="sword.hide_up > 0">(+{{sword.hide_up}})</em></td>
                 <td v-if="option.value" v-text="sword.rangeName"></td>
                 <td v-if="option.value" v-text="sword.loyalties"></td>
-                <td v-text="sword.vfatigue"></td>
+                <td v-if="sword.inBattle" v-text="sword.battleFatigue"></td>
+                <td v-else v-text="sword.vfatigue"></td>
                 <td v-if="option.equip" v-text="sword.equipSlot"></td>
                 <td v-if="option.equip">{{ sword.equips | all-equip-serial-name }}</td>
                 <td v-if="option.equip">{{ sword.item_id | amulet-name}}</td>

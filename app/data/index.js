@@ -26,12 +26,22 @@ define((require, exports, module) => {
       notInBattle (state) {
         state.inBattle = false
       },
+      fatigueToV (state) {
+        let swords = state.swords.serial
+        for(let s in swords) {
+          let sword = swords[s]
+          sword.battleFatigue = sword.vfatigue
+          if(sword.battleFatigue<=0){
+            sword.battleFatigue = "0"
+          }
+        }
+      },
       fatigueToVV (state) {
         let swords = state.swords.serial
         for(let s in swords) {
           let sword = swords[s]
           sword.battleFatigue = sword.vfatigue - 10
-          if(sword.battleFatigue<0){
+          if(sword.battleFatigue<=0){
             sword.battleFatigue = "0"
           }
         }

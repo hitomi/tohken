@@ -150,6 +150,7 @@ define((require, exports, module) => {
 
     static ['battle/practicescout'](content){
       store.commit('inBattle')
+      store.commit('fatigueToV')
       store.commit('sally/updateSally', {
         updateData: content.postData
       })
