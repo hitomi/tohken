@@ -559,7 +559,7 @@
               <td>{{ forge.steel || '-' }}</td>
               <td>{{ forge.coolant || '-' }}</td>
               <td>{{ forge.file || '-' }}</td>
-              <td>{{ forge.use_assist || '-' }}</td>
+              <td>{{ forge.consumable_id | item-name-format}}</td>
               <td>{{ forge.finished_at | MMDDhhmmss }}</td>
             </tr>
           </tbody>

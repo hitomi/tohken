@@ -8,7 +8,8 @@ define((require, exports, module) => {
       steel: null,
       coolant: null,
       file: null,
-      use_assist: null
+      use_assist: null,
+      consumable_id: null
     }
   }
 })

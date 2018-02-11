@@ -153,4 +153,9 @@ define((require, exports, module) => {
   exports.allEquipSerialName = Vue.filter('all-equip-serial-name', (serialIds) => {
     return _.map(serialIds, (serialId) => _.get(store.state, ['equip', 'serial', serialId, 'name'], '-').replace(/\d+/, '')).join(' / ')
   })
+
+  exports.itemNameFormat = Vue.filter('item-name-format', (ConsumableId) => {
+    let name = _.get(TRHMasterData.getMasterData('Consumable'), [ConsumableId, 'name'], '-')
+    return name.replace('御札・', '')
+  })
 })
