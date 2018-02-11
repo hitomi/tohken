@@ -74,6 +74,9 @@ define((require, exports, module) => {
       },
       get fatigueFlag () {
         let fatigue = this.vfatigue
+        if (this.inBattle){
+          fatigue = this.battleFatigue
+        }
         if (fatigue <= TRH.FATIGUE.VALUE.VERY_TIERD) {
           return 0
         } else if (fatigue <= TRH.FATIGUE.VALUE.TIERD) {
