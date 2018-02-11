@@ -153,14 +153,17 @@ define((require, exports, module) => {
       store.commit('sally/updateSally', {
         updateData: content.postData
       })
+      let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
+      _.each(party.slot, (v, k)=>{
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id, 
+          updateData: {inBattle: true}
+        })
+      })
     }
 
     static ['battle/practicebattle'](content){
       store.commit('inBattle')
-      store.commit('party/updateParty', {
-        partyNo: content.result.player.party.partyNo,
-        updateData: { inBattle: true }
-      })
       store.commit('battle/updateBattleResult', {
         updateData: content.result
       })
@@ -229,10 +232,6 @@ define((require, exports, module) => {
 
     static ['battle/battle'] (content) {
       store.commit('inBattle')
-      store.commit('party/updateParty', {
-        partyNo: content.result.player.party.partyNo,
-        updateData: { inBattle: true }
-      })
       store.commit('battle/updateBattleResult', {
         updateData: content.result
       })
@@ -352,6 +351,13 @@ define((require, exports, module) => {
       //console.log(content.postData)
       store.commit('sally/updateSally', {
         updateData: content
+      })
+      let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
+      _.each(party.slot, (v, k)=>{
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id, 
+          updateData: {inBattle: true}
+        })
       })
     }
     static ['sally/eventsally'] (content) {
