@@ -64,6 +64,9 @@ define((require, exports, module) => {
       },
       get vfatigue () {
         let fatigue = this.fatigue
+        if (this.inBattle && this.battleFatigue != null) {
+          fatigue = this.battleFatigue
+        }
         if (!this.inBattle && fatigue < TRH.FATIGUE.VALUE.NOMAL && !_.isUndefined(this.recovered_at)) {
           let now = Math.floor(Date.now() / 1000)
           let recovered = Math.floor(this.recovered_at / 1000)

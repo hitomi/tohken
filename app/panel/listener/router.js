@@ -347,12 +347,6 @@ define((require, exports, module) => {
 
     static ['home'] (content) {
       store.commit('notInBattle')
-      _.each(store.state.swords.serial, (v, k) => {
-        store.commit('swords/updateSword', {
-          serialId: v.serial_id,
-          updateData: {inBattle: false}
-        })
-      })
     }
     
     static ['sally/sally'] (content) {
