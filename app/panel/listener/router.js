@@ -161,6 +161,12 @@ define((require, exports, module) => {
           updateData: {inBattle: true}
         })
       })
+      _.each(store.state.equip.serial, (v, k) => {
+        store.commit('equip/updateEquip', {
+          serialId: v.serial_id, 
+          updateData: {soldier: v.hp_max}
+        })
+      })
     }
 
     static ['battle/practicebattle'](content){
@@ -341,6 +347,12 @@ define((require, exports, module) => {
 
     static ['home'] (content) {
       store.commit('notInBattle')
+      _.each(store.state.swords.serial, (v, k) => {
+        store.commit('swords/updateSword', {
+          serialId: v.serial_id,
+          updateData: {inBattle: false}
+        })
+      })
     }
     
     static ['sally/sally'] (content) {
@@ -358,6 +370,12 @@ define((require, exports, module) => {
         store.commit('swords/updateSword', {
           serialId: v.serial_id, 
           updateData: {inBattle: true}
+        })
+      })
+      _.each(store.state.equip.serial, (v, k) => {
+        store.commit('equip/updateEquip', {
+          serialId: v.serial_id, 
+          updateData: {soldier: v.hp_max}
         })
       })
     }
