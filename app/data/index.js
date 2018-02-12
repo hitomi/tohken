@@ -30,20 +30,14 @@ define((require, exports, module) => {
         let swords = state.swords.serial
         for(let s in swords) {
           let sword = swords[s]
-          sword.battleFatigue = sword.vfatigue
-          if(sword.battleFatigue<=0){
-            sword.battleFatigue = "0"
-          }
+          sword.battleFatigue = Math.max(sword.vfatigue, 0)
         }
       },
       fatigueToVV (state) {
         let swords = state.swords.serial
         for(let s in swords) {
           let sword = swords[s]
-          sword.battleFatigue = sword.vfatigue - 10
-          if(sword.battleFatigue<=0){
-            sword.battleFatigue = "0"
-          }
+          sword.battleFatigue = Math.max(sword.vfatigue - 10, 0)
         }
       },
       loadData (state, payload) {

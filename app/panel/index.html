@@ -183,7 +183,7 @@
         </div>
       </div>
     </div>
-    <div class="touken-info" v-else-if="_.isNull(swordSerialId)">
+    <div class="touken-info" v-else-if="!swordSerialId">
       <img src="../../static/sword/0.png" alt="空" class="pattern">
       <div class="info"><div class="name">暂无队员</div></div>
     </div>
@@ -684,7 +684,7 @@
             </li>
             <li>
               <p>调试模式： <config-switch attr="debug_mode" /></p>
-              <p>清空存储数据(谨慎操作)</p>
+              <!-- <p>清空存储数据(谨慎操作)</p> -->
             </li>
             <li>
               <b>版本：v1.1.4</b>

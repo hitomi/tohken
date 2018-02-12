@@ -7,6 +7,7 @@ define((require, exports, module) => {
           let status = mutation.payload.updateData.status
           let finished_at = mutation.payload.updateData.finished_at
           let party = _.get(state, ['party', 'parties', mutation.payload.updateData.party_no])
+          if (!party) return
           if(party.isIntervalSet == false || party.isIntervalSet == null) {
             let check = setInterval(function isConquestFinished(){
               party.isIntervalSet = true

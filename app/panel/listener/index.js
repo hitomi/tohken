@@ -69,7 +69,10 @@ define((require, exports, module) => {
     static runDebugData (data) {
       let tohken = data.url.match(/https?:\/\/(.*?)\.touken-ranbu\.jp\/(.*)/)
       let path = tohken[2]
-      TRHRequestRouter.route(path, data.content)
+      if (path.indexOf('?uid') > -1) {
+        let action = path.split('?')[0]
+        TRHRequestRouter.route(action, data.content)
+      }
     }
   }
 })
