@@ -4,8 +4,8 @@ define((require, exports, module) => {
   return class TRHRequestRouter {
     static route (action, content) {
       // Log
-      console.log(action)
-      console.log(content)
+      //console.log(action)
+      //console.log(content)
       // Route
       if (_.isFunction(this[action])) {
         this[action](content)
