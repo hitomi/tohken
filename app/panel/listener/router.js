@@ -497,6 +497,7 @@ define((require, exports, module) => {
     }
 
     static ['produce/start'](content){
+      if(content.success == 1)
       store.commit('equip/updateEquip', {
         serialId: content.serial_id,
         updateData: content
