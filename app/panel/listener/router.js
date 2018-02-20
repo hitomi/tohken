@@ -381,7 +381,7 @@ define((require, exports, module) => {
       }
       eventContent.episode_id = content.postData.event_id*(-1)
       eventContent.field_id = content.postData.event_field_id
-      eventContent.layer_num = content.postData.event_layer_id
+      eventContent.layer_num = content.postData.event_layer_id == 0 ? 1 : content.postData.event_layer_id
       store.commit('sally/updateSally', {
         updateData: eventContent
       })
