@@ -7,13 +7,20 @@ define((require, exports, module) => {
     },
     mutations: {
       updateEvolution (state, payload) {
+        let {updateData} = payload
         console.log(payload)
-        if (payload.back == null) {
-          Vue.set(state, defaultEvolutionModel())
+        if (updateData.back[0] && updateData.back[0].serial_id) {
+          mergeModel(state, updateData)
         }
         else {
-        let {updateData} = payload
-        mergeModel(state, updateData)
+          updateData.back = {
+            0:{
+              serial_id: 0,
+              finished_at: 0,
+              isIntervalSet: false
+            }
+          }
+          mergeModel(state, updateData)
         }
       }
     }
