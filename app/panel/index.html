@@ -259,8 +259,8 @@
           <div class="touken-info" style="min-width: 474px;">
             <img :src="enemy_sword_id | enemy-sword-pattern" alt="空" class="enemyPattern">
             <div class="info" style="left: 198px">
-              <div class="name" v-if="enemyList[enemy_sword_id].mobile>=100" style="color:red;">{{ enemy_sword_id | sword-name}}({{enemy_sword_id}})</div>
-              <div class="name" v-else>{{ enemy_sword_id | sword-name}}({{enemy_sword_id}})</div>
+              <div class="name" v-if="enemyList[enemy_sword_id].mobile>=100" style="color:red;">{{ enemy_sword_id | sword-name}}<small>({{enemy_sword_id}})</small></div>
+              <div class="name" v-else>{{ enemy_sword_id | sword-name}}<small>({{enemy_sword_id}})</small></div>
               <div class="hp">HP {{ enemy_sword_id | sword-hp}}</div>
             </div>
           </div>
