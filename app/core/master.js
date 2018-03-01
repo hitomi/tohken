@@ -168,11 +168,22 @@ define((require, exports, module) => {
       TRHMasterData.Sword = _(TRHMasterData.masterData.sword_master)
         .split('\n')
         .map((line) => {
+          let swordNickname = {
+            3:"",
+            5:"",
+            7:"",
+            9:"",
+            11:"",
+            12:""
+          }
           let arr = line.split(',')
           let obj = {}
           obj['swordId'] = _.toInteger(arr[0])
           obj['baseId'] = _.toInteger(arr[1])
           obj['name'] = arr[2]
+          if(swordNickname[arr[0]]){
+            obj['name'] = swordNickname[arr[0]]
+          }
           obj['alias'] = arr[3]
           obj['symbol'] = _.toInteger(arr[4])
           obj['styleId'] = _.toInteger(arr[5])
