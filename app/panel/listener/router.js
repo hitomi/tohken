@@ -156,6 +156,7 @@ define((require, exports, module) => {
       })
       let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
       _.each(party.slot, (v, k)=>{
+        if(v.serial_id)
         store.commit('swords/updateSword', {
           serialId: v.serial_id, 
           updateData: {inBattle: true}
@@ -361,6 +362,7 @@ define((require, exports, module) => {
       })
       let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
       _.each(party.slot, (v, k)=>{
+        if(v.serial_id)
         store.commit('swords/updateSword', {
           serialId: v.serial_id, 
           updateData: {inBattle: true}
@@ -530,6 +532,7 @@ define((require, exports, module) => {
       })
       let party = _.get(store, ['state', 'party', 'parties', content.postData.party_no], {})
       _.each(party.slot, (v, k)=>{
+        if(v.serial_id)
         store.commit('swords/updateSword', {
           serialId: v.serial_id, 
           updateData: {inBattle: true}
