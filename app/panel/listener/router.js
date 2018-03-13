@@ -401,6 +401,24 @@ define((require, exports, module) => {
     }
     static ['sally/eventforward'] (content) {
       this['sally/forward'](content)
+      if(content.gimmick.draw){
+        //毒箭
+        if(content.gimmick.draw==19 || (content.gimmick.draw>=53 && content.gimmick.draw<=55)){
+          store.commit('swords/updateSword',{
+            serialId: content.gimmick.result.effect[0].serial_id,
+            updateData: {hp: content.gimmick.result.effect[0].value[1]}
+          })
+        }
+        //炸弹
+        else if(content.gimmick.draw==20 || (content.gimmick.draw>=60 && content.gimmick.draw<=62)){
+          _.each(content.gimmick.result.serial_ids, (v, k)=>{
+            store.commit('equip/updateEquip',{
+              serialId: v,
+              updateData: {soldier: '0'}
+            })
+          })
+        }
+      }
     }
     static ['forge/start'] (content) {
       store.commit('forge/updateForge', {
