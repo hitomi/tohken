@@ -56,6 +56,16 @@ define((require, exports, module) => {
             .values()
             .value()
           let getSwordId = _.get(updateData, ['result', 'get_sword_id'])
+          let getInstrumentId = 0
+          if(updateData.result.drop_reward.length!=0){
+            getInstrumentId = _.get(updateData, ['result', 'drop_reward', '0', 'item_id'])
+          }
+          else{
+            getInstrumentId = 0
+          }
+          if(getInstrumentId>29 || getInstrumentId<25){
+            getInstrumentId = 0
+          }
           let playerEquips = _(_.get(updateData, ['player', 'party']))
             .values()
             .keyBy(o => o.serial_id)
@@ -102,8 +112,16 @@ define((require, exports, module) => {
             })
             .values()
             .value()
+          let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
+          if (getInstrumentId!=0){
+            if(getSwordId!=0){
+              swordName+=" & "+ _.get(TRHMasterData.getMasterData('Consumable'), [getInstrumentId, 'name'], '-')
+            }else{
+              swordName= _.get(TRHMasterData.getMasterData('Consumable'), [getInstrumentId, 'name'], '-')
+              getSwordId = 'item'+getInstrumentId
+            }
+          }
           if (playerParty.length) {
-            let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
             if (swordName){
               if (playerEquips.length)
               store.dispatch('notice/addNotice', {
@@ -124,7 +142,6 @@ define((require, exports, module) => {
             }
           }
           else if (playerEquips.length) {
-            let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
             if (swordName)
             store.dispatch('notice/addNotice', {
               title: `战斗报告`,
@@ -135,7 +152,6 @@ define((require, exports, module) => {
             })
           }
           else if (getSwordId !== 0) {
-            let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
             store.dispatch('notice/addNotice', {
               title: `战斗报告`,
               message: '本场无受伤',
