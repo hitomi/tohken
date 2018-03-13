@@ -404,9 +404,11 @@ define((require, exports, module) => {
       if(content.gimmick.draw){
         //毒箭
         if(content.gimmick.draw==19 || (content.gimmick.draw>=53 && content.gimmick.draw<=55)){
-          store.commit('swords/updateSword',{
-            serialId: content.gimmick.result.effect[0].serial_id,
-            updateData: {hp: content.gimmick.result.effect[0].value[1]}
+          _.each(content.gimmick.result.effect, (v, k)=>{
+            store.commit('swords/updateSword',{
+              serialId: v.serial_id,
+              updateData: {hp: v.value[1]}
+            })
           })
         }
         //炸弹
