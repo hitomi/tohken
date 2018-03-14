@@ -574,7 +574,7 @@
           <thead>
             <tr>
               <th>部隊</th>
-              <th>刀名</th>
+              <th>掉落</th>
               <th>時代-地域</th>
               <th>階数</th>
               <th>戦闘地ID</th>
@@ -585,8 +585,8 @@
           <tbody>
             <tr v-for="battle in log.battle">
               <td>{{ battle.party_no || '-' }}</td>
-              <td v-if="battle.category === 3" style="color: red;">{{ battle.get_sword_id | sword-name }}</td>
-              <td v-else>{{ battle.get_sword_id | sword-name }}</td>
+              <td v-if="battle.category === 3" style="color: red;">{{ battle.get }}</td>
+              <td v-else>{{ battle.get }}</td>
               <td>{{ battle.episode_id || '-' }}-{{ battle.field_id || '-' }}</td>
               <td>{{ battle.layer_num }}</td>
               <td v-if="battle.category === 3" style="color: red;">{{ battle.square_id }}(Boss)</td>

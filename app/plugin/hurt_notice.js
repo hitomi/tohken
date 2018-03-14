@@ -5,30 +5,6 @@ define((require, exports, module) => {
       if (state.config.hurt_notice == true) {
         if (mutation.type === 'battle/updateBattle' || mutation.type === 'battle/updatePracticeBattle') {
           let { updateData } = mutation.payload
-          if(mutation.type === 'battle/updateBattle'){
-          store.commit('log/addBattleLog', {
-            logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
-            party_no: state.sally.party_no,
-            get_sword_id: updateData.result.get_sword_id,
-            episode_id: state.sally.episode_id,
-            field_id: state.sally.field_id,
-            layer_num: state.sally.layer_num,
-            square_id: state.sally.square_id,
-            rank: updateData.result.rank,
-            mvp: updateData.result.mvp,
-            now: updateData.now
-          })}
-          if(mutation.type === 'battle/updatePracticeBattle'){
-          store.commit('log/addPracticeLog', {
-            logId: `${state.sally.party_no}#${state.sally.target_id}@${moment(updateData.now).unix()}`,
-            party_no: state.sally.party_no,
-            enemy_id: state.sally.target_id,
-            enemy_name: updateData.enemy.name,
-            enemy_level: updateData.enemy.level,
-            rank: updateData.result.rank,
-            mvp: updateData.result.mvp,
-            now: updateData.now
-          })}
           let resultParty = _(_.get(updateData, ['result', 'player', 'party', 'slot']))
             .values()
             .keyBy(o => o.serial_id)
@@ -121,6 +97,30 @@ define((require, exports, module) => {
               getSwordId = 'item'+getInstrumentId
             }
           }
+          if(mutation.type === 'battle/updateBattle'){
+            store.commit('log/addBattleLog', {
+              logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
+              party_no: state.sally.party_no,
+              get: swordName,
+              episode_id: state.sally.episode_id,
+              field_id: state.sally.field_id,
+              layer_num: state.sally.layer_num,
+              square_id: state.sally.square_id,
+              rank: updateData.result.rank,
+              mvp: updateData.result.mvp,
+              now: updateData.now
+            })}
+            if(mutation.type === 'battle/updatePracticeBattle'){
+            store.commit('log/addPracticeLog', {
+              logId: `${state.sally.party_no}#${state.sally.target_id}@${moment(updateData.now).unix()}`,
+              party_no: state.sally.party_no,
+              enemy_id: state.sally.target_id,
+              enemy_name: updateData.enemy.name,
+              enemy_level: updateData.enemy.level,
+              rank: updateData.result.rank,
+              mvp: updateData.result.mvp,
+              now: updateData.now
+            })}
           if (playerParty.length) {
             if (swordName){
               if (playerEquips.length)

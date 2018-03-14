@@ -230,7 +230,7 @@ define((require, exports, module) => {
           BattleLog = "\"部隊\",\"刀名\",\"時代-地域\",\"階数\",\"戦闘地ID\",\"評価\",\"戦闘時点\""
           _.forEach(_.get(store.state, ['log','battle']), function(_this) {
             rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
-            BattleLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.get_sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.get_sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "\",\"'" + (_this.layer_num ? _this.layer_num : '-') + "\",\"'" + (_this.square_id ? _this.square_id : '-') + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
+            BattleLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.get ? _this.get : '空') + "\",\"'" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "\",\"'" + (_this.layer_num ? _this.layer_num : '-') + "\",\"'" + (_this.square_id ? _this.square_id : '-') + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
           })
           blob = new Blob([BattleLog], {
             type: "text/plain;charset=utf-8"
