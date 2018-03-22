@@ -248,6 +248,32 @@ define((require, exports, module) => {
           });
           saveAs(blob, "TRHPractice" + (Date.now()) + ".csv");
         }
+        else if(name == 'DutyLog') {
+          DutyLog = "\"马当番\",\"畑当番\",\"手合\",\"结束时间\""
+          _.forEach(_.get(store.state, ['log','duty']), function(_this) {
+            let sword_name={
+              horse_id1: '-',
+              horse_id2: '-',
+              field_id1: '-',
+              field_id2: '-',
+              bout_id1: '-',
+              bout_id2: '-'
+            }
+            _.each(sword_name, (v, k)=>{
+              if(_this[k]){
+                sword_name[k]=_.get(store.state, ['swords', 'serial', _this[k], 'name'], '-')
+                if(_this.param[k]){
+                  sword_name[k]+=_this.param[k]
+                }
+              }
+            })
+            DutyLog += "\n\"'" + sword_name.horse_id1 + "/" + sword_name.horse_id2 + "\",\"'"+ sword_name.field_id1 + "/" + sword_name.field_id2 + "\",\"'"+ sword_name.bout_id1 + "/" + sword_name.bout_id2 + "\",\"'"+(moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
+          })
+          blob = new Blob([DutyLog], {
+            type: "text/plain;charset=utf-8"
+          });
+          saveAs(blob, "TRHDuty" + (Date.now()) + ".csv");
+        }
       }
     }
   })
@@ -320,6 +346,11 @@ define((require, exports, module) => {
       localforage.getItem('PracticeLog').then((data) => {
         //console.log(data)
         if (data) _.each(data, v => store.commit('log/addPracticeLog', v))
+      })
+
+      localforage.getItem('DutyLog').then((data) => {
+        //console.log(data)
+        if (data) _.each(data, v => store.commit('log/addDutyLog', v))
       })
 
       localforage.getItem('Resource').then((data) => {

@@ -2,13 +2,15 @@ define((require, exports, module) => {
   const defaultBattleLog = require('../model/battle_log')
   const defaultForgeLog = require('../model/forge_log')
   const defaultPracticeLog = require('../model/practice_log')
+  const defaultDutyLog = require('../model/duty_log')
   return {
     namespaced: true,
     state () {
       return {
         battle: {},
         forge: {},
-        practice: {}
+        practice: {},
+        duty: {}
       }
     },
     mutations: {
@@ -35,6 +37,14 @@ define((require, exports, module) => {
           Vue.set(state.forge, logId, defaultForgeLog())
         }
         mergeModel(state.forge[logId], payload)
+      },
+      addDutyLog (state, payload) {
+        let { logId } = payload
+        if (!logId) return
+        if (!state.duty[logId]) {
+          Vue.set(state.duty, logId, defaultDutyLog())
+        }
+        mergeModel(state.duty[logId], payload)
       }
     }
   }

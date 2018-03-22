@@ -8,6 +8,8 @@ define((require, exports, module) => {
           return localforage.setItem('ForgeLog', state.log.forge)
         case 'log/addPracticeLog':
           return localforage.setItem('PracticeLog', state.log.practice)
+        case 'log/addDutyLog':
+          return localforage.setItem('DutyLog', state.log.duty)
         case 'config/updateConfig':
           return localforage.setItem('Config', state.config)
         case 'swords/updateSword':

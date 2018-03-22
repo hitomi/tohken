@@ -71,6 +71,9 @@
           <div class="menu-inner" @click="scroll('practice-log')">
             演練記録
           </div>
+          <div class="menu-inner" @click="scroll('duty-log')">
+            内番記録
+          </div>
         </router-link>
         <router-link class="main-menu" to="/setting">
           <div class="menu-cover">
@@ -620,6 +623,29 @@
               <td>Lv.{{ battle.enemy_level }}</td>
               <td>{{ battle.rank | rank-name }}</td>
               <td>{{ battle.now | MMDDhhmmss }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="title" id="duty-log">· 内番記録 ·</div>
+      <div style="text-align: right; float:left; width:50%;" @click="removeLog('DutyLog')">[清除記録]</div>
+      <div style="text-align: left; float:left; width:50%;" @click="saveLog('DutyLog')">[导出記録]</div>
+      <div class="data-table">
+        <table style="max-width: 1000px">
+          <thead>
+            <tr>
+              <th>马当番</th>
+              <th>畑当番</th>
+              <th>手合</th>
+              <th>结束时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="duty in log.duty">
+              <td>{{duty.horse_id1 | sword-serial-name}} <span v-if="duty.param.horse_id1">{{duty.param.horse_id1}}</span>/ {{duty.horse_id2 | sword-serial-name}} <span v-if="duty.param.horse_id2">{{duty.param.horse_id2}}</span></td>
+              <td>{{duty.field_id1 | sword-serial-name}} <span v-if="duty.param.field_id1">{{duty.param.field_id1}}</span>/ {{duty.field_id2 | sword-serial-name}} <span v-if="duty.param.field_id2">{{duty.param.field_id2}}</span></td>
+              <td>{{duty.bout_id1 | sword-serial-name}} <span v-if="duty.param.bout_id1">{{duty.param.bout_id1}}</span> / {{duty.bout_id2 | sword-serial-name}} <span v-if="duty.param.bout_id2">{{duty.param.bout_id2}}</span></td>
+              <td>{{duty.finished_at | MMDDhhmmss}}</td>
             </tr>
           </tbody>
         </table>

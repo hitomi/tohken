@@ -634,5 +634,11 @@ define((require, exports, module) => {
         updateData: content.sword
       })
     }
+
+    static ['duty/complete'] (content) {
+      store.commit('duty/updateDuty', {
+        updateData: content
+      })
+    }
   }
 })
