@@ -121,6 +121,10 @@ define((require, exports, module) => {
               mvp: updateData.result.mvp,
               now: updateData.now
             })}
+          let timeout = _.get(state, ['config', 'timeout'], 3)*1000
+          if (timeout<3000){
+            timeout = 3000
+          }
           if (playerParty.length) {
             if (swordName){
               if (playerEquips.length)
@@ -128,6 +132,7 @@ define((require, exports, module) => {
                 title: `战斗报告`,
                 message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
                 context: `掉落：${swordName}！`,
+                timeout: timeout,
                 swordBaseId: getSwordId,
                 icon: `static/sword/${getSwordId}.png`,
               })
@@ -136,6 +141,7 @@ define((require, exports, module) => {
                 title: `战斗报告`,
                 message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
                 context: `掉落：${swordName}！`,
+                timeout: timeout,
                 swordBaseId: getSwordId,
                 icon: `static/sword/${getSwordId}.png`,
               })
@@ -147,6 +153,7 @@ define((require, exports, module) => {
               title: `战斗报告`,
               message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>'),
               context: `掉落：${swordName}！`,
+              timeout: timeout,
               swordBaseId: getSwordId,
               icon: `static/sword/${getSwordId}.png`,
             })
@@ -156,6 +163,7 @@ define((require, exports, module) => {
               title: `战斗报告`,
               message: '本场无受伤',
               context: `掉落：${swordName}！`,
+              timeout: timeout,
               swordBaseId: getSwordId,
               icon: `static/sword/${getSwordId}.png`
             })

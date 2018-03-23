@@ -700,6 +700,11 @@
           <p>手入提醒： <config-switch attr="repair_notice" /></p>
           <p>修行提醒： <config-switch attr="evolution_notice" /></p>
         </div>
+        <div style="padding: 8px;">
+            <p>请输入战报显示持续秒数（不要低于3秒）</p>
+            <p>战报将在显示相应时长后自动消失</p>
+            <input v-model="timeout">
+        </div>
       </div>
       <div>
         <div class="title" id="about">· 关于 ·</div>

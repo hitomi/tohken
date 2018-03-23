@@ -8,7 +8,8 @@ define((require, exports, module) => {
       hurt_notice: true,
       repair_notice: true,
       evolution_notice: true,
-      debug_mode: false
+      debug_mode: false,
+      timeout: 3
     }
   }
 })
