@@ -241,7 +241,7 @@ define((require, exports, module) => {
           saveAs(blob, "TRHForge" + (Date.now()) + ".csv");
         }
         else if(name == 'BattleLog') {
-          BattleLog = "\"部隊\",\"刀名\",\"時代-地域\",\"階数\",\"戦闘地ID\",\"評価\",\"戦闘時点\""
+          BattleLog = "\"部隊\",\"掉落\",\"時代-地域\",\"階数\",\"戦闘地ID\",\"評価\",\"戦闘時点\""
           _.forEach(_.get(store.state, ['log','battle']), function(_this) {
             rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
             BattleLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.get ? _this.get : '空') + "\",\"'" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "\",\"'" + (_this.layer_num ? _this.layer_num : '-') + "\",\"'" + (_this.square_id ? _this.square_id : '-') + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
