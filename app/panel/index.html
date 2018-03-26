@@ -277,7 +277,7 @@
           <div class="info">
             <div class="name">{{ practice_enemy_sword[enemy_sword.serial_id].name }}</div>
             <div class="level">Lv.{{ practice_enemy_sword[enemy_sword.serial_id].level }}</div>
-            <div class="level"> </div>
+            <div class="fatigue" :class="practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-cname">{{ practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-text }} {{practice_enemy_sword[enemy_sword.serial_id].vfatigue}}</div>
             <div class="horse">{{ practice_enemy_sword[enemy_sword.serial_id].horse_serial_id | practice-enemy-equip-serial-name }}</div>
             <div class="equip">
               <ul v-for="equip in practice_enemy_sword[enemy_sword.serial_id].equips">
