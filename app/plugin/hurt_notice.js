@@ -75,11 +75,11 @@ define((require, exports, module) => {
               let sword = _.get(state, ['swords', 'serial', v.serial_id], {})
               let equipstring = ''
               if(v.equip[1]!=null)
-                equipstring += _.get(TRHMasterData.getMasterData('Equip'), [v.equip[1], 'name'], '-') + ' '
+                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[1], 'name'], '-') + '] '
               if(v.equip[2]!=null)
-                equipstring += _.get(TRHMasterData.getMasterData('Equip'), [v.equip[2], 'name'], '-') + ' '
+                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[2], 'name'], '-') + '] '
               if(v.equip[3]!=null)
-                equipstring += _.get(TRHMasterData.getMasterData('Equip'), [v.equip[3], 'name'], '-') + ' '
+                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[3], 'name'], '-') + '] '
               return {
                 serial_id: v.serial_id,
                 name: sword.name,

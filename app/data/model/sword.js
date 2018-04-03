@@ -40,6 +40,7 @@ define((require, exports, module) => {
       recovered_at: null,
       created_at: null,
       inBattle: false,
+      isEnemy: false,
       get name () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
       },
@@ -67,7 +68,7 @@ define((require, exports, module) => {
         if (this.inBattle && this.battleFatigue != null) {
           fatigue = this.battleFatigue
         }
-        if (!this.inBattle && fatigue < TRH.FATIGUE.VALUE.NOMAL && !_.isUndefined(this.recovered_at) && this.status!=3) {
+        if (!this.inBattle && fatigue < TRH.FATIGUE.VALUE.NOMAL && !_.isUndefined(this.recovered_at) && this.status!=3 && !this.isEnemy) {
           let now = Math.floor(Date.now() / 1000)
           let recovered = Math.floor(this.recovered_at / 1000)
           fatigue = fatigue + Math.floor((now - recovered) / 180) * 3

@@ -4,14 +4,11 @@ define((require, exports, module) => {
   return class TRHRequestRouter {
     static route (action, content) {
       // Log
-      //console.log(action)
-      //console.log(content)
       // Route
       if (_.isFunction(this[action])) {
         this[action](content)
       }
       // Common
-      //if(action!='party/list')
       this.common(content)
     }
 
@@ -138,6 +135,10 @@ define((require, exports, module) => {
         store.commit('practice_enemy/updatePracticeSword', {
           serialId: k, 
           updateData: v
+        })
+        store.commit('practice_enemy/updatePracticeSword', {
+          serialId: k,
+          updateData: {isEnemy: true}
         })
       })
       _.each(content.enemy_party, (v,k) => {
