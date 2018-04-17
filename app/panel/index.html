@@ -171,7 +171,8 @@
   <!-- Component Sword Item -->
   <script id="sword-item" type="text/template">
     <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname">
-      <img :src="sword.sword_id | sword-pattern" alt="空" class="pattern">
+      <img v-if="sword.injury>=2" :src="sword.sword_id + '_injury' | sword-pattern" alt="空" class="pattern">
+      <img v-else :src="sword.sword_id | sword-pattern" alt="空" class="pattern">
       <div class="info">
         <div class="name">{{ sword.name }}<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
         <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && sword.status == 1" style="color:blue;">[{{ sword.status | status-text }}]</span></div>
