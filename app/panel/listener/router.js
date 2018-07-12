@@ -113,6 +113,10 @@ define((require, exports, module) => {
     static ['party/list'](content){
       store.commit('swords/clear')
       store.commit('equip/clear')
+      //store.commit('item/clear')
+    }
+
+    static ['shop/list'](content){
       store.commit('item/clear')
     }
 
