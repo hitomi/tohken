@@ -120,6 +120,13 @@ define((require, exports, module) => {
       store.commit('item/clear')
     }
 
+    static ['item/add_exp'](content){
+      store.commit('swords/updateSword',{
+        serialId: content.sword.serial_id,
+        updateData: content.sword
+      })
+    }
+
     static ['forge'](content){
       store.commit('forge/clear')
     }
