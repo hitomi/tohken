@@ -47,6 +47,9 @@ define((require, exports, module) => {
     else if (episodeId < 0){
       let type = _.get(TRHMasterData.getMasterData('Event'), [episodeId, 'type'], 0)
       let map = _.get(TRHMasterData.getMasterData('EventLayer'), [episodeId, fieldId, layerNum, 'map'], 0)
+      if(type == 4){
+        map = fieldId
+      }
       return '../../static/map/event' +  '_' + type + '_' + map + '.jpg'
     }
   })
