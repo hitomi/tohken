@@ -207,18 +207,18 @@ define((require, exports, module) => {
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
         if(rank < 6){
-          console.log("Rank Win")
+          // console.log("Rank Win")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           if(v.serial_id == mvp) {
-            console.log("mvp calculate")
+            // console.log("mvp calculate")
             v.battleFatigue += 10
           }
         }
         if(v.battleFatigue >= 100) {
-          console.log(">= 100")
+          // console.log(">= 100")
           v.battleFatigue = 100
         }
         store.commit('swords/updateSword', {
@@ -278,59 +278,59 @@ define((require, exports, module) => {
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
         if(rank == 1) {
-          console.log("Rank ONE_ON_ONE")
+          // console.log("Rank ONE_ON_ONE")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 1
         }
         else if(rank == 2) {
-          console.log("Rank S")
+          // console.log("Rank S")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 1
         }
         else if(rank == 3) {
-          console.log("Rank A")
+          // console.log("Rank A")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 0
         }
         else if(rank == 4) {
-          console.log("Rank B")
+          // console.log("Rank B")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue -= 1
         }
         else if(rank == 5) {
-          console.log("Rank C")
+          // console.log("Rank C")
           if(v.serial_id == leader) {
-            console.log("leader calculate")
+            // console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue -= 2
         }
         else if(rank == 6) {
-          console.log("Rank D")
+          // console.log("Rank D")
           v.battleFatigue -= 3
         }
         if(v.serial_id == mvp) {
-          console.log("mvp calculate")
+          // console.log("mvp calculate")
           v.battleFatigue += 10
         }
         if(v.battleFatigue >= 100) {
-          console.log(">= 100")
+          // console.log(">= 100")
           v.battleFatigue = 100
         }
         if(v.battleFatigue <= 0) {
-          console.log("<= 0")
+          // console.log("<= 0")
           v.battleFatigue = 0
         }
         store.commit('swords/updateSword', {
