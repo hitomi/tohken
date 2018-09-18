@@ -175,6 +175,10 @@ a {
 .menu-inner.party {
   line-height: 1.5;
 }
+.map-info {
+  height: 30px;
+  line-height: 30px;
+}
 
 .party-info {
   padding: 8px;

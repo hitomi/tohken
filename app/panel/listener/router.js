@@ -391,11 +391,13 @@ define((require, exports, module) => {
       let eventContent = {
         episode_id: null,
         field_id: null,
-        layer_num: null
+        layer_num: null,
+        select_event_layer_num: null,
       }
       eventContent.episode_id = content.postData.event_id*(-1)
       eventContent.field_id = content.postData.event_field_id
       eventContent.layer_num = content.postData.event_layer_id == 0 ? 1 : content.postData.event_layer_id
+      eventContent.select_event_layer_num = content.postData.select_event_layer_num
       store.commit('sally/updateSally', {
         updateData: eventContent
       })
