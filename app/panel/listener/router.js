@@ -394,11 +394,13 @@ define((require, exports, module) => {
         layer_num: null,
         select_event_layer_num: null,
       }
+      let eventType = _.get(TRHMasterData.getMasterData('Event'), [content.postData.event_id*(-1), 'type'], 0)
       eventContent.episode_id = content.postData.event_id*(-1)
       eventContent.field_id = content.postData.event_field_id
       eventContent.layer_num = content.postData.event_layer_id == 0 ? 1 : content.postData.event_layer_id
-      eventContent.select_event_layer_num = content.postData.select_event_layer_num
-      store.commit('sally/updateSally', {
+      if(eventType==6){
+        eventContent.layer_num = content.select_event_layer_num
+      }      store.commit('sally/updateSally', {
         updateData: eventContent
       })
       this['sally/sally'] (content)

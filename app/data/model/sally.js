@@ -8,15 +8,11 @@ define((require, exports, module) => {
       layer_num: null,
       square_id: null,
       target_id: null,
-      select_event_layer_num: null,
       get category(){
         if(this.episode_id>0)
           return _.get(TRHMasterData.getMasterData('FieldSquare'),[this.episode_id, this.field_id, this.layer_num, this.square_id, 'category'],0)
         else
           return _.get(TRHMasterData.getMasterData('EventSquare'),[this.episode_id, this.field_id, this.layer_num, this.square_id, 'category'],0)
-      },
-      get type () {
-        return _.get(TRHMasterData.getMasterData('Event'), [this.episode_id, 'type'], 0)
       }
     }
   }
