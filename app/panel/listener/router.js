@@ -400,7 +400,8 @@ define((require, exports, module) => {
       eventContent.layer_num = content.postData.event_layer_id == 0 ? 1 : content.postData.event_layer_id
       if(eventType==6){
         eventContent.layer_num = content.select_event_layer_num
-      }      store.commit('sally/updateSally', {
+      }
+      store.commit('sally/updateSally', {
         updateData: eventContent
       })
       this['sally/sally'] (content)
@@ -442,6 +443,15 @@ define((require, exports, module) => {
       store.commit('forge/updateForge', {
         slotNo: content.slot_no,
         updateData: _.extend(content, content.postData)
+      })
+    }
+
+    static ['forge/fast'] (content) {
+      let forgeData = _.get(store, ['state', 'forge', 'slot', content.postData.slot_no], {})
+      forgeData.sword_id = content.sword_id
+      store.commit('forge/updateForge', {
+        slotNo: content.postData.slot_no,
+        updateData: _.extend(content, content.postData, forgeData)
       })
     }
 
