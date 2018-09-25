@@ -60,9 +60,9 @@ define((require, exports, module) => {
 
   exports.partyStatus = Vue.filter('party-status', (status) => {
     return [
-      '未开放',
-      '正常',
-      '远征'
+      'locked',
+      'normal',
+      'conquest'
     ][status] || ''
   })
 

@@ -175,6 +175,16 @@ a {
 .menu-inner.party {
   line-height: 1.5;
 }
+
+.menu-inner.party.locked {
+  filter:brightness(0.5);
+}
+.menu-inner.party.normal {
+}
+.menu-inner.party.conquest {
+  border-left: #9c7eff solid;
+}
+
 .map-info {
   height: 30px;
   line-height: 30px;

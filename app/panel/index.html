@@ -16,7 +16,7 @@
           <div class="menu-cover">
             部隊
           </div>
-          <div class="menu-inner party" v-for='i in 4' :key="i" :data-party="i" @click="scroll('party-' + i)">
+          <div class="menu-inner party" v-for='i in 4' :key="i" :data-party="i" @click="scroll('party-' + i)" :class="party.parties[i].status | party-status">
             第{{ i }}部隊<br>
             <small v-if="party.parties[i]">
               A.<span>{{ party.parties[i].averageLevel }}</span> / T.<span>{{ party.parties[i].totalLevel }}</span>
@@ -159,7 +159,7 @@
   <script id="party-list" type="text/template">
     <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
       <div class="party-info">
-        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[{{ party.status | party-status }}][{{ party.finished_at | hhmmss }}]</small><small v-if="party.status > 2">[{{ party.status | party-status }}]</small></div>
+        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[远征][{{ party.finished_at | hhmmss }}]</small><small v-if="party.status > 2">[{{ party.status | party-status }}]</small></div>
         <div class="party-level">
           A.<span>{{ party.averageLevel }}</span> / T.<span>{{ party.totalLevel }}</span>
         </div>

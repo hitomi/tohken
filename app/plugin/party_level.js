@@ -16,7 +16,10 @@ define((require, exports, module) => {
           })
           .value()
         let totalLevel = Math.floor(_.sum(swordLevels))
-        let averageLevel = Math.ceil(_.mean(swordLevels))
+        let averageLevel = 0
+        if(totalLevel!=0){
+          averageLevel = Math.ceil(_.mean(swordLevels))
+        }
         store.commit('party/updateLevel', {
           partyNo,
           totalLevel,
