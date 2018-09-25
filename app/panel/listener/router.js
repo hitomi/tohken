@@ -453,6 +453,13 @@ define((require, exports, module) => {
         slotNo: content.postData.slot_no,
         updateData: _.extend(content, content.postData, forgeData)
       })
+      store.commit('item/addItem', {
+        consumableId: 8, 
+        updateData: {
+          consumable_id: 8,
+          num: -1
+        }
+      })
     }
 
     static ['login/start'] (content) {

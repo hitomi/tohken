@@ -2,7 +2,7 @@ define((require, exports, module) => {
   let TRHMasterData = require('app/core/master')
   return (store) => {
     store.subscribe((mutation, state) => {
-      if (state.config.forge_notice == true) {
+      
         if (mutation.type === 'forge/updateForge') {
           let { updateData } = mutation.payload
           let getSwordId = updateData.sword_id
@@ -13,6 +13,7 @@ define((require, exports, module) => {
             logId,
             ...mutation.payload.updateData
           })
+          if (state.config.forge_notice == true) {
           if (getSwordId) {
             store.dispatch('notice/addNotice', {
               title: `锻刀剧透： ${swordName}`,

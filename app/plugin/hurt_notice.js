@@ -2,7 +2,8 @@ define((require, exports, module) => {
   let TRHMasterData = require('app/core/master')
   return (store) => {
     store.subscribe((mutation, state) => {
-      if (state.config.hurt_notice == true) {
+
+      
         if (mutation.type === 'battle/updateBattle' || mutation.type === 'battle/updatePracticeBattle') {
           let { updateData } = mutation.payload
           let resultParty = _(_.get(updateData, ['result', 'player', 'party', 'slot']))
@@ -97,34 +98,12 @@ define((require, exports, module) => {
               getSwordId = 'item'+getInstrumentId
             }
           }
-          if(mutation.type === 'battle/updateBattle'){
-            store.commit('log/addBattleLog', {
-              logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
-              party_no: state.sally.party_no,
-              get: swordName,
-              episode_id: state.sally.episode_id,
-              field_id: state.sally.field_id,
-              layer_num: state.sally.layer_num,
-              square_id: state.sally.square_id,
-              rank: updateData.result.rank,
-              mvp: updateData.result.mvp,
-              now: updateData.now
-            })}
-            if(mutation.type === 'battle/updatePracticeBattle'){
-            store.commit('log/addPracticeLog', {
-              logId: `${state.sally.party_no}#${state.sally.target_id}@${moment(updateData.now).unix()}`,
-              party_no: state.sally.party_no,
-              enemy_id: state.sally.target_id,
-              enemy_name: updateData.enemy.name,
-              enemy_level: updateData.enemy.level,
-              rank: updateData.result.rank,
-              mvp: updateData.result.mvp,
-              now: updateData.now
-            })}
+          
           let timeout = _.get(state, ['config', 'timeout'], 3)*1000
           if (timeout<3000){
             timeout = 3000
           }
+          if (state.config.hurt_notice == true) {
           if (playerParty.length) {
             if (swordName){
               if (playerEquips.length)
