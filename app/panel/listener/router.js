@@ -448,10 +448,14 @@ define((require, exports, module) => {
 
     static ['forge/fast'] (content) {
       let forgeData = _.get(store, ['state', 'forge', 'slot', content.postData.slot_no], {})
-      forgeData.sword_id = content.sword_id
+      
       store.commit('forge/updateForge', {
         slotNo: content.postData.slot_no,
-        updateData: _.extend(content, content.postData, forgeData)
+        updateData: {
+          slot_no: content.postData.slot_no,
+          sword_id: content.sword_id,
+          finished_at: forgeData.finished_at
+        }
       })
       store.commit('item/addItem', {
         consumableId: 8, 
