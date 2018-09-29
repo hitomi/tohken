@@ -277,6 +277,9 @@ define((require, exports, module) => {
         let rank = _.get(content, ['result', 'rank'])
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
+        if(content.tsukimi){
+          v.battleFatigue += -6
+        }
         if(rank == 1) {
           // console.log("Rank ONE_ON_ONE")
           if(v.serial_id == leader) {
@@ -673,8 +676,9 @@ define((require, exports, module) => {
     }
 
     static ['duty/complete'] (content) {
+      let finished_at = _.get(store.state, ['duty', 'finished_at'], 0)
       store.commit('duty/updateDuty', {
-        updateData: content
+        updateData: _.extend(content, {finished_at: finished_at})
       })
     }
   }

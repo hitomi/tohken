@@ -48,7 +48,7 @@ define((require, exports, module) => {
             bout_id2: bout_id2
           })}}
             if (state.config.duty_notice == true) {
-            if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull) || mutation.payload.updateData.length == 0) {
+            if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull) || JSON.stringify(mutation.payload.updateData)=="{}" || JSON.stringify(mutation.payload.updateData)=="[]") {
             store.dispatch('notice/addNotice', {
               title: `内番未放置`,
               context: '请安排刀刀们干活啦！',
