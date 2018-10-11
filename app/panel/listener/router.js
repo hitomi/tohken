@@ -278,7 +278,9 @@ define((require, exports, module) => {
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
         if(content.tsukimi){
-          v.battleFatigue += -6
+          if(JSON.stringify(content.tsukimi)!="{}"){
+            v.battleFatigue += -6
+          }
         }
         if(rank == 1) {
           // console.log("Rank ONE_ON_ONE")
