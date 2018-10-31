@@ -676,6 +676,21 @@ define((require, exports, module) => {
         updateData: content.sword
       })
     }
+    
+    static ['composition/union'] (content) {
+      let serial_ids = _(content.postData.material_serial_id)
+        .split('%2C')
+        .value()
+      _.each(serial_ids, v => {
+        store.commit('swords/deleteSword', {
+          serialId: v
+        })
+      })
+      store.commit('swords/updateSword', {
+        serialId: content.sword.serial_id, 
+        updateData: content.sword
+      })
+    }
 
     static ['duty/complete'] (content) {
       let finished_at = _.get(store.state, ['duty', 'finished_at'], 0)
