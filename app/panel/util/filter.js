@@ -63,7 +63,7 @@ define((require, exports, module) => {
       'locked',
       'normal',
       'conquest',
-      '出陣'
+      'inBattle'
     ][status] || ''
   })
 

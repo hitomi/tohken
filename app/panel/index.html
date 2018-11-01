@@ -159,7 +159,7 @@
   <script id="party-list" type="text/template">
     <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
       <div class="party-info">
-        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[远征][{{ party.finished_at | hhmmss }}]</small><small v-if="party.status > 2">[{{ party.status | party-status }}]</small></div>
+        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[远征][{{ party.finished_at | hhmmss }}]</small><small v-if="party.status == 3">[出陣]</small><small v-if="party.status > 3">[{{ party.status | party-status }}]</small></div>
         <div class="party-level">
           A.<span>{{ party.averageLevel }}</span> / T.<span>{{ party.totalLevel }}</span>
         </div>

@@ -184,6 +184,9 @@ a {
 .menu-inner.party.conquest {
   border-left: #9c7eff solid;
 }
+.menu-inner.party.inBattle {
+  border-left: #f38263 solid;
+}
 
 .map-info {
   height: 30px;
