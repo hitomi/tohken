@@ -98,57 +98,82 @@ define((require, exports, module) => {
               getSwordId = 'item'+getInstrumentId
             }
           }
-          
+          if(mutation.type === 'battle/updateBattle'){
+            store.commit('log/addBattleLog', {
+              logId: `${state.sally.party_no}#${state.sally.episode_id}-${state.sally.field_id}@${moment(updateData.now).unix()}`,
+              party_no: state.sally.party_no,
+              get: swordName,
+              episode_id: state.sally.episode_id,
+              field_id: state.sally.field_id,
+              layer_num: state.sally.layer_num,
+              square_id: state.sally.square_id,
+              rank: updateData.result.rank,
+              mvp: updateData.result.mvp,
+              now: updateData.now
+            })
+          }
+          if(mutation.type === 'battle/updatePracticeBattle'){
+          store.commit('log/addPracticeLog', {
+            logId: `${state.sally.party_no}#${state.sally.target_id}@${moment(updateData.now).unix()}`,
+            party_no: state.sally.party_no,
+            enemy_id: state.sally.target_id,
+            enemy_name: updateData.enemy.name,
+            enemy_level: updateData.enemy.level,
+            rank: updateData.result.rank,
+            mvp: updateData.result.mvp,
+            now: updateData.now
+          })
+          }
           let timeout = _.get(state, ['config', 'timeout'], 3)*1000
           if (timeout<3000){
             timeout = 3000
           }
           if (state.config.hurt_notice == true) {
-          if (playerParty.length) {
-            if (swordName){
-              if (playerEquips.length)
+            if (playerParty.length) {
+              if (swordName){
+                if (playerEquips.length)
+                store.dispatch('notice/addNotice', {
+                  title: `战斗报告`,
+                  message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
+                  context: `掉落：${swordName}！`,
+                  timeout: timeout,
+                  swordBaseId: getSwordId,
+                  icon: `static/sword/${getSwordId}.png`,
+                })
+                else
+                store.dispatch('notice/addNotice', {
+                  title: `战斗报告`,
+                  message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
+                  context: `掉落：${swordName}！`,
+                  timeout: timeout,
+                  swordBaseId: getSwordId,
+                  icon: `static/sword/${getSwordId}.png`,
+                })
+              }
+            }
+            else if (playerEquips.length) {
+              if (swordName)
               store.dispatch('notice/addNotice', {
                 title: `战斗报告`,
-                message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
-                context: `掉落：${swordName}！`,
-                timeout: timeout,
-                swordBaseId: getSwordId,
-                icon: `static/sword/${getSwordId}.png`,
-              })
-              else
-              store.dispatch('notice/addNotice', {
-                title: `战斗报告`,
-                message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
+                message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>'),
                 context: `掉落：${swordName}！`,
                 timeout: timeout,
                 swordBaseId: getSwordId,
                 icon: `static/sword/${getSwordId}.png`,
               })
             }
-          }
-          else if (playerEquips.length) {
-            if (swordName)
-            store.dispatch('notice/addNotice', {
-              title: `战斗报告`,
-              message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>'),
-              context: `掉落：${swordName}！`,
-              timeout: timeout,
-              swordBaseId: getSwordId,
-              icon: `static/sword/${getSwordId}.png`,
-            })
-          }
-          else if (getSwordId !== 0) {
-            store.dispatch('notice/addNotice', {
-              title: `战斗报告`,
-              message: '本场无受伤',
-              context: `掉落：${swordName}！`,
-              timeout: timeout,
-              swordBaseId: getSwordId,
-              icon: `static/sword/${getSwordId}.png`
-            })
+            else if (getSwordId !== 0) {
+              store.dispatch('notice/addNotice', {
+                title: `战斗报告`,
+                message: '本场无受伤',
+                context: `掉落：${swordName}！`,
+                timeout: timeout,
+                swordBaseId: getSwordId,
+                icon: `static/sword/${getSwordId}.png`
+              })
+            }
           }
         }
-      }
     })
   }
 })
