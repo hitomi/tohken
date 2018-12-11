@@ -25,40 +25,34 @@ define((require, exports, module) => {
             }
           })
           if(finished_at){
-          store.commit('log/addDutyLog', {
-            logId: `${moment(parseValues(finished_at)).unix()}`,
-            finished_at: finished_at,
-            horse_id2: horse_id2,
-            horse_id1: horse_id1,
-            field_id1: field_id1,
-            field_id2: field_id2,
-            bout_id1: bout_id1,
-            bout_id2: bout_id2,
-            param: paramResult
-          })}}else{
-            if(finished_at){
             store.commit('log/addDutyLog', {
-            logId: `${moment(parseValues(finished_at)).unix()}`,
-            finished_at: finished_at,
-            horse_id2: horse_id2,
-            horse_id1: horse_id1,
-            field_id1: field_id1,
-            field_id2: field_id2,
-            bout_id1: bout_id1,
-            bout_id2: bout_id2
-          })}}
-            if (state.config.duty_notice == true) {
-            if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull) || JSON.stringify(mutation.payload.updateData)=="{}" || JSON.stringify(mutation.payload.updateData)=="[]") {
-            store.dispatch('notice/addNotice', {
-              title: `内番未放置`,
-              context: '请安排刀刀们干活啦！',
-              disableAutoClose: true,
-              swordBaseId: state.config.secretary,
-              icon: `static/sword/${state.config.secretary}.png`
+              logId: `${moment(parseValues(finished_at)).unix()}`,
+              finished_at: finished_at,
+              horse_id2: horse_id2,
+              horse_id1: horse_id1,
+              field_id1: field_id1,
+              field_id2: field_id2,
+              bout_id1: bout_id1,
+              bout_id2: bout_id2,
+              param: paramResult
             })
-          } else if (!finished_at) {
-            finished_at = state.duty.finished_at
           }
+        }
+        else{
+          if(finished_at){
+            store.commit('log/addDutyLog', {
+              logId: `${moment(parseValues(finished_at)).unix()}`,
+              finished_at: finished_at,
+              horse_id2: horse_id2,
+              horse_id1: horse_id1,
+              field_id1: field_id1,
+              field_id2: field_id2,
+              bout_id1: bout_id1,
+              bout_id2: bout_id2
+            })
+          }
+        }
+        if (state.config.duty_notice == true) {
           if(state.duty.isIntervalSet == false || state.duty.isIntervalSet == null) {
             console.log("set interval")
             let check = setInterval(function isDutyFinished(){
@@ -77,6 +71,18 @@ define((require, exports, module) => {
                 state.duty.isIntervalSet = false
               }
             }, 1000)
+          }
+          if(_.every([horse_id1, horse_id2, field_id1, field_id2, bout_id1, bout_id2], _.isNull) || JSON.stringify(mutation.payload.updateData)=="{}" || JSON.stringify(mutation.payload.updateData)=="[]") {
+            store.dispatch('notice/addNotice', {
+              title: `内番未放置`,
+              context: '请安排刀刀们干活啦！',
+              disableAutoClose: true,
+              swordBaseId: state.config.secretary,
+              icon: `static/sword/${state.config.secretary}.png`
+            })
+          }
+          else if (!finished_at) {
+            finished_at = state.duty.finished_at
           }
         }
       }

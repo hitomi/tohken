@@ -429,7 +429,7 @@ define((require, exports, module) => {
           _.each(content.gimmick.result.effect, (v, k)=>{
             store.commit('swords/updateSword',{
               serialId: v.serial_id,
-              updateData: {hp: v.value[1]}
+              updateData: {hp: v.value[1] || 1}
             })
           })
         }
