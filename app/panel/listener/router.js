@@ -247,6 +247,10 @@ define((require, exports, module) => {
     }
 
     static ['battle/alloutbattle'](content){
+      let new_square_id = _.get(store, ['state', 'sally', 'square_id']) + 1
+        store.commit('sally/updateSally', {
+        updateData: {square_id: new_square_id}
+      })
       this['battle/battle'] (content)
     }
 
@@ -410,6 +414,11 @@ define((require, exports, module) => {
         updateData: eventContent
       })
       this['sally/sally'] (content)
+      if(eventType==4){
+          store.commit('sally/updateSally', {
+          updateData: {square_id: "0"}
+        })
+      }
     }
     static ['sally/forward'] (content) {
       store.commit('sally/updateSally', {
