@@ -609,6 +609,14 @@ define((require, exports, module) => {
           updateData: {inBattle: true}
         })
       })
+      let eventId = _.get(store, ['state', 'sally', 'episode_id'])
+      let eventType = _.get(TRHMasterData.getMasterData('Event'), [eventId, 'type'], 0)
+      let new_square_id = _.get(store, ['state', 'sally', 'square_id']) - 1
+      if(eventType == 4){
+        store.commit('sally/updateSally', {
+          updateData: {square_id: new_square_id}
+        })
+      }
     }
 
     static ['mission/reward'] (content) {
