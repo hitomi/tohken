@@ -249,9 +249,33 @@ define((require, exports, module) => {
     static ['battle/alloutbattle'](content){
       let new_square_id = _.get(store, ['state', 'sally', 'square_id']) + 1
         store.commit('sally/updateSally', {
-        updateData: {square_id: new_square_id}
+        updateData: {
+          square_id: new_square_id,
+          party_no: content.postData.party_no
+        }
       })
       this['battle/battle'] (content)
+      if(content.allout.is_finish == true){
+        store.commit('player/updatePlayer', {
+          updateData: {
+            exp: content.allout.settle_up.player.exp,
+            level: content.allout.settle_up.player.level
+          }
+        })
+        _.each(content.allout.settle_up.player.party, (v, k)=>{
+          _.each(v.slot, (v1, k1)=>{
+            if(v1.serial_id){
+              store.commit('swords/updateSword',{
+                serialId: v1.serial_id,
+                updateData: {
+                  exp: v1.exp,
+                  level: v1.level
+                }
+              })
+            }
+          })
+        })
+      }
     }
 
     static ['battle/battle'] (content) {
