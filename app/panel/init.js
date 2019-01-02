@@ -233,7 +233,7 @@ define((require, exports, module) => {
         if(name == 'ForgeLog') {
           ForgeLog = "\"番号\",\"刀名\",\"木炭\",\"玉鋼\",\"冷却材\",\"砥石\",\"御札\",\"结束时间\""
           _.forEach(_.get(store.state, ['log','forge']), function(_this) {
-            ForgeLog += "\n\"'" + (_this.sword_id ? _this.sword_id : '-') + "\",\"'" + (_this.sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.charcoal ? _this.charcoal : '-') + "\",\"'" + (_this.steel ? _this.steel : '-') + "\",\"'" + (_this.coolant ? _this.coolant : '-') + "\",\"'" + (_this.file ? _this.file : '-') + "\",\"'" + (_this.consumable_id ? _this.consumable_id : '-') + "\",\"'" + (moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
+            ForgeLog += "\n\"'" + (_this.sword_id ? _this.sword_id : '-') + "\",\"'" + (_this.sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.charcoal ? _this.charcoal : '-') + "\",\"'" + (_this.steel ? _this.steel : '-') + "\",\"'" + (_this.coolant ? _this.coolant : '-') + "\",\"'" + (_this.file ? _this.file : '-') + "\",\"'" + (_this.consumable_id ? _.get(TRHMasterData.getMasterData('Consumable'), [_this.consumable_id, 'name'], '-').replace('御札・', '') : '-') + "\",\"'" + (moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
           })
           blob = new Blob([ForgeLog], {
             type: "text/plain;charset=utf-8"
