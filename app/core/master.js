@@ -97,7 +97,7 @@ define((require, exports, module) => {
     // Init User Level Data
     static initUserLevelMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.UserLevel = _(TRHMasterData.masterData.level_master)
+      TRHMasterData.UserLevel = _(TRHMasterData.masterData.LevelMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -130,7 +130,7 @@ define((require, exports, module) => {
     // Init Sword Level Data
     static initSwordLevelMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.SwordLevel = _(TRHMasterData.masterData.sword_level_master)
+      TRHMasterData.SwordLevel = _(TRHMasterData.masterData.SwordLevelMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -165,7 +165,7 @@ define((require, exports, module) => {
     // Init Sword Data
     static initSwordMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.Sword = _(TRHMasterData.masterData.sword_master)
+      TRHMasterData.Sword = _(TRHMasterData.masterData.SwordMaster)
         .split('\n')
         .map((line) => {
           let swordNickname = {
@@ -244,7 +244,7 @@ define((require, exports, module) => {
     // Init Equip Data
     static initEquipMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.Equip = _(TRHMasterData.masterData.equip_master)
+      TRHMasterData.Equip = _(TRHMasterData.masterData.EquipMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -289,7 +289,7 @@ define((require, exports, module) => {
     //Init Consumable Data
     static initConsumableMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.Consumable = _(TRHMasterData.masterData.consumable_master)
+      TRHMasterData.Consumable = _(TRHMasterData.masterData.ConsumableMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -329,7 +329,7 @@ define((require, exports, module) => {
     //Init Square Data
     static initFieldSquareMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.FieldSquare = _(TRHMasterData.masterData.field_square_master)
+      TRHMasterData.FieldSquare = _(TRHMasterData.masterData.FieldSquareMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -382,7 +382,7 @@ define((require, exports, module) => {
     //Init Event Data
     static initEventMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.Event = _(TRHMasterData.masterData.event_master)
+      TRHMasterData.Event = _(TRHMasterData.masterData.EventMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -414,7 +414,7 @@ define((require, exports, module) => {
     //Init Event Layer Data
     static initEventLayerMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.EventLayer = _(TRHMasterData.masterData.event_layer_master)
+      TRHMasterData.EventLayer = _(TRHMasterData.masterData.EventLayerMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
@@ -457,7 +457,7 @@ define((require, exports, module) => {
     //Init Event Square Data
     static initEventSquareMaster (store) {
       if (TRHMasterData.masterData === null) return
-      TRHMasterData.EventSquare = _(TRHMasterData.masterData.event_square_master)
+      TRHMasterData.EventSquare = _(TRHMasterData.masterData.EventSquareMaster)
         .split('\n')
         .map((line) => {
           let arr = line.split(',')
