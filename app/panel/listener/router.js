@@ -226,6 +226,16 @@ define((require, exports, module) => {
           updateData: v
         })
       })
+      _.each(_.values(_.get(content, ['battle'])), (v, k) =>{
+        if(v.is_skill == true){
+          v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.atk, 'battleFatigue'])
+          v.battleFatigue -= 20
+          store.commit('swords/updateSword', {
+            serialId: v.atk,
+            updateData: {battleFatigue : v.battleFatigue}
+          })
+        }
+      })
       _.each(_.values(_.get(content, ['player', 'party'])), (v, k) => {
         let equipUpdate = [{
           serial_id: v.equip_serial_id1,
@@ -370,6 +380,16 @@ define((require, exports, module) => {
           serialId: v.serial_id,
           updateData: v
         })
+      })
+      _.each(_.values(_.get(content, ['battle'])), (v, k) =>{
+        if(v.is_skill == true){
+          v.battleFatigue = _.get(store, ['state', 'swords', 'serial', v.atk, 'battleFatigue'])
+          v.battleFatigue -= 20
+          store.commit('swords/updateSword', {
+            serialId: v.atk,
+            updateData: {battleFatigue : v.battleFatigue}
+          })
+        }
       })
       _.each(_.values(_.get(content, ['player', 'party'])), (v, k) => {
         let equipUpdate = [{
