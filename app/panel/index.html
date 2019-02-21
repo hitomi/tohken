@@ -140,17 +140,17 @@
       <ul>
         <li>
           <div class="k">审神者</div>
-          <div class="v">{{ player.name || '' }}  <small>(Lv.{{ player.level || 'N/A' }})</small></div>
+          <div class="v">{{ player.name || '' }}  <small>(Lv.{{ player.level || '-' }})</small></div>
         </li>
       </ul>
       <ul class="fr">
-        <li><div class="k">木炭</div><div class="v">{{ resource.charcoal || 'N/A' }}</div></li>
-        <li><div class="k">玉鋼</div><div class="v">{{ resource.steel || 'N/A' }}</div></li>
-        <li><div class="k">冷却</div><div class="v">{{ resource.coolant || 'N/A' }}</div></li>
-        <li><div class="k">砥石</div><div class="v">{{ resource.file || 'N/A' }}</div></li>
-        <li><div class="k">依頼</div><div class="v">{{ resource.bill || 'N/A' }}</div></li>
-        <li><div class="k">手伝</div><div class="v">{{ (item.consumable["8"] && item.consumable["8"]["num"]) || 'N/A' }}</div></li>
-        <li><div class="k">小判</div><div class="v">{{ resource.money || 'N/A'}}</div></li>
+        <li><div class="k">木炭</div><div class="v">{{ resource.charcoal || '-' }}</div></li>
+        <li><div class="k">玉鋼</div><div class="v">{{ resource.steel || '-' }}</div></li>
+        <li><div class="k">冷却</div><div class="v">{{ resource.coolant || '-' }}</div></li>
+        <li><div class="k">砥石</div><div class="v">{{ resource.file || '-' }}</div></li>
+        <li><div class="k">依頼</div><div class="v">{{ resource.bill || '-' }}</div></li>
+        <li><div class="k">手伝</div><div class="v">{{ (item.consumable["8"] && item.consumable["8"]["num"]) || '-' }}</div></li>
+        <li><div class="k">小判</div><div class="v">{{ resource.money || '-'}}</div></li>
       </ul>
     </div>
   </script>
