@@ -422,7 +422,7 @@ define((require, exports, module) => {
 
       localforage.getItem('Evolution').then((data) => {
         if(data) {
-          data.back[0].isIntervalSet = false
+          data.back.isIntervalSet = false
           store.commit('evolution/updateEvolution', {
             updateData: data
           })
