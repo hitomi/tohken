@@ -58,7 +58,7 @@ define((require, exports, module) => {
             })
           }
         } else {
-          if(request.request.url.match(/1f1fa3d5e6cdc140f3c493457940e761\.bin/)) {
+          if(request.request.url.match(/d87515923124453e51fdd097ab74289f\.bin/)) {
             request.getContent((content, encoding) => {
               TRHMasterData.init(content, store)
             })
