@@ -87,6 +87,10 @@ define((require, exports, module) => {
     return moment(time).format('MM/DD HH:mm:ss')
   })
 
+  exports.YYYYMMDDhhmmss = Vue.filter('YYYYMMDDhhmmss', (time) => {
+    return moment(time).format('YYYY/MM/DD HH:mm:ss')
+  })
+
   exports.equipLevelName = Vue.filter('equip-level-name', function (equip_id) {
     let level = _.get(TRHMasterData.getMasterData('Equip'), [equip_id, 'rarity'], 0)
     return {

@@ -206,15 +206,19 @@ define((require, exports, module) => {
     },
     methods: {
       saveLog (name) {
+        let logHead = "<html><head><meta charset=\"UTF-8\"></head><body><table>"
+        let logTail = "</table></body></html>"
         if(name=='Swords'){
-          Swords="\"番号\",\"刀名\",\"稀有度\",\"种类\",\"刀派\",\"等级\",\"次级经验\",\"累计经验\",\"段数\",\"生存\",\"打击\",\"统率\",\"机动\",\"冲力\",\"侦查\",\"隐蔽\",\"范围\",\"必杀\",\"疲劳\",\"刀装数\",\"刀装\",\"御守\",\"马\",\"锁\",\"获取时间\""
+          Swords=logHead+"<thead><tr><th>番号</th><th>刀名</th><th>稀有度</th><th>种类</th><th>刀派</th><th>等级</th><th>次级经验</th><th>累计经验</th><th>距离毕业经验</th><th>段数</th><th>生存</th><th>打击</th><th>统率</th><th>机动</th><th>冲力</th><th>侦查</th><th>隐蔽</th><th>范围</th><th>必杀</th><th>疲劳</th><th>刀装数</th><th>刀装</th><th>御守</th><th>马</th><th>锁</th><th>获取时间</th></tr></thead>"
+          Swords+="<tbody>"
           _.forEach(_.get(store.state,['swords','serial']), function(_this){
-            Swords += "\n\"'"+_this.sword_id+"\",\"'"+_this.name+"\",\"'"+_this.rarity+"\",\"'"+_this.typeName+"\",\"'"+_this.styleName+"\",\"'"+_this.level+"\",\"'"+_this.nextExp+"\",\"'"+_this.exp+"\",\"'"+_this.evoName+"\",\"'"+_this.hp+"/"+_this.hp_max+ (_this.hp_up>0 ? "(+"+_this.hp_up+")" : "") + "\",\"'" + _this.atk + (_this.atk_up>0 ? "(+"+_this.atk_up+")" : "") + "\",\"'" + _this.def + (_this.def_up>0 ? "(+"+_this.def_up+")":"")+"\",\"'"+_this.mobile+(_this.mobile_up>0?"(+"+_this.mobile_up+")":"")+"\",\"'"+_this.back+(_this.back_up>0?"(+"+_this.back_up+")":"")+"\",\"'"+_this.scout+(_this.scout_up>0 ? "(+"+_this.scout_up+")":"")+"\",\"'"+_this.hide+(_this.hide_up>0?"(+"+_this.hide_up+")":"")+"\",\"'"+_this.rangeName+"\",\"'"+_this.loyalties+"\",\"'"+(_this.inBattle ? _this.battleFatigue : _this.vfatigue)+"\",\"'"+_this.equipSlot+"\",\"'"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id1, 'name'], '-')+(_this.equipSlot>1 ? "/"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id2, 'name'], '-') : "")+(_this.equipSlot>2 ? "/"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id3, 'name'], '-') : "")+"\",\"'"+['-','有','極'][_this.item_id]+"\",\"'"+_.get(store.state, ['equip', 'serial', _this.horse_serial_id, 'name'], '-')+"\",\"'"+_this.protectName+"\",\"'"+moment(_this.created_at).format('YYYY/MM/DD HH:mm:ss') + "\""
+            Swords += "<tr><td>"+_this.sword_id+"</td><td>"+_this.name+"</td><td>"+_this.rarity+"</td><td>"+_this.typeName+"</td><td>"+_this.styleName+"</td><td>"+_this.level+"</td><td>"+_this.nextExp+"</td><td>"+_this.exp+"</td><td>"+_this.totalExp+"</td><td>"+_this.evoName+"</td><td>"+_this.hp+"/"+_this.hp_max+ (_this.hp_up>0 ? "(+"+_this.hp_up+")" : "") + "</td><td>" + _this.atk + (_this.atk_up>0 ? "(+"+_this.atk_up+")" : "") + "</td><td>" + _this.def + (_this.def_up>0 ? "(+"+_this.def_up+")":"")+"</td><td>"+_this.mobile+(_this.mobile_up>0?"(+"+_this.mobile_up+")":"")+"</td><td>"+_this.back+(_this.back_up>0?"(+"+_this.back_up+")":"")+"</td><td>"+_this.scout+(_this.scout_up>0 ? "(+"+_this.scout_up+")":"")+"</td><td>"+_this.hide+(_this.hide_up>0?"(+"+_this.hide_up+")":"")+"</td><td>"+_this.rangeName+"</td><td>"+_this.loyalties+"</td><td>"+(_this.inBattle ? _this.battleFatigue : _this.vfatigue)+"</td><td>"+_this.equipSlot+"</td><td>"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id1, 'name'], '-')+(_this.equipSlot>1 ? "/"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id2, 'name'], '-') : "")+(_this.equipSlot>2 ? "/"+_.get(store.state, ['equip', 'serial', _this.equip_serial_id3, 'name'], '-') : "")+"</td><td>"+['-','有','極'][_this.item_id]+"</td><td>"+_.get(store.state, ['equip', 'serial', _this.horse_serial_id, 'name'], '-')+"</td><td>"+_this.protectName+"</td><td>"+moment(_this.created_at).format('YYYY/MM/DD HH:mm:ss') + "</td></tr>"
           })
+          Swords+="</tbody>"+logTail;
           blob = new Blob([Swords], {
-            type: "text/plain;charset=utf-8"
+            type: "application/vnd.ms-excel"
           });
-          saveAs(blob, "TRHSwords" + (Date.now()) + ".csv");
+          saveAs(blob, "TRHSwords" + (Date.now()) + ".xls");
         }
       }
     }
@@ -227,43 +231,50 @@ define((require, exports, module) => {
     },
     methods: {
       removeLog (name) {
-        localforage.removeItem(`${name}`)
+        localforage.removeItem(`${name}`);
+        location.reload();
       },
       saveLog (name) {
+        let logHead = "<html><head><meta charset=\"UTF-8\"></head><body><table>"
+        let logTail = "</table></body></html>"
         if(name == 'ForgeLog') {
-          ForgeLog = "\"番号\",\"刀名\",\"木炭\",\"玉鋼\",\"冷却材\",\"砥石\",\"御札\",\"结束时间\""
+          ForgeLog =logHead+ "<thead><tr><th>番号</th><th>刀名</th><th>木炭</th><th>玉鋼</th><th>冷却材</th><th>砥石</th><th>御札</th><th>结束时间</th></tr></thead>"
+          ForgeLog+="<tbody>"
           _.forEach(_.get(store.state, ['log','forge']), function(_this) {
-            ForgeLog += "\n\"'" + (_this.sword_id ? _this.sword_id : '-') + "\",\"'" + (_this.sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.sword_id, 'name'], '-') : '空') + "\",\"'" + (_this.charcoal ? _this.charcoal : '-') + "\",\"'" + (_this.steel ? _this.steel : '-') + "\",\"'" + (_this.coolant ? _this.coolant : '-') + "\",\"'" + (_this.file ? _this.file : '-') + "\",\"'" + (_this.consumable_id ? _.get(TRHMasterData.getMasterData('Consumable'), [_this.consumable_id, 'name'], '-').replace('御札・', '') : '-') + "\",\"'" + (moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
+            ForgeLog += "<tr><td>" + (_this.sword_id ? _this.sword_id : '-') + "</td><td>" + (_this.sword_id ? _.get(TRHMasterData.getMasterData('Sword'), [_this.sword_id, 'name'], '-') : '空') + "</td><td>" + (_this.charcoal ? _this.charcoal : '-') + "</td><td>" + (_this.steel ? _this.steel : '-') + "</td><td>" + (_this.coolant ? _this.coolant : '-') + "</td><td>" + (_this.file ? _this.file : '-') + "</td><td>" + (_this.consumable_id ? _.get(TRHMasterData.getMasterData('Consumable'), [_this.consumable_id, 'name'], '-').replace('御札・', '') : '-') + "</td><td>" + (moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "</td></tr>"
           })
+          ForgeLog +="</tbody>"+logTail;
           blob = new Blob([ForgeLog], {
-            type: "text/plain;charset=utf-8"
+            type: "application/vnd.ms-excel"
           });
-          saveAs(blob, "TRHForge" + (Date.now()) + ".csv");
+          saveAs(blob, "TRHForge" + (Date.now()) + ".xls");
         }
         else if(name == 'BattleLog') {
-          BattleLog = "\"部隊\",\"掉落\",\"時代-地域\",\"階数\",\"戦闘地ID\",\"評価\",\"戦闘時点\""
+          BattleLog =logHead+ "<thead><tr><th>部隊</th><th>掉落</th><th>時代-地域</th><th>階数</th><th>戦闘地ID</th><th>評価</th><th>戦闘時点</th></tr></thead><tbody>"
           _.forEach(_.get(store.state, ['log','battle']), function(_this) {
             rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
-            BattleLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.get ? _this.get : '空') + "\",\"'" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "\",\"'" + (_this.layer_num ? _this.layer_num : '-') + "\",\"'" + (_this.square_id ? _this.square_id : '-') + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
+            BattleLog += "<tr><td>" + (_this.party_no ? _this.party_no : '-') + "</td><td>" + (_this.get ? _this.get : '空') + "</td><td>" + (_this.episode_id ? _this.episode_id : '-') + '-' + (_this.field_id ? _this.field_id : '-') + "</td><td>" + (_this.layer_num ? _this.layer_num : '-') + "</td><td>" + (_this.square_id ? _this.square_id : '-') + "</td><td>" + (rank_name) + "</td><td>" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "</td></tr>"
           })
+          BattleLog +="</tbody>"+logTail;
           blob = new Blob([BattleLog], {
-            type: "text/plain;charset=utf-8"
+            type: "application/vnd.ms-excel"
           });
-          saveAs(blob, "TRHBattle" + (Date.now()) + ".csv");
+          saveAs(blob, "TRHBattle" + (Date.now()) + ".xls");
         }
         else if(name == 'PracticeLog') {
-          PracticeLog = "\"部隊\",\"敵名\",\"敵LV\",\"評価\",\"戦闘時点\""
+          PracticeLog =logHead+ "<thead><tr><th>部隊</th><th>敵名</th><th>敵LV</th><th>評価</th><th>戦闘時点</th></tr></thead><tbody>"
           _.forEach(_.get(store.state, ['log','practice']), function(_this) {
             rank_name = ['0', '一騎', 'S', 'A', 'B', 'C', '敗北'][_this.rank] || ''
-            PracticeLog += "\n\"'" + (_this.party_no ? _this.party_no : '-') + "\",\"'" + (_this.enemy_name ? _this.enemy_name : '-') + "\",\"'" + "Lv." + (_this.enemy_level) + "\",\"'" + (rank_name) + "\",\"'" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "\""
+            PracticeLog += "<tr><td>" + (_this.party_no ? _this.party_no : '-') + "</td><td>" + (_this.enemy_name ? _this.enemy_name : '-') + "</td><td>" + "Lv." + (_this.enemy_level) + "</td><td>" + (rank_name) + "</td><td>" + (moment(_this.now).format('MM/DD HH:mm:ss')) + "</td></tr>"
           })
+          PracticeLog += "</tbody>"+logTail;
           blob = new Blob([PracticeLog], {
-            type: "text/plain;charset=utf-8"
+            type: "application/vnd.ms-excel"
           });
-          saveAs(blob, "TRHPractice" + (Date.now()) + ".csv");
+          saveAs(blob, "TRHPractice" + (Date.now()) + ".xls");
         }
         else if(name == 'DutyLog') {
-          DutyLog = "\"马当番\",\"畑当番\",\"手合\",\"结束时间\""
+          DutyLog =logHead+ "<thead><tr><th>马当番</th><th>畑当番</th><th>手合</th><th>结束时间</th></tr></thead><tbody>"
           _.forEach(_.get(store.state, ['log','duty']), function(_this) {
             let sword_name={
               horse_id1: '-',
@@ -281,12 +292,13 @@ define((require, exports, module) => {
                 }
               }
             })
-            DutyLog += "\n\"'" + sword_name.horse_id1 + "/" + sword_name.horse_id2 + "\",\"'"+ sword_name.field_id1 + "/" + sword_name.field_id2 + "\",\"'"+ sword_name.bout_id1 + "/" + sword_name.bout_id2 + "\",\"'"+(moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "\""
+            DutyLog += "<tr><td>" + sword_name.horse_id1 + "/" + sword_name.horse_id2 + "</td><td>"+ sword_name.field_id1 + "/" + sword_name.field_id2 + "</td><td>"+ sword_name.bout_id1 + "/" + sword_name.bout_id2 + "</td><td>"+(moment(_this.finished_at).format('MM/DD HH:mm:ss')) + "</td></tr>"
           })
+          DutyLog += "</tbody>"+logTail;
           blob = new Blob([DutyLog], {
-            type: "text/plain;charset=utf-8"
+            type: "application/vnd.ms-excel"
           });
-          saveAs(blob, "TRHDuty" + (Date.now()) + ".csv");
+          saveAs(blob, "TRHDuty" + (Date.now()) + ".xls");
         }
       }
     }

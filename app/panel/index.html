@@ -398,7 +398,7 @@
         </table>
       </div>
       <div class="title"><small>所持刀剣</small></div>
-      <div style="text-align: center;" @click="saveLog('Swords')">[导出表格]</div>
+      <div align="center"><button style="text-align: center;" @click="saveLog('Swords')">导出表格</button></div>
       <div class="data-table all-swords">
         <div class="option">
           <span class="switcher" :class="{active: !option.info}" @click="option.info = !option.info">信息</span>
@@ -463,7 +463,7 @@
                 <td v-if="option.equip">{{ sword.item_id | amulet-name}}</td>
                 <td v-if="option.equip">{{ sword.horse_serial_id | equip-serial-name }}</td>
                 <td v-if="option.info" v-text="sword.protectName"></td>
-                <td v-if="option.info">{{sword.created_at | MMDDhhmmss}}</td>
+                <td v-if="option.info">{{sword.created_at | YYYYMMDDhhmmss}}</td>
               </tr>
             </tbody>
           </table>
@@ -542,8 +542,10 @@
     <div>
       <div class="logo"></div>
       <div class="title" id="forge-log">· 锻刀記錄 ·</div>
-      <div style="text-align: right; float:left; width:50%;" @click="removeLog('ForgeLog')">[清除記録]</div>
-      <div style="text-align: left; float:left; width:50%;" @click="saveLog('ForgeLog')">[导出記録]</div>
+      <div align="center">
+        <button style="text-align: center" @click="removeLog('ForgeLog')">清除記録</button>
+        <button style="text-align: center" @click="saveLog('ForgeLog')">导出記録</button>
+      </div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -573,8 +575,10 @@
         </table>
       </div>
       <div class="title" id="battle-log">· 交戦記録 ·</div>
-      <div style="text-align: right; float:left; width:50%;" @click="removeLog('BattleLog')">[清除記録]</div>
-      <div style="text-align: left; float:left; width:50%;" @click="saveLog('BattleLog')">[导出記録]</div>
+      <div align="center">
+        <button style="text-align: center" @click="removeLog('BattleLog')">清除記録</button>
+        <button style="text-align: center" @click="saveLog('BattleLog')">导出記録</button>
+      </div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -604,8 +608,10 @@
         </table>
       </div>
       <div class="title" id="practice-log">· 演練記録 ·</div>
-      <div style="text-align: right; float:left; width:50%;" @click="removeLog('PracticeLog')">[清除記録]</div>
-      <div style="text-align: left; float:left; width:50%;" @click="saveLog('PracticeLog')">[导出記録]</div>
+      <div>
+        <button style="text-align: center" @click="removeLog('PracticeLog')">清除記録</button>
+        <button style="text-align: center" @click="saveLog('PracticeLog')">导出記録</button>
+      </div>
       <div class="data-table">
         <table style="max-width: 500px;">
           <thead>
@@ -629,8 +635,10 @@
         </table>
       </div>
       <div class="title" id="duty-log">· 内番記録 ·</div>
-      <div style="text-align: right; float:left; width:50%;" @click="removeLog('DutyLog')">[清除記録]</div>
-      <div style="text-align: left; float:left; width:50%;" @click="saveLog('DutyLog')">[导出記録]</div>
+      <div>
+        <button style="text-align: center" @click="removeLog('DutyLog')">清除記録</button>
+        <button style="text-align: center" @click="saveLog('DutyLog')">导出記録</button>
+      </div>
       <div class="data-table">
         <table style="max-width: 1000px">
           <thead>
