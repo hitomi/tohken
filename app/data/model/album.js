@@ -7,17 +7,20 @@ define((require, exports, module) => {
       letter: null,
       bgm_flg: null,
       new_flg: null,
+      flg_max: null,
       get name () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
       },
+      
       get all_img_flg () {
-        return this.image_flg==31 ? 1 : 0
+        return this.image_flg==flg_max ? 1 : 0
       },
+
       get work_img_flg () {
-        return this.image_flg>=16 ? 1 : 0
+        return parseInt(this.image_flg/16)%2 ? 1 : 0
       },
       get serious_img_flg () {
-        return (this.image_flg==15)||(this.image_flg==31) ? 1 : 0
+        return parseInt(this.image_flg/8)%2 ? 1 : 0
       }
     }
   }
