@@ -388,7 +388,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for='sw in album.serial' v-if="!sw.all_img_flg">
+            <tr v-for='sw in album.serial' v-if="!(sw.serious_img_flg & sw.work_img_flg)">
             <td>{{ sw.sword_id }}</td>
             <td>{{ sw.name }}</td>
             <td>{{ sw.serious_img_flg | not-flg }}</td>
