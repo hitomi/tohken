@@ -450,7 +450,10 @@ define((require, exports, module) => {
       let eventType = _.get(TRHMasterData.getMasterData('Event'), [content.postData.event_id*(-1), 'type'], 0)
       eventContent.episode_id = content.postData.event_id*(-1)
       eventContent.field_id = content.postData.event_field_id
-      eventContent.layer_num = content.postData.event_layer_id == 0 ? 1 : content.postData.event_layer_id
+      eventContent.layer_num = 1
+      if(content.postData.event_layer_id){
+        eventContent.layer_num = content.postData.event_layer_id
+      }
       if(eventType==6){
         eventContent.layer_num = content.select_event_layer_num
       }
