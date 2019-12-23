@@ -8,7 +8,10 @@ define((require, exports, module) => {
       field_id2: null,
       bout_id1: null,
       bout_id2: null,
-      isIntervalSet: false
+      isIntervalSet: false,
+      isNoticed: false,
+      left_time: '',
+      status: 2
     }
   }
 })

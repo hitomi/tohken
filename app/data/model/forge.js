@@ -10,7 +10,11 @@ define((require, exports, module) => {
       coolant: null,
       file: null,
       use_assist: null,
-      consumable_id: null
+      consumable_id: null,
+      isIntervalSet: false,
+      isNoticed: false,
+      left_time: '',
+      status: 2
     }
   }
 })

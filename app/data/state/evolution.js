@@ -14,10 +14,13 @@ define((require, exports, module) => {
         }
         else {
           updateData.back = {
-            serial_id: 0,
-            finished_at: 0,
-            isIntervalSet: false
+            
+              serial_id: null,
+              finished_at: null,
+              isIntervalSet: false
+            
           }
+          Vue.delete(state.back)
           mergeModel(state, updateData)
         }
       }

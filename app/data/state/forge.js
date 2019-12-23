@@ -13,6 +13,9 @@ define((require, exports, module) => {
         if (!state.slot[slotNo]) {
           Vue.set(state.slot, slotNo, defaultForgeModel())
         }
+        if(!updateData.sword_id){
+          updateData.sword_id='unknown'
+        }
         mergeModel(state.slot[slotNo], updateData)
       },
       clear (state) {

@@ -1,4 +1,5 @@
 define((require, exports, module) => {
+  let TRHMasterData = require('app/core/master')
   return () => {
     return {
       // filling: false,
@@ -44,6 +45,12 @@ define((require, exports, module) => {
         practice_win: null,
         conquest: null,
         conquest_success: null
+      },
+      get format_created_at(){
+        return new Date(this.created_at).toLocaleString()
+      },
+      get prev_exp(){
+        return _.get(TRHMasterData.getMasterData('UserLevel'), [this.level, 'exp'], 0)
       }
     }
   }

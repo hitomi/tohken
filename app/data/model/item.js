@@ -5,10 +5,13 @@ define((require, exports, module) => {
       consumable_id: null,
       num: null,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Consumable'), [this.consumable_id, 'name'], '暂未获取')
+        return _.get(TRHMasterData.getMasterData('Consumable'), [this.consumable_id, 'name'], '-')
       },
       get limitNum () {
-        return _.get(TRHMasterData.getMasterData('Consumable'), [this.consumable_id, 'limitNum'], '暂未获取')
+        return _.get(TRHMasterData.getMasterData('Consumable'), [this.consumable_id, 'limitNum'], '-')
+      },
+      get value () {
+        return _.get(TRHMasterData.getMasterData('Consumable'), [this.consumable_id, 'value'], 0)
       }
     }
   }

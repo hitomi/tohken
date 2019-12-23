@@ -2,8 +2,6 @@ define((require, exports, module) => {
   let TRHMasterData = require('app/core/master')
   return (store) => {
     store.subscribe((mutation, state) => {
-
-      
         if (mutation.type === 'battle/updateBattle' || mutation.type === 'battle/updatePracticeBattle') {
           let { updateData } = mutation.payload
           let resultParty = _(_.get(updateData, ['result', 'player', 'party', 'slot']))
@@ -76,11 +74,11 @@ define((require, exports, module) => {
               let sword = _.get(state, ['swords', 'serial', v.serial_id], {})
               let equipstring = ''
               if(v.equip[1]!=null)
-                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[1], 'name'], '-') + '] '
+                equipstring += "["+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[1], 'name'], '-') + '] '
               if(v.equip[2]!=null)
-                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[2], 'name'], '-') + '] '
+                equipstring += "["+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[2], 'name'], '-') + '] '
               if(v.equip[3]!=null)
-                equipstring += '['+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[3], 'name'], '-') + '] '
+                equipstring += "["+_.get(TRHMasterData.getMasterData('Equip'), [v.equip[3], 'name'], '-') + '] '
               return {
                 serial_id: v.serial_id,
                 name: sword.name,
@@ -90,6 +88,7 @@ define((require, exports, module) => {
             .values()
             .value()
           let swordName = _.get(TRHMasterData.getMasterData('Sword'), [getSwordId, 'name'], '无')
+          let iconpath = 'sword'
           if (getInstrumentId!=0){
             if(getSwordId!=0){
               swordName+=" & "+ _.get(TRHMasterData.getMasterData('Consumable'), [getInstrumentId, 'name'], '-')
@@ -111,6 +110,15 @@ define((require, exports, module) => {
               mvp: updateData.result.mvp,
               now: updateData.now
             })
+            if(state.sally.party_no>=1 && state.sally.party_no<=4){
+              store.commit('config/updateConfig',{
+                partySelected: state.sally.party_no
+              })
+            }else{
+              store.commit('config/updateConfig',{
+                partySelected: 1
+              })
+            }
           }
           if(mutation.type === 'battle/updatePracticeBattle'){
           store.commit('log/addPracticeLog', {
@@ -122,58 +130,61 @@ define((require, exports, module) => {
             rank: updateData.result.rank,
             mvp: updateData.result.mvp,
             now: updateData.now
-          })
-          }
+          })}
           let timeout = _.get(state, ['config', 'timeout'], 3)*1000
           if (timeout<3000){
             timeout = 3000
           }
-          if (state.config.hurt_notice == true) {
-            if (playerParty.length) {
-              if (swordName){
-                if (playerEquips.length)
-                store.dispatch('notice/addNotice', {
-                  title: `战斗报告`,
-                  message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
-                  context: `掉落：${swordName}！`,
-                  timeout: timeout,
-                  swordBaseId: getSwordId,
-                  icon: `static/sword/${getSwordId}.png`,
-                })
-                else
-                store.dispatch('notice/addNotice', {
-                  title: `战斗报告`,
-                  message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
-                  context: `掉落：${swordName}！`,
-                  timeout: timeout,
-                  swordBaseId: getSwordId,
-                  icon: `static/sword/${getSwordId}.png`,
-                })
-              }
-            }
-            else if (playerEquips.length) {
-              if (swordName)
+          if (state.config.hurt_notice === true) {
+          if (playerParty.length) {
+            if (swordName){
+              if (playerEquips.length){
               store.dispatch('notice/addNotice', {
-                title: `战斗报告`,
-                message: _.map(playerEquips, o => `[刀装破坏] ${o.name} - ${o.equips}`).join('<br>'),
+                title: `戦闘報告`,
+                message: _.map(playerEquips, o => `[刀装破壊] ${o.name} - ${o.equips}`).join('<br>')+'<br>'+_.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
                 context: `掉落：${swordName}！`,
+                renotify: true,
                 timeout: timeout,
                 swordBaseId: getSwordId,
-                icon: `static/sword/${getSwordId}.png`,
-              })
-            }
-            else if (getSwordId !== 0) {
+                icon: `static/${iconpath}/${getSwordId}.png`,
+              })}
+              else{
               store.dispatch('notice/addNotice', {
-                title: `战斗报告`,
-                message: '本场无受伤',
+                title: `戦闘報告`,
+                message: _.map(playerParty, o => `[${o.battleStatusText}] ${o.name} HP -${o.hp}`).join('<br>'),
                 context: `掉落：${swordName}！`,
+                renotify: true,
                 timeout: timeout,
                 swordBaseId: getSwordId,
-                icon: `static/sword/${getSwordId}.png`
-              })
+                icon: `static/${iconpath}/${getSwordId}.png`,
+              })}
             }
           }
+          else if (playerEquips.length) {
+            if (swordName){
+            store.dispatch('notice/addNotice', {
+              title: `戦闘報告`,
+              message: _.map(playerEquips, o => `[刀装破壊] ${o.name} - ${o.equips}`).join('<br>'),
+              context: `掉落：${swordName}！`,
+              renotify: true,
+              timeout: timeout,
+              swordBaseId: getSwordId,
+              icon: `static/${iconpath}/${getSwordId}.png`,
+            })}
+          }
+          else if (getSwordId !== 0) {
+            store.dispatch('notice/addNotice', {
+              title: `戦闘報告`,
+              message: '本场无受伤',
+              context: `掉落：${swordName}！`,
+              renotify: true,
+              timeout: timeout,
+              swordBaseId: getSwordId,
+              icon: `static/${iconpath}/${getSwordId}.png`
+            })
+          }
         }
+      }
     })
   }
 })

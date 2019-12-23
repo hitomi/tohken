@@ -3,7 +3,7 @@ define((require, exports, module) => {
   const TRHMasterData = require('app/core/master')
 
   exports.battleStatusText = Vue.filter('battle-status-text', function (statusId) {
-    return ['战斗', '軽傷', '中傷', '重傷', '破壞'][statusId]
+    return ['战斗', '轻伤', '中伤', '重伤', '破坏'][statusId]
   })
 
   exports.statusText = Vue.filter('status-text', function (statusId) {
@@ -23,11 +23,15 @@ define((require, exports, module) => {
   })
 
   exports.equipNameFormat = Vue.filter('equip-name-format', (name) => {
-    return name.replace('兵', '').replace('特上', '特')
+    return name.replace('兵', '').split('･')[0]
   })
 
   exports.fatigueBuff = Vue.filter('fatigue-buff', function (fatigueFlag) {
-    return '(' + ['-40%', '-20%', '+0%', '+20%'][fatigueFlag] + ')'
+    return ['-40%', '-20%', '+0%', '+20%'][fatigueFlag]
+  })
+
+  exports.fatigueBuffNum = Vue.filter('fatigue-buff-num', function (fatigueFlag) {
+    return [0.6, 0.8, 1, 1.2][fatigueFlag]
   })
 
   exports.swordPattern = Vue.filter('sword-pattern', function (swordId) {
@@ -63,15 +67,15 @@ define((require, exports, module) => {
       'locked',
       'normal',
       'conquest',
-      'inBattle'
+      'sally'
     ][status] || ''
   })
 
   exports.amuletName = Vue.filter('amulet-name', (itemId) => {
     return [
     '-',
-    '守',
-    '极守'
+    '有',
+    '極'
     ][itemId] || ''
   })
 
@@ -113,29 +117,29 @@ define((require, exports, module) => {
   exports.rankName = Vue.filter('rank-name', (rank) => {
     return [
       '0',
-      '一騎',
+      '一骑S',
       'S',
       'A',
       'B',
       'C',
-      '敗北'
-    ][rank] || ''
+      '败北'
+    ][rank] || '0'
   })
 
   exports.formationName = Vue.filter('formation-name', (formationId) => {
     return {
       0: '不明',
-      1: '魚鱗陣',
-      2: '鶴翼陣',
-      3: '方陣',
-      4: '横隊陣',
-      5: '雁行陣',
-      6: '逆行陣'
-    }[formationId] || ''
+      1: '鱼鳞',
+      2: '鹤翼',
+      3: '方阵',
+      4: '横队',
+      5: '雁行',
+      6: '逆行'
+    }[formationId] || '未知'
   })
 
   exports.swordName = Vue.filter('sword-name', (swordId) => {
-    return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'name'], '-') : '空'
+    return swordId ? _.get(TRHMasterData.getMasterData('Sword'), [swordId, 'name'], '未知') : '空'
   })
 
   exports.swordHp = Vue.filter('sword-hp', (swordId) => {
@@ -148,6 +152,10 @@ define((require, exports, module) => {
 
   exports.swordSerialName = Vue.filter('sword-serial-name', (serialId) => {
     return _.get(store.state, ['swords', 'serial', serialId, 'name'], '-')
+  })
+
+  exports.swordSerialId = Vue.filter('sword-serial-swordid', (serialId) => {
+    return _.get(store.state, ['swords', 'serial', serialId, 'sword_id'], 0)
   })
 
   exports.equipSerialName = Vue.filter('equip-serial-name', (serialId) => {
@@ -166,4 +174,41 @@ define((require, exports, module) => {
     let name = _.get(TRHMasterData.getMasterData('Consumable'), [ConsumableId, 'name'], '-')
     return name.replace('御札・', '')
   })
+
+  exports.realMobile = Vue.filter('real-mobile', (serialId) => {
+    let mobile = 0
+    let sword_mobile = _.get(store.state, ['swords', 'serial', serialId, 'mobile'], 0)
+    mobile+=sword_mobile
+    let equips = _.get(store.state, ['swords', 'serial', serialId, 'equips'], [])
+    _.each(equips, equipSerialId=>{
+      let equip_mobile = 0
+      equip_mobile = _.get(store.state, ['equip', 'serial', equipSerialId, 'mobile'], 0)
+      mobile+=equip_mobile
+    })
+    let level = _.get(store.state, ['swords', 'serial', serialId, 'level'], 0)
+    let fatigue_flag = _.get(store.state, ['swords', 'serial', serialId, 'fatigueFlag'], 0)
+    let fatigue_buff = [0.6, 0.8, 1, 1.2][fatigue_flag]
+    return Math.floor(mobile*(level*0.039+1.03)*fatigue_buff)
+  })
+
+  exports.realMobileHorse = Vue.filter('real-mobile-horse', (serialId) => {
+    let mobile = 0
+    let sword_mobile = _.get(store.state, ['swords', 'serial', serialId, 'mobile'], 0)
+    mobile+=sword_mobile
+    let equips = _.get(store.state, ['swords', 'serial', serialId, 'equips'], [])
+    _.each(equips, equipSerialId=>{
+      let equip_mobile = _.get(store.state, ['equip', 'serial', equipSerialId, 'mobile'], 0)
+      mobile+=equip_mobile
+    })
+    let horse_mobile = 0
+    let horse_serial_id = _.get(store.state, ['swords', 'serial', serialId, 'horse_serial_id'], 0)
+    horse_mobile = _.get(store.state, ['equip', 'serial', horse_serial_id, 'mobile'], 0)
+    mobile+=horse_mobile
+    let level = _.get(store.state, ['swords', 'serial', serialId, 'level'], 0)
+    let fatigue_flag = _.get(store.state, ['swords', 'serial', serialId, 'fatigueFlag'], 0)
+    let fatigue_buff = [0.6, 0.8, 1, 1.2][fatigue_flag]
+    return Math.floor(mobile*(level*0.039+1.03)*fatigue_buff)
+  })
+
+  
 })

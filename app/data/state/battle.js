@@ -28,6 +28,7 @@ define((require, exports, module) => {
       },
       clearBattleEnemy (state) {
         state.enemy = defaultBattleEnemyModel()
+        state.result = defaultBattleResultModel()
       },
       updateBattleScout (state, payload) {
         let { updateData } = payload

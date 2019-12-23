@@ -42,7 +42,7 @@ define((require, exports, module) => {
       inBattle: false,
       isEnemy: false,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '-') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
       },
       get baseId () {
         return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'baseId'], 0)
@@ -78,8 +78,8 @@ define((require, exports, module) => {
       },
       get fatigueFlag () {
         let fatigue = this.vfatigue
-        if (this.inBattle){
-          fatigue = this.battleFatigue
+        if (this.inBattle && this.battleFatigue != null) {
+          fatigue = Math.min(10 + this.vfatigue, TRH.FATIGUE.VALUE.MAX)
         }
         if (fatigue <= TRH.FATIGUE.VALUE.VERY_TIERD) {
           return 0
@@ -97,6 +97,10 @@ define((require, exports, module) => {
       get nextExp () {
         let expMaster = TRHMasterData.getMasterData('SwordLevel')[this.shareWord]
         return Math.max(expMaster[Math.min(this.level + 1, 99)] - this.exp, 0)
+      },
+      get totalExp () {
+        let expMaster = TRHMasterData.getMasterData('SwordLevel')[this.shareWord]
+        return Math.max(expMaster[99] - this.exp, 0)
       },
       get hana () {
         return '❀'.repeat(this.rarity)
@@ -121,7 +125,7 @@ define((require, exports, module) => {
       },
       get evoName () {
         if(this.symbol==0)
-          return '普通'
+          return '普'
         if(this.symbol==2)
           return '極'
         if(this.symbol==1){

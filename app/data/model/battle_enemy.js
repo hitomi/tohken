@@ -44,7 +44,7 @@ define((require, exports, module) => {
           get scout_sword_id () {
             if(this.sword_id!=null)
               return this.sword_id
-            else return enemy[1]
+            else return 1//enemy[1]
           }
         },
         2: {

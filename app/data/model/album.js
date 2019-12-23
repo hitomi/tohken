@@ -9,11 +9,11 @@ define((require, exports, module) => {
       new_flg: null,
       flg_max: null,
       get name () {
-        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '暂未获取') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
+        return _.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'name'], '-') + (_.get(TRHMasterData.getMasterData('Sword'), [this.sword_id, 'symbol'], 0) === 2 ? '·極' : '')
       },
       
       get all_img_flg () {
-        return this.image_flg==flg_max ? 1 : 0
+        return this.image_flg==this.flg_max ? 1 : 0
       },
 
       get work_img_flg () {

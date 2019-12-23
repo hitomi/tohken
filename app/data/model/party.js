@@ -7,9 +7,10 @@ define((require, exports, module) => {
       finished_at: null,
       totalLevel: null,
       averageLevel: null,
-      inBattle: false,
+      inBattle: null,
       isIntervalSet: false,
       isNoticed: false,
+      left_time: '',
       slot: {
         1: {
           serial_id: null,

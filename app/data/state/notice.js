@@ -20,11 +20,11 @@ define((require, exports, module) => {
           payload._id = ++context.state.count
         }
         context.commit('updateNotice', _.extend({ hidden: false }, payload))
-        if (!payload.disableAutoClose) {
+        /*if (!payload.disableAutoClose) {
           setTimeout(() => {
             context.commit('updateNotice', _.extend(payload, { hidden: true }))
           }, payload.timeout || context.state.timeout)
-        }
+        }*/
       }
     }
   }

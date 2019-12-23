@@ -2,101 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TRH Final</title>
+  <title>TRH Kyoku</title>
   <link rel="stylesheet" href="../../static/style/normalize.css">
   <link rel="stylesheet" href="../../static/style/appmain.css">
 </head>
 <body>
   <div id="app">
-    <debug-tools v-if="config.debug_mode || debug.config.localMode"></debug-tools>
-    <div class="top-nav">
-      <resource-panel></resource-panel>
-      <div class="switch-tab">
-        <router-link class="main-menu" to="/party">
-          <div class="menu-cover">
-            部隊
-          </div>
-          <div class="menu-inner party" v-for='i in 4' :key="i" :data-party="i" @click="scroll('party-' + i)" :class="party.parties[i].status | party-status">
-            第{{ i }}部隊<br>
-            <small v-if="party.parties[i]">
-              A.<span>{{ party.parties[i].averageLevel }}</span> / T.<span>{{ party.parties[i].totalLevel }}</span>
-            </small>
-            <small v-else>暂未获取</small>
-          </div>
-        </router-link>
-        <router-link class="main-menu" to="/enemy">
-          <div class="menu-cover">
-            敵情報
-          </div>
-          <div class="menu-inner" @click="scroll('battle')">
-            戦闘
-          </div>
-          <div class="menu-inner" @click="scroll('practice')">
-            演練
-          </div>
-        </router-link>
-        <router-link class="main-menu" to="/other">
-          <div class="menu-cover">
-            本丸
-          </div>
-          <div class="menu-inner" @click="scroll('equip')">
-            刀装&amp;馬
-          </div>
-          <div class="menu-inner" @click="scroll('forge')">
-            锻刀&amp;手入
-          </div>
-          <div class="menu-inner" @click="scroll('all-swords')">
-            刀帳
-          </div>
-          <div class="menu-inner" @click="scroll('duty')">
-            内番&amp;修行
-          </div>
-          <div class="menu-inner" @click="scroll('item')">
-            所持道具
-          </div>
-          <!--<div class="menu-inner" @click="scroll('enemy-list')">
-            敵数値一覧
-          </div>-->
-        </router-link>
-        <router-link class="main-menu" to="/extra">
-          <div class="menu-cover">
-            記錄
-          </div>
-          <div class="menu-inner" @click="scroll('forge-log')">
-            锻刀記錄
-          </div>
-          <div class="menu-inner" @click="scroll('battle-log')">
-            交戦記録
-          </div>
-          <div class="menu-inner" @click="scroll('practice-log')">
-            演練記録
-          </div>
-          <div class="menu-inner" @click="scroll('duty-log')">
-            内番記録
-          </div>
-        </router-link>
-        <router-link class="main-menu" to="/setting">
-          <div class="menu-cover">
-            設定
-          </div>
-          <div class="menu-inner" @click="scroll('setSecretary')">
-            設定
-          </div>
-          <div class="menu-inner" @click="scroll('about')">
-            关于
-          </div>
-        </router-link>
+    <!--<debug-tools></debug-tools>-->
+    <div class="sidebar">
+      <!-- Player Info -->
+      <player></player>
+      <!-- Activity -->
+      <activity></activity>
+      
+    </div>
+    <div class="main-content">
+      <div class="party-buttons">
+        <div v-for="i in 4" :key="i" class="party-button hover" :class="config.partySelected==i ? 'selected':'' + party.parties[i].status==2 ? ' conquest':''" @click="config.partySelected=i">{{i}}</div>
+      </div>
+      <div>
+        <div v-if="config.partySelected==2">
+          <party-list party-no='2'></party-list>
+        </div>
+        <div v-else-if="config.partySelected==3">
+          <party-list party-no='3'></party-list>
+        </div>
+        <div v-else-if="config.partySelected==4">
+          <party-list party-no='4'></party-list>
+        </div>
+        <div v-else-if="config.partySelected==1">
+          <party-list party-no='1'></party-list>
+        </div>
+        <div v-else>
+          <party-list party-no='1'></party-list>
+        </div>
       </div>
     </div>
-    <div class="view-content">
-      <router-view name="party-list-wrapper"></router-view>
-      <!-- Default -->
-      <router-view></router-view>
-    </div>
-    <!-- {{ dataLoaded }} -->
-    <notice-content></notice-content>
-    <div class="check-data" v-if="!_.every(dataLoaded) || _.isEmpty(swords.serial)">
-      <div class="check-title">婶婶忙 · 初始化</div>
+    <div class="check-data" v-if="(!_.every(dataLoaded)) || _.isEmpty(swords.serial)">
+      <div class="check-title">婶婶忙 · 初期化</div>
       <div class="check-item">
         <div class="check-item-title">
           <span v-if="_.every(dataLoaded)">[已取得]</span>
@@ -116,563 +59,291 @@
     </div>
   </div>
 
-  <!-- Notice template -->
-  <script id="notice-template" type="text/template">
-    <div id="notice">
-      <transition-group name="notice-block-list" tag="div">
-        <div class="notice-block" v-for="n in notice.history" v-if="!n.hidden" :key="n._id" @click="close(n)">
-          <div class="notice-image">
-            <img :src="n.swordBaseId | sword-pattern" alt="空">
-          </div>
-          <div class="notice-content">
-            <div class="notice-title" v-html="n.title"></div>
-            <div class="notice-message" v-html="n.message"></div>
-            <div class="notice-context" v-html="n.context"></div>
-          </div>
+  <script id="player" type="text/template">
+    <div class="player">
+      <div class="player-level hover" :style="{'filter': config.info_hide.user_level ? 'blur(5px)' : null}" @click="config.info_hide.user_level=!config.info_hide.user_level">
+        <div class="player-level-text">Lv.&nbsp{{player.level || 0}}</div>
+        <div class="player-level-box">
+          <div class="player-level-bar" :style="[{'height': 4+'px'},{'width': ((player.exp-player.prev_exp)/(player.next_exp-player.prev_exp))*100+'%'}]"></div>
         </div>
-      </transition-group>
+        <div class="player-exp-next"> next {{player.next_exp-player.exp}}</div>
+      </div>
+      <div class="player-name hover" :style="{'filter': config.info_hide.user_name ? 'blur(5px)' : null}" @click="config.info_hide.user_name=!config.info_hide.user_name">{{player.name || '-'}}</div>
+      <div class="player-created-at hover" :style="{'filter': config.info_hide.created_at ? 'blur(5px)' : null}" @click="config.info_hide.created_at=!config.info_hide.created_at">已就任 {{parseInt((Date.now() - player.created_at)/86400000) ||'-'}} 日</div>
     </div>
   </script>
-
-  <!-- Component Resouce Panel -->
-  <script id="resource-panel" type="text/template">
-    <div class="resource">
-      <ul>
-        <li>
-          <div class="k">审神者</div>
-          <div class="v">{{ player.name || '' }}  <small>(Lv.{{ player.level || '-' }})</small></div>
-        </li>
-      </ul>
-      <ul class="fr">
-        <li><div class="k">木炭</div><div class="v">{{ resource.charcoal || '-' }}</div></li>
-        <li><div class="k">玉鋼</div><div class="v">{{ resource.steel || '-' }}</div></li>
-        <li><div class="k">冷却</div><div class="v">{{ resource.coolant || '-' }}</div></li>
-        <li><div class="k">砥石</div><div class="v">{{ resource.file || '-' }}</div></li>
-        <li><div class="k">依頼</div><div class="v">{{ resource.bill || '-' }}</div></li>
-        <li><div class="k">手伝</div><div class="v">{{ (item.consumable["8"] && item.consumable["8"]["num"]) || '-' }}</div></li>
-        <li><div class="k">小判</div><div class="v">{{ resource.money || '-'}}</div></li>
-      </ul>
-    </div>
-  </script>
-
-  <!-- Component Party List -->
-  <script id="party-list" type="text/template">
-    <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
-      <div class="party-info">
-        <div class="party-name">{{ party.party_name }} <small v-if="party.status == 2">[远征][{{ party.finished_at | hhmmss }}]</small><small v-if="party.status == 3">[出陣]</small><small v-if="party.status > 3">[{{ party.status | party-status }}]</small></div>
-        <div class="party-level">
-          A.<span>{{ party.averageLevel }}</span> / T.<span>{{ party.totalLevel }}</span>
+  <script id="activity">
+      <div class="activity">
+        <div class="activity-tabs">
+          <router-link class="activity-tab hover" to='/basic'>本丸</router-link>
+          <router-link class="activity-tab hover" to='/battle'>战斗</router-link>
+          <router-link class="activity-tab hover" to='/changes'>其他</router-link>
+        </div>
+        <div class="activity-content">
+          <!--<router-view path="/basic"></router-view>-->
+          <!-- Default -->
+          <router-view></router-view>
         </div>
       </div>
-      <sword-item v-for="sword in party.slot" :sword-serial-id="sword.serial_id" :key="sword.serial_id"></sword-item>
-    </div>
   </script>
 
-  <!-- Component Sword Item -->
-  <script id="sword-item" type="text/template">
-    <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname">
-      <img :src="sword.sword_id | sword-pattern" alt="空" class="pattern">
-      <div class="info">
-        <div class="name">{{ sword.name }}<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span></div>
-        <div class="hp">HP <span>{{ sword.hp }} / {{ sword.hp_max }}</span><span v-if="!sword.inBattle && sword.status == 1" style="color:blue;">[{{ sword.status | status-text }}]</span></div>
-        <div class="level">Lv.{{ sword.level }}<small>(next {{ sword.nextExp }})</small></div>
-        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{ sword.fatigueFlag | fatigue-text }} {{ sword.battleFatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>
-        <div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-else>{{ sword.fatigueFlag | fatigue-text }} {{ sword.vfatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>
-        <div class="horse">{{ sword.horse_serial_id | equip-serial-name }}</div>
-        <div class="equip">
-          <ul>
-            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :in-battle="sword.inBattle" :key="equip"></equip-item>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="touken-info" v-else-if="!swordSerialId">
-      <img src="../../static/sword/0.png" alt="空" class="pattern">
-      <div class="info"><div class="name">暂无队员</div></div>
-    </div>
-    <div class="touken-info danger" v-else>
-      <img src="../../static/sword/0.png" alt="空" class="pattern">
-      <div class="info"><div class="name">数据错误</div></div>
-    </div>
-  </script>
-
-  <!-- Component Equip Item -->
-  <script id="equip-item" type="text/template">
-    <li v-if="equip === null">空</li>
-    <li v-else-if="equip.serial_id" :class="equip.hp === 0 ? 0 : equip.level | equip-level-cname">{{ equip.name | equip-name-format }} [{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}]</li>
-    <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
-    <li v-else>数据错误</li>
-  </script>
-
-  <!-- Component Forge Item -->
-  <script id="forge-item" type="text/template">
-    <div>{{ forge.slot_no }}: <span>{{ forge.sword_id | sword-name }}</span><span>[{{ forge.finished_at | hhmmss }}]</span></div>
-  </script>
-
-  <!-- Component Repair Item -->
-  <script id="repair-item" type="text/template">
-    <div>{{ repair.slot_no }}: <span>{{ repair.sword_serial_id | sword-serial-name }}</span><span>[{{ repair.finished_at | MMDDhhmmss }}]</span></div>
-  </script>
-
-  <script id="enemy" type='text/template'>
+  <script id="basic">
     <div>
-      <div class="logo"></div>
-      <div class="title" id="battle">· 戦闘 ·</div>
-      <div class="party-info">
-      <div>出阵地图：{{sally.episode_id || '-'}}-{{sally.field_id || '-'}}</div>
-      <img v-if="sally.episode_id && sally.field_id && sally.layer_num" :src="sally.episode_id + '_' + sally.field_id + '_' + sally.layer_num | map-pattern" alt="空" class="mapPattern">
-      <div class="map-info">
-        <div style="float:left; width:50%;">层数：{{sally.layer_num || '-'}}</div>
-        <div v-if="sally.category===3" style="float:left; width:50%;">战斗点ID：<span style="color: red;">{{sally.square_id || '-'}}(Boss)</span></div>
-        <div v-else style="float:left; width:50%;">战斗点ID：{{sally.square_id || '-'}}</div>
+      <div class="resource">
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="木炭"><img src="src=../../../../static/resource/charcoal.png" class="resource-icon" alt="木炭"></span><span class="resource-text">{{resource.charcoal}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="玉钢"><img src="src=../../../../static/resource/steel.png" class="resource-icon" alt="玉钢"></span><span class="resource-text">{{resource.steel}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="冷却材"><img src="src=../../../../static/resource/coolant.png" class="resource-icon" alt="冷却材"></span><span class="resource-text">{{resource.coolant}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="砥石"><img src="src=../../../../static/resource/file.png" class="resource-icon" alt="砥石"></span><span class="resource-text">{{resource.file}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="依赖札"><img src="src=../../../../static/resource/bill.png" class="resource-icon" alt="依赖札"></span><span class="resource-text">{{resource.bill}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="手伝い札"><img src="src=../../../../static/resource/item_8.png" class="resource-icon" alt="手伝い札"></span><span class="resource-text">{{item.consumable["8"] && item.consumable["8"]["num"]}}</span></div>
+        <div class="resource-element"><span class="fake-title" style="float:left;" data-msg="小判"><img src="src=../../../../static/resource/money.png" class="resource-icon" alt="小判"></span><span class="resource-text fake-title" :data-msg="'全部开箱：'+(resource.money+item.consumable['13']['num']*item.consumable['13']['value']+item.consumable['14']['num']*item.consumable['14']['value']+item.consumable['15']['num']*item.consumable['15']['value'])">{{resource.money}}</span></div>
       </div>
-      <div class="party-name">敌方队伍：</div>
-      <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0">阵型：{{ battle_enemy.formation_id | formation-name }}</div>
-      <div v-else-if="battle_scout.enemy[0]!=null && battle_scout.enemy[0]!=0">阵型：{{ battle_scout.formation_id | formation-name }}</div>
-      <div v-if="battle_enemy.party[1].sword_id!=null && battle_enemy.party[1].sword_id!=0" class="party-list">
-        <div v-for="enemy_sword in battle_enemy.party" v-if="enemy_sword.sword_id!=null && enemy_sword.sword_id!=0">
-          <div class="touken-info" style="min-width: 474px;">
-            <img :src="enemy_sword.sword_id | enemy-sword-pattern" alt="空" class="enemyPattern">
-            <div class="info" style="left: 198px">
-              <div class="name" v-if="enemyList[enemy_sword.sword_id].mobile>=100" style="color:red;">{{ enemy_sword.sword_id | sword-name}}<small>({{enemy_sword.sword_id}})</small></div>
-              <div class="name" v-else>{{ enemy_sword.sword_id | sword-name}}<small>({{enemy_sword.sword_id}})</small></div>
-              <div class="hp">HP {{ enemy_sword.sword_id | sword-hp}}</div>
-              <div class="level"></div>
-              <div class="level"></div>
-              <div class="equip">
-                <ul>
-                  <li v-if="enemy_sword.equip_id1===null || enemy_sword.equip_id1===0">空</li>
-                  <li v-else :class="enemy_sword.equip_id1 | equip-level-name">{{ enemy_sword.equip_id1 | equip-name | equip-name-format}}</li>
-                </ul>
-                <ul>
-                  <li v-if="enemy_sword.equip_id2===null || enemy_sword.equip_id2===0">空</li>
-                  <li v-else :class="enemy_sword.equip_id2 | equip-level-name">{{ enemy_sword.equip_id2 | equip-name | equip-name-format}}</li>
-                </ul>
-                <ul>
-                  <li v-if="enemy_sword.equip_id3===null || enemy_sword.equip_id3===0">空</li>
-                  <li v-else :class="enemy_sword.equip_id3 | equip-level-name">{{ enemy_sword.equip_id3 | equip-name | equip-name-format}}</li>
-                </ul>
-              </div>
-            </div>
+    
+      <div class="conquest">
+        <conquest-item v-for="i in ['2','3','4']" :party-no="i"></conquest-item>
+      </div>
+      <div class="repair">
+        <div v-for="r in 4" :key='r'>
+          <div v-if="r<=player.repair_slot">
+            <repair-item v-if="repair.slot[r]" :slot-no="r"></repair-item><img src="../../../../static/sword/0.png" class="small-pattern repair-icon" v-else>
+          </div>
+          <div v-else>
+            <img src="../../../../static/sword/lock.png" class="small-pattern repair-icon">
           </div>
         </div>
       </div>
-      <div v-else-if="battle_scout.enemy[0]!=null && battle_scout.enemy[0]!=0" class="party-list">
-        <div v-for="enemy_sword_id in battle_scout.enemy" v-if="enemy_sword_id!=null && enemy_sword_id!=0">
-          <div class="touken-info" style="min-width: 474px;">
-            <img :src="enemy_sword_id | enemy-sword-pattern" alt="空" class="enemyPattern">
-            <div class="info" style="left: 198px">
-              <div class="name" v-if="enemyList[enemy_sword_id].mobile>=100" style="color:red;">{{ enemy_sword_id | sword-name}}<small>({{enemy_sword_id}})</small></div>
-              <div class="name" v-else>{{ enemy_sword_id | sword-name}}<small>({{enemy_sword_id}})</small></div>
-              <div class="hp">HP {{ enemy_sword_id | sword-hp}}</div>
-            </div>
+      <div class="forge">
+        <div v-for="f in 4" :key='f'>
+          <div v-if="f<=player.forge_slot">
+            <forge-item v-if="forge.slot[f]" :slot-no="f"></forge-item><img src="../../../../static/sword/0.png" class="small-pattern forge-icon" v-else>
+          </div>
+          <div v-else>
+            <img src="../../../../static/sword/lock.png" class="small-pattern forge-icon">
           </div>
         </div>
       </div>
-      </div>
-      <div class="title" id="practice">· 演練 ·</div>
-      <div v-if="practice_enemy_party != null" v-for="enemy_sword in practice_enemy_party.slot" class="party-list">
-        <div v-if="enemy_sword.serial_id" class="touken-info">
-          <img :src="practice_enemy_sword[enemy_sword.serial_id].sword_id | sword-pattern" alt="空" class="pattern">
-          <div class="info">
-            <div class="name">{{ practice_enemy_sword[enemy_sword.serial_id].name }}</div>
-            <div class="level">Lv.{{ practice_enemy_sword[enemy_sword.serial_id].level }}</div>
-            <div class="fatigue" :class="practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-cname">{{ practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-text }} {{practice_enemy_sword[enemy_sword.serial_id].vfatigue}} <small>{{ practice_enemy_sword[enemy_sword.serial_id].fatigueFlag | fatigue-buff }}</small></div>
-            <div class="horse">{{ practice_enemy_sword[enemy_sword.serial_id].horse_serial_id | practice-enemy-equip-serial-name }}</div>
-            <div class="equip">
-              <ul v-for="equip in practice_enemy_sword[enemy_sword.serial_id].equips">
-                <li v-if="equip === null || equip === 0">空</li>
-                <li v-else-if="practice_enemy_equip[equip].serial_id" :class="practice_enemy_equip[equip].level | equip-level-cname">{{ practice_enemy_equip[equip].name | equip-name-format }} </li>
-                <li v-else>数据错误</li>
-              </ul>
-            </div>
+      <div class="duty">
+        <div>
+          <div>
+            <span class="fake-title" :data-msg="duty.horse_id1 | sword-serial-name"><img :src="duty.horse_id1 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #7e8a9e;"></span>
+            <span class="fake-title" :data-msg="duty.field_id1 | sword-serial-name"><img :src="duty.field_id1 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #899e7e;"></span>
+            <span class="fake-title" :data-msg="duty.bout_id1 | sword-serial-name"><img :src=" duty.bout_id1 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #9e7e7e;"></span>
+          </div>
+          <div>
+            <span class="fake-title" :data-msg="duty.horse_id2 | sword-serial-name"><img :src=" duty.horse_id2 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #7e8a9e;"></span>
+            <span class="fake-title" :data-msg="duty.field_id2 | sword-serial-name"><img :src=" duty.field_id2 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #899e7e;"></span>
+            <span class="fake-title" :data-msg="duty.bout_id2 | sword-serial-name"><img :src=" duty.bout_id2 | sword-serial-swordid | sword-pattern" class="small-pattern duty-icon" style="border: 1px solid #9e7e7e;"></span>
           </div>
         </div>
-        <!--{{practice_enemy_sword[enemy_sword.serial_id].name}}-->
-        <div class="touken-info" v-else-if="enemy_sword.serial_id === null || enemy_sword.serial_id === 0">
-          <img src="../../static/sword/0.png" alt="空" class="pattern">
-          <div class="info"><div class="name">暂无队员</div></div>
+        
+        <div><span v-if="duty.status==2" class="fake-title" :data-msg="duty.finished_at | hhmmss">{{duty.left_time}}</span><span v-else> --:--:-- </span></div>
+      </div>
+      <div class="evolution">
+        <div class="fake-title" :data-msg="evolution.back.serial_id | sword-serial-name">
+          <img :src="evolution.back.serial_id | sword-serial-swordid | sword-pattern" class="medium-pattern" style="border: 1px solid #947e9e;">
         </div>
-        <div class="touken-info danger" v-else>
-          <img src="../../static/sword/0.png" alt="空" class="pattern">
-          <div class="info"><div class="name">数据错误</div></div>
-        </div>
+        <div v-if="evolution.back.finished_at"><span v-if="evolution.back.finished_at>=Date.now()">{{evolution.back.finished_at | MMDDhhmmss}}</span><span v-else>已完成</span></div>
+        <div v-else> --/-- <br> --:--:-- </div>
       </div>
     </div>
   </script>
 
-  <script id="other" type="text/template">
-    <div class="info-page">
-      <div class="logo"></div>
-      <div class="title" id="equip">· 刀装一覧 ·</div>
-      <div class="data-table">
-        <table>
-          <thead>
-            <tr>
-              <th>分類</th>
-              <th title="兵力">兵</th>
-              <th title="打撃">打</th>
-              <th title="統率">統</th>
-              <th title="機動">機</th>
-              <th title="衝力">衝</th>
-              <th title="偵察">偵</th>
-              <th title="隠蔽">隠</th>
-              <th>持有数</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="eq in equipList.equip">
-              <td>{{ eq.name }}</td>
-              <td>{{ eq.soldier || '-' }}</td>
-              <td>{{ eq.atk || '-' }}</td>
-              <td>{{ eq.def || '-' }}</td>
-              <td>{{ eq.mobility || '-' }}</td>
-              <td>{{ eq.back || '-' }}</td>
-              <td>{{ eq.scout || '-' }}</td>
-              <td>{{ eq.hide || '-' }}</td>
-              <td>{{ eq.count || '-' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="title" id="horse">· 馬一覧 ·</div>
-      <div class="data-table">
-        <table>
-          <thead>
-            <tr>
-              <th>分類</th>
-              <th title="打撃">打</th>
-              <th title="統率">統</th>
-              <th title="機動">機</th>
-              <th title="衝力">衝</th>
-              <th title="偵察">偵</th>
-              <th title="隠蔽">隠</th>
-              <th>装備中</th>
-              <th>持有数</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="eq in equipList.horse">
-              <td>{{ eq.name.replace(/\d+/, '') }}</td>
-              <td>{{ eq.atk || '-' }}</td>
-              <td>{{ eq.def || '-' }}</td>
-              <td>{{ eq.mobility || '-' }}</td>
-              <td>{{ eq.back || '-' }}</td>
-              <td>{{ eq.scout || '-' }}</td>
-              <td>{{ eq.hide || '-' }}</td>
-              <td>{{ eq.owner || '-' }}</td>
-              <td>{{ eq.count || '-' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <script id="conquest-item" type="text/template">
+    <div class="conquest-item">
+      <div v-if="party.slot" class="fake-title" :data-msg="party.slot['1'].serial_id | sword-serial-name"><img :src="party.slot['1'].serial_id | sword-serial-swordid | sword-pattern" :alt="party.slot['1'].serial_id | sword-serial-swordid" class="medium-pattern" style="background-color: rgba(201,190,169,0.7);"></div>
+      <div v-if="party.status==2" class="fake-title" :data-msg="party.finished_at | hhmmss"><span v-if="party.isIntervalSet">{{party.left_time }}</span><span v-else>已完成</span></div>
+    </div>
+  </script>
 
-      <div class="title" id="forge">
-        · 锻刀室 ·
-        <forge-item v-for='f in forge.slot' :slot-no="f.slot_no" :key="f.slot_no"></forge-item>
+  <script id="repair-item" type="text/template">
+    <div v-if="repair.status==2"><span class="fake-title" :data-msg="repair.sword_serial_id | sword-serial-name"><img :src="repair.sword_serial_id | sword-serial-swordid | sword-pattern" class="small-pattern repair-icon"></span><span class="fake-title" :data-msg="repair.finished_at | hhmmss"><span v-if="repair.isIntervalSet">{{repair.left_time}}</span><span v-else>已完成</span></span></div>
+    <div v-else><img src="../../../../static/sword/0.png" class="small-pattern repair-icon"></div>
+  </script>
+
+  <script id="forge-item" type="text/template">
+    <div v-if="forge.status==2"><span class="fake-title" :data-msg="forge.sword_id | sword-name"><img :src="forge.sword_id | sword-pattern" class="small-pattern forge-icon" style="background-color: rgba(201,190,169,0.7);"></span><span class="fake-title" :data-msg="forge.finished_at | hhmmss"><span v-if="forge.isIntervalSet">{{forge.left_time}}</span><span v-else>已完成</span></span></div>
+    <div v-else><img src="../../../../static/sword/0.png" class="small-pattern forge-icon"></div>
+  </script>
+
+  <script id="battle" type="text/template">
+    <div>
+      <div class="sally-info">
+    出阵地图：{{sally.episode_id>=0 ? '':'e'}}{{sally.episode_id || '-'}}-{{sally.field_id || '-'}}
       </div>
-      <div class="title">
-        · 手入室 ·
-        <repair-item v-for='r in repair.slot' :slot-no="r.slot_no" :key="r.slot_no"></repair-item>
+      <div class="map-info">
+        <div style="float:left; width:50%;font-size:10px;">层数：{{sally.layer_num || '-'}}</div>
+        <div v-if="sally.category===3" style="float:left; width:50%;font-size:10px;">战斗点ID：<span style="color: red;">{{sally.square_id || '-'}}</span></div>
+        <div v-else style="float:left; width:50%;font-size:10px;">战斗点ID：{{sally.square_id || '-'}}</div>
+        <div style="float:left; width:50%;">
+          <div v-if="battle.enemy.party[1].sword_id!=null && battle.enemy.party[1].sword_id!=0" style="font-size:10px;">阵型：{{ battle.enemy.formation_id | formation-name }}</div>
+          <div v-else-if="battle.scout.enemy[0]!=null && battle.scout.enemy[0]!=0" style="font-size:10px;">阵型：{{ battle.scout.formation_id | formation-name }}</div>
+        </div>
+        <div style="float:left; width:50%;">
+          <div v-if="battle.result.rank!=null && battle.result.rank!=0" style="font-size:10px;">评价：{{ battle.result.rank | rank-name }}</div>
+        </div>
       </div>
-      <div class="title" id="all-swords">· 刀帳 ·</div>
-      <div class="title"><small>图鉴收集</small></div>
+      <div style="padding-left:8px;width=110px;height:200px;">
+        <div v-if="battle.enemy.party[1].sword_id!=null && battle.enemy.party[1].sword_id!=0">
+          <div v-for="enemy_sword in battle.enemy.party" v-if="enemy_sword.sword_id!=null && enemy_sword.sword_id!=0" style="margin:2px; width:100px;">
+            <div :class="enemy_sword.turn_end_hp<=0 ? 'dead' : ''" class="fake-title" :data-msg="enemy_sword.sword_id | sword-name">
+              <img :src="enemy_sword.sword_id | enemy-sword-pattern" :alt="enemy_sword.sword_id" class="enemyPattern" >
+            </div>
+            <div class="hpbox" style="height:4px;border-radius:4px;">
+              <div class="hpbar" :class="enemy_sword.turn_end_status | status-cname" :style="[{'height': 4+'px'},{'width': (enemy_sword.turn_end_hp)/(enemy_sword.hp_max)*100+'%'},{'border-radius':'4px'}]"></div>
+            </div>
+          </div>
+        </div>
+        <div v-else-if="battle.scout.enemy[0]!=null && battle.scout.enemy[0]!=0">
+          <div v-for="enemy_sword_id in battle.scout.enemy" v-if="enemy_sword_id!=null && enemy_sword_id!=0" class="fake-title" :data-msg="enemy_sword_id | sword-name" style="margin:2px; width:100px;">
+            <div class="fake-title" :data-msg="enemy_sword_id | sword-name">
+              <img :src="enemy_sword_id | enemy-sword-pattern" :alt="enemy_sword_id" class="enemyPattern">
+            </div>
+            <div class="hpbox" style="height:4px;border-radius:4px;">
+              <div class="hpbar" style="height:4px;width:100%;border-radius:4px;"></div>
+            </div>
+          </div>
+        </div>
+        <div v-else>无战斗信息</div>
+      </div>
+      <div style="padding-left:8px;width=110px;padding-top:8px;">
+        <div v-if="battle.result.get_sword_id" style="font-size:10px;">
+          掉落：<span class="fake-title" :data-msg="battle.result.get_sword_id | sword-name"><img :src="battle.result.get_sword_id | sword-pattern" :alt="battle.result.get_sword_id" class="small-pattern"></span>
+        </div>
+        <div v-else-if="battle.result.drop_reward.length>0" style="font-size:10px;">
+          掉落：<span class="fake-title" :data-msg="battle.result.drop_reward[0].item_id | item-name-format"><img :src="'item'+battle.result.drop_reward[0].item_id | sword-pattern" :alt="battle.result.drop_reward[0].item_id" class="small-pattern"></span>
+        </div>
+        <!--<div v-else style="font-size:10px;">
+          掉落：<span class="fake-title" data-msg="无"><img :src="'unknown' | sword-pattern" alt="无" class="small-pattern"></span>
+        </div>-->
+      </div>
+    </div>
+  </script>
+
+  <script id="changes" type="text/template">
+    <div v-if="config.activityShow=='default'">
+      <div style="text-align:center; padding:2px; font-size:10px; color:red;">当前版本中本模块为暂定状态<br>后续版本中显示可能会有变化</div>
+      <div class="title"><small>玩家设置</small></div>
+      <div class="setNotice" style="text-align:center;padding: 1px;">
+        <div>远征提醒： <config-switch attr="conquest_notice" /></div>
+        <div>内番提醒： <config-switch attr="duty_notice" /></div>
+        <div>锻刀提醒： <config-switch attr="forge_notice" /></div>
+        <div>手入提醒： <config-switch attr="repair_notice" /></div>
+        <div>修行提醒： <config-switch attr="evolution_notice" /></div>
+      </div>
+      <div class="title"><small>记录清除</small></div>
+      <div align="center"><button style="text-align: center" @click="removeLog()">清除内部记录</button></div>
+    </div>
+    <div v-else-if="config.activityShow=='album'">
+      <div class="title"><small>图鉴收集情况</small></div>
       <div class="data-table" v-if="album.serial">
         <table  v-if="album.serial">
           <thead>
             <tr>
               <th>番号</th>
-              <th>刀名</th>
-              <th>真剑未收</th>
-              <th>内番未收</th>
+              <th>刀剑</th>
+              <th>缺真剑</th>
+              <th>缺内番</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for='sw in album.serial' v-if="!(sw.serious_img_flg & sw.work_img_flg)">
             <td>{{ sw.sword_id }}</td>
-            <td>{{ sw.name }}</td>
+            <td class="fake-title" :data-msg="sw.name"><img :src="sw.sword_id | sword-pattern" class="small-pattern"></td>
             <td>{{ sw.serious_img_flg | not-flg }}</td>
             <td>{{ sw.work_img_flg | not-flg }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="title"><small>所持刀剣</small></div>
-      <div align="center"><button style="text-align: center;" @click="saveLog('Swords')">导出表格</button></div>
-      <div class="data-table all-swords">
-        <div class="option">
-          <span class="switcher" :class="{active: !option.info}" @click="option.info = !option.info">信息</span>
-          <span class="switcher" :class="{active: !option.value}" @click="option.value = !option.value">属性</span>
-          <span class="switcher" :class="{active: !option.equip}" @click="option.equip = !option.equip">装备</span>
-        </div>
-        <div class="container">
-          <table>
-            <thead>
-              <tr>
-                <th>番号</th>
-                <th>刀名</th>
-                <th v-if="option.info">稀有度</th>
-                <th v-if="option.info">種類</th>
-                <th v-if="option.info">刀派</th>
-                <th>等级</th>
-                <th>次级经验</th>
-                <th v-if="option.info">累计经验</th>
-                <th>阶数</th>
-                <th>生存</th>
-                <th v-if="option.value">打撃</th>
-                <th v-if="option.value">統率</th>
-                <th v-if="option.value">機動</th>
-                <th v-if="option.value">衝力</th>
-                <th v-if="option.value">偵察</th>
-                <th v-if="option.value">隠蔽</th>
-                <th v-if="option.value">範囲</th>
-                <th v-if="option.value">必殺</th>
-                <th>疲劳</th>
-                <th v-if="option.equip">刀装位</th>
-                <th v-if="option.equip">刀装</th>
-                <th v-if="option.equip">御守</th>
-                <th v-if="option.equip">马</th>
-                <th v-if="option.info">锁</th>
-                <th v-if="option.info">获取时间</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="sword in swords.serial" :key="sword.serial_id">
-                <td v-text="sword.sword_id"></td>
-                <td v-text="sword.name"></td>
-                <td v-if="option.info" v-text="sword.hana"></td>
-                <td v-if="option.info" v-text="sword.typeName"></td>
-                <td v-if="option.info" v-text="sword.styleName"></td>
-                <td v-text="sword.level"></td>
-                <td>{{sword.nextExp}}</td>
-                <td v-if="option.info">{{sword.exp}}</td>
-                <td v-text="sword.evoName"></td>
-                <td>{{sword.hp}} / {{sword.hp_max}} <em v-if="sword.hp_up > 0">(+{{sword.hp_up}})</em></td>
-                <td v-if="option.value">{{sword.atk}} <em v-if="sword.atk_up > 0">(+{{sword.atk_up}})</em></td>
-                <td v-if="option.value">{{sword.def}} <em v-if="sword.def_up > 0">(+{{sword.def_up}})</em></td>
-                <td v-if="option.value">{{sword.mobile}} <em v-if="sword.mobile_up > 0">(+{{sword.mobile_up}})</em></td>
-                <td v-if="option.value">{{sword.back}} <em v-if="sword.back_up > 0">(+{{sword.back_up}})</em></td>
-                <td v-if="option.value">{{sword.scout}} <em v-if="sword.scout_up > 0">(+{{sword.scout_up}})</em></td>
-                <td v-if="option.value">{{sword.hide}} <em v-if="sword.hide_up > 0">(+{{sword.hide_up}})</em></td>
-                <td v-if="option.value" v-text="sword.rangeName"></td>
-                <td v-if="option.value" v-text="sword.loyalties"></td>
-                <td v-if="sword.inBattle" v-text="sword.battleFatigue"></td>
-                <td v-else v-text="sword.vfatigue"></td>
-                <td v-if="option.equip" v-text="sword.equipSlot"></td>
-                <td v-if="option.equip">{{ sword.equips | all-equip-serial-name }}</td>
-                <td v-if="option.equip">{{ sword.item_id | amulet-name}}</td>
-                <td v-if="option.equip">{{ sword.horse_serial_id | equip-serial-name }}</td>
-                <td v-if="option.info" v-text="sword.protectName"></td>
-                <td v-if="option.info">{{sword.created_at | YYYYMMDDhhmmss}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="title" id="duty">· 内番 ·</div>
-      <div v-if="duty.finished_at != null" style="text-align:center;">结束时间：{{duty.finished_at | hhmmss}}</div>
-      <div class="title">· 修行 ·</div>
-      <div style="text-align:center;">
-        <div v-if="evolution.back.finished_at == null || evolution.back.finished_at == 0">修行数据为空。若您有正在修行的刀剑，请刷新游戏以获取数据</div>
-        <div v-else>
-          <div>修行刀剑：{{evolution.back.serial_id | sword-serial-name}}</div>
-          <div>归来时间：{{evolution.back.finished_at | MMDDhhmmss}}</div>
-        </div>
-      </div>
-      <div class="title" id="item">· 所持道具一覧 ·</div>
-      <div class="data-table">
-        <table>
-          <thead>
-            <tr>
-              <th>名称</th>
-              <th>持有数</th>
-              <th>持有上限</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="con in item.consumable" v-if="con.num">
-              <td>{{ con.name }}</td>
-              <td>{{ con.num || '-' }}</td>
-              <td>{{ con.limitNum || '-'}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!--<div class="title" id="enemy-list">· 敵数値一覧 ·</div>
-      <div class="data-table">
-        <table style="max-width: 500px;">
-          <thead>
-            <tr>
-              <th>番号</th>
-              <th>刀名</th>
-              <th>稀有度</th>
-              <th>生存</th>
-              <th>打撃</th>
-              <th>統率</th>
-              <th>機動</th>
-              <th>衝力</th>
-              <th>偵察</th>
-              <th>隠蔽</th>
-              <th>必殺</th>
-              <th>備考</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="sword in enemyList" :key="sword.swordId" v-if="sword.swordId>=100000">
-              <td>{{sword.swordId}}</td>
-              <td>{{sword.name}}</td>
-              <td>{{sword.rarity}}</td>
-              <td>{{sword.hp}}</td>
-              <td>{{sword.atk}}</td>
-              <td>{{sword.def}}</td>
-              <td>{{sword.mobile}}</td>
-              <td>{{sword.back}}</td>
-              <td>{{sword.scout}}</td>
-              <td>{{sword.hide}}</td>
-              <td>{{sword.loyalties}}</td>
-              <td>{{sword.alias}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>-->
     </div>
   </script>
 
-  <script id="extra" type="text/template">
-    <div>
-      <div class="logo"></div>
-      <div class="title" id="forge-log">· 锻刀記錄 ·</div>
-      <div align="center">
-        <button style="text-align: center" @click="removeLog('ForgeLog')">清除記録</button>
-        <button style="text-align: center" @click="saveLog('ForgeLog')">导出記録</button>
+  <script id="party-list" type="text/template">
+    <div v-if="!_.isEmpty(party) && party.status" class="party-list" :id="'party-' + party.party_no">
+      <div class="party-info">
+        <div class="party-status">
+          <span class="party-status-text">Lv总</span>
+          <span class="party-status-value">{{ party.totalLevel }}</span> 
+          <span class="party-status-text">Lv均</span>
+          <span class="party-status-value">{{ party.averageLevel }}</span>
+          <!--<span class="party-status-text">生存</span>
+          <span class="party-status-value">良好</span> 
+          <span class="party-status-text">疲劳</span>
+          <span class="party-status-value">良好</span>-->
+        </div>
       </div>
-      <div class="data-table">
-        <table style="max-width: 500px;">
-          <thead>
-            <tr>
-              <th>番号</th>
-              <th>刀名</th>
-              <th>木炭</th>
-              <th>玉鋼</th>
-              <th>冷却</th>
-              <th>砥石</th>
-              <th>御札</th>
-              <th>结束时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="forge in log.forge">
-              <td>{{ forge.sword_id || '-' }}</td>
-              <td>{{ forge.sword_id | sword-name }}</td>
-              <td>{{ forge.charcoal || '-' }}</td>
-              <td>{{ forge.steel || '-' }}</td>
-              <td>{{ forge.coolant || '-' }}</td>
-              <td>{{ forge.file || '-' }}</td>
-              <td>{{ forge.consumable_id | item-name-format}}</td>
-              <td>{{ forge.finished_at | MMDDhhmmss }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="title" id="battle-log">· 交戦記録 ·</div>
-      <div align="center">
-        <button style="text-align: center" @click="removeLog('BattleLog')">清除記録</button>
-        <button style="text-align: center" @click="saveLog('BattleLog')">导出記録</button>
-      </div>
-      <div class="data-table">
-        <table style="max-width: 500px;">
-          <thead>
-            <tr>
-              <th>部隊</th>
-              <th>掉落</th>
-              <th>時代-地域</th>
-              <th>階数</th>
-              <th>戦闘地ID</th>
-              <th>評価</th>
-              <th>戦闘時点</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="battle in log.battle">
-              <td>{{ battle.party_no || '-' }}</td>
-              <td v-if="battle.category === 3" style="color: red;">{{ battle.get }}</td>
-              <td v-else>{{ battle.get }}</td>
-              <td>{{ battle.episode_id || '-' }}-{{ battle.field_id || '-' }}</td>
-              <td>{{ battle.layer_num }}</td>
-              <td v-if="battle.category === 3" style="color: red;">{{ battle.square_id }}(Boss)</td>
-              <td v-else>{{ battle.square_id }}</td>
-              <td>{{ battle.rank | rank-name }}</td>
-              <td>{{ battle.now | MMDDhhmmss }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="title" id="practice-log">· 演練記録 ·</div>
-      <div>
-        <button style="text-align: center" @click="removeLog('PracticeLog')">清除記録</button>
-        <button style="text-align: center" @click="saveLog('PracticeLog')">导出記録</button>
-      </div>
-      <div class="data-table">
-        <table style="max-width: 500px;">
-          <thead>
-            <tr>
-              <th>部隊</th>
-              <th>敵名</th>
-              <th>敵LV</th>
-              <th>評価</th>
-              <th>戦闘時点</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="battle in log.practice">
-              <td>{{ battle.party_no || '-' }}</td>
-              <td>{{ battle.enemy_name || '-' }}</td>
-              <td>Lv.{{ battle.enemy_level }}</td>
-              <td>{{ battle.rank | rank-name }}</td>
-              <td>{{ battle.now | MMDDhhmmss }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="title" id="duty-log">· 内番記録 ·</div>
-      <div>
-        <button style="text-align: center" @click="removeLog('DutyLog')">清除記録</button>
-        <button style="text-align: center" @click="saveLog('DutyLog')">导出記録</button>
-      </div>
-      <div class="data-table">
-        <table style="max-width: 1000px">
-          <thead>
-            <tr>
-              <th>马当番</th>
-              <th>畑当番</th>
-              <th>手合</th>
-              <th>结束时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="duty in log.duty">
-              <td>{{duty.horse_id1 | sword-serial-name}} <span v-if="duty.param.horse_id1">{{duty.param.horse_id1}}</span>/ {{duty.horse_id2 | sword-serial-name}} <span v-if="duty.param.horse_id2">{{duty.param.horse_id2}}</span></td>
-              <td>{{duty.field_id1 | sword-serial-name}} <span v-if="duty.param.field_id1">{{duty.param.field_id1}}</span>/ {{duty.field_id2 | sword-serial-name}} <span v-if="duty.param.field_id2">{{duty.param.field_id2}}</span></td>
-              <td>{{duty.bout_id1 | sword-serial-name}} <span v-if="duty.param.bout_id1">{{duty.param.bout_id1}}</span> / {{duty.bout_id2 | sword-serial-name}} <span v-if="duty.param.bout_id2">{{duty.param.bout_id2}}</span></td>
-              <td>{{duty.finished_at | MMDDhhmmss}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="party-member-list">
+      <sword-item v-for="sword in party.slot" :sword-serial-id="sword.serial_id" :key="sword.serial_id"></sword-item>
       </div>
     </div>
+  </script>
+
+  <script id="sword-item" type="text/template">
+    <div v-if="sword.serial_id" class="touken-info" :class="sword.injury | status-cname" :style="!sword.inBattle && (sword.status == 1 ) ? 'background: rgba(166,209,242,0.9);' : ''">
+      <div>
+        <img v-if="sword.injury>=2" :src="sword.sword_id + '_injury' | sword-pattern" :alt="sword.sword_id" class="large-pattern">
+        <img v-else :src="sword.sword_id | sword-pattern" :alt="sword.sword_id" class="large-pattern">
+      </div>
+      <div class="info">
+        <div class="name">{{ sword.name }}<!--<span v-if="sword.inBattle || sword.injury">[{{ sword.injury | battle-status-text }}]</span><span v-if="!sword.inBattle && (sword.status == 1 )" style="color:blue;">[{{ sword.status | status-text }}]</span>--></div>
+        <!--<div class="fatigue" :class="sword.fatigueFlag | fatigue-cname" v-if="sword.inBattle">{{ sword.fatigueFlag | fatigue-text }} {{ sword.battleFatigue }} <small>{{ sword.fatigueFlag | fatigue-buff }}</small></div>-->
+        <div class="fatigue fake-title" :class="sword.fatigueFlag | fatigue-cname" :data-msg="sword.fatigueFlag | fatigue-buff"><!--{{ sword.fatigueFlag | fatigue-text }}--> {{ sword.vfatigue }} <!--<small>{{ sword.fatigueFlag | fatigue-buff }}</small>--></div>
+        <div class="horse">{{ sword.horse_serial_id | equip-serial-name }}</div>
+        <div class="amulet">{{ sword.item_id | amulet-name }}</div>
+        <div class="level">Lv.{{ sword.level }}&nbsp;<small>(next {{ sword.nextExp }})</small></div>
+        <div style="font-size:10px;">理论机动：<span class="fake-title" data-msg="马有效">{{sword.serial_id | real-mobile-horse}}</span>｜<span class="fake-title" data-msg="马无效">{{sword.serial_id | real-mobile}}</span></div>
+        <div class="hp">
+          <div style="position:absolute; width:38%">
+            <span style="font-size:12px; color:white;">{{ sword.hp }}</span> <span style="font-size:10px; color:white;">/ {{ sword.hp_max }}</span>
+          </div>
+          <div class="hpbox" style="height:14px;">
+            <div class="hpbar" :class="sword.injury | status-cname" :style="[{'height': 14+'px'},{'width': (sword.hp)/(sword.hp_max)*100+'%'}]"></div>
+          </div>
+          
+        </div>
+        <div class="equip">
+          <ul>
+            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :in-battle="sword.inBattle" :key="equip"></equip-item>
+          </ul>
+        </div>
+        <!--<div class="hp"><span style="font-size:16px; color:white;">{{ sword.hp }}</span> <span>/ {{ sword.hp_max }}</span><span><></div>
+        <div class="level">&nbsp;Lv.{{ sword.level }}<small>(next {{ sword.nextExp }})</small></div>
+        <div class="horse">{{ sword.horse_serial_id | equip-serial-name }}</div>
+        <div class="equip">
+          <ul>
+            <equip-item v-for="equip in sword.equips" :equip-serial-id="equip" :in-battle="sword.inBattle" :key="equip"></equip-item>
+          </ul>
+        </div>-->
+      </div>
+    </div>
+    <div class="touken-info" v-else-if="!swordSerialId">
+      <img src="../../static/sword/0.png" alt="空" class="large-pattern">
+      <div class="info"><div class="name">暂无队员</div></div>
+    </div>
+    <div class="touken-info danger" v-else>
+      <img src="../../static/sword/0.png" alt="空" class="large-pattern">
+      <div class="info"><div class="name">数据错误</div></div>
+    </div>
+  </script>
+
+  <script id="equip-item" type="text/template">
+    <li v-if="equip === null">空</li>
+    <li v-else-if="equip.serial_id" :class="equip.hp === 0 ? 0 : equip.level | equip-level-cname">{{ equip.name | equip-name-format }}{{ inBattle ? equip.hp : equip.hp_max }}/{{ equip.hp_max }}</li>
+    <li v-else-if="_.isNull(equipSerialId) || equipSerialId === 0">空</li>
+    <li v-else>数据错误</li>
   </script>
 
   <script id="debug-tools-template" type="text/template">
     <div id="debug-cover">
-      <div v-if="!debug.config.replayMode">
+      <div>
         <button :disabled="debug.config.replayMode" @click="startRecord">{{ debug.config.inRecordMode ? `Stop Record (${debug.records.length})` : `Start Record` }}</button>
         <button :disabled="debug.config.inRecordMode || debug.config.replayMode" @click="replayMode">Replay Mode</button>
       </div>
-      <div v-if="debug.config.replayMode">
+      <div>
         <button :disabled="!debug.config.replayMode || debug.config.inRecordMode || !debug.records.length" @click="playNext">Next ({{ debug.records.length }})</button>
         <button :disabled="!debug.config.replayMode || debug.config.inRecordMode || !debug.records.length" @click="autoPlay">Auto Play</button>
       </div>
-      <div v-if="debug.config.replayMode">
+      <div>
         <button disabled>Load Record：</button> <input type="file" :disabled="!debug.config.replayMode" accept=".json" @change="loadRecord" />
       </div>
       <div>
@@ -686,154 +357,6 @@
       <span class="setNotice" :class="{ active: attrValue }" @click="on()">[开启]</span>
       <span class="setNotice" :class="{ active: !attrValue }" @click="off()">[关闭]</span>
     </span>
-  </script>
-
-  <script id="setting" type="text/template">
-    <div class="setting-container">
-      <div>
-        <div class="logo"></div>
-        <div class="title" id="setSecretary">· 近侍设置 ·</div>
-        <div style="padding: 8px;">
-            <p>请输入近侍刀帐号，远征及内番提醒将会显示近侍刀纹</p>
-            <input v-model="secretary">
-            <p>{{ secretary | sword-name }}</p>
-        </div>
-      </div>
-      <div>
-        <div class="title" id="setNotice">· 提醒设置 ·</div>
-        <div style="padding: 8px;">
-          <p>远征提醒： <config-switch attr="conquest_notice" /></p>
-          <p>内番提醒： <config-switch attr="duty_notice" /></p>
-          <p>锻刀提醒： <config-switch attr="forge_notice" /></p>
-          <p>战斗提醒： <config-switch attr="hurt_notice" /></p>
-          <p>稀有刀提醒： <config-switch attr="rare_sword_notice" /></p>
-          <p>手入提醒： <config-switch attr="repair_notice" /></p>
-          <p>修行提醒： <config-switch attr="evolution_notice" /></p>
-        </div>
-        <div style="padding: 8px;">
-            <p>请输入战报显示持续秒数（不要低于3秒）</p>
-            <p>战报将在显示相应时长后自动消失</p>
-            <input v-model="timeout">
-        </div>
-      </div>
-      <div>
-        <div class="title" id="about">· 关于 ·</div>
-        <div style="padding: 8px;">
-          <ul>
-            <li>
-              <p>现役背锅：<a href="https://weibo.com/u/5381086937" target="_blank">@黎浮_</a></p>
-              <p>现役背锅：<a href="https://weibo.com/tetsuya1204" target="_blank">@林原哲也</a></p>
-              <p>退隐山林：<a href="https://weibo.com/moelynn" target="_blank">@毫无存在感的凌</a></p>
-            </li>
-            <li>
-              <p>调试模式： <config-switch attr="debug_mode" /></p>
-              <p>（有bug时请向开发者询问如何使用调试模式）</p>
-              <!-- <p>清空存储数据(谨慎操作)</p> -->
-            </li>
-            <li>
-              <b>版本：v1.1.10</b>
-              <p>修复基础数据读取失败的bug</p>
-              <p>修复修行数据读取失败的bug</p>
-              <p>导出记录格式改为excel</p>
-              <p>点击清除记录后会自动刷新插件</p>
-              <p>修复轻装实装后图鉴收集表格显示的异常</p>
-              <p>修复花札毒箭和炸弹不能及时显示的问题</p>
-            </li>
-            <li>
-              <b>版本：v1.1.9</b>
-              <p>修复花札中毒箭显示破坏的bug</p>
-              <p>修复联队战的各种bug</p>
-              <p>【鉴于现役背锅的两人越来越咸鱼，以后的更新可能会越来越少了，不出什么大的幺蛾子请各位尽量用旧版本苟住</p>
-            </li>
-            <li>
-              <b>版本：v1.1.8</b>
-              <p>增加了兔子活动boss点的位置剧透（不过一年就一回呀）</p>
-              <p>锻刀加速情况修复</p>
-              <p>各种记录的bug修复：不开提醒也可以有记录了</p>
-              <p>部队下拉菜单可以显示队伍情况（远征/出阵）</p>
-              <p>习合时更新刀帐列表</p>
-              <p>聚乐第出阵状态</p>
-            </li>
-            <li>
-              <b>版本：v1.1.7</b>
-              <p>修正了“垃圾ts增添数据”而导致婶婶忙崩溃的bug</p>
-              <p>增加了稀有刀掉落提醒，可以与正常战报同时使用</p>
-            </li>
-            <li>
-              <b>版本：v1.1.6</b>
-              <p>增加内番记录</p>
-              <p>增加战报持续时长设定</p>
-              <p>修正疲劳49以下刀剑远征时疲劳自动回复的bug</p>
-              <p>增加演练对方阵容剧透疲劳度</p>
-              <p>增加全刀帐直接导出</p>
-              <p>【垃圾ts使我兴致全无江户城点种类统计无限期咕咕咕】</p>
-            </li>
-            <li>
-              <b>版本：v1.1.5</b>
-              <p>预备移动刀帐位置&添加远征计算器</p>
-              <p>修正平均等级</p>
-              <p>增加刀名魔改</p>
-              <p>花札乐器掉落&修正焙烙玉及毒矢显示问题</p>
-            </li>
-            <li>
-              <b>版本：v1.1.4.1</b>
-              <p>修正战扩地图</p>
-              <p>修正修行数据读取问题</p>
-              <p>修正刀装做成失败问题</p>
-              <p>修正手入刀纹极普未分问题</p>
-            </li>
-            <li>
-              <b>版本：v1.1.4</b>
-              <p>记录导出</p>
-              <p>远征提醒和内番提醒bug修正</p>
-              <p>战报增加刀装破坏提示</p>
-              <p>增加索敌阵型提示</p>
-              <p>刀纹读取修正</p>
-              <p>审神者信息bug修正</p>
-              <p>修行时间显示及推送</p>
-              <p>物品列表与小判及时刷新</p>
-              <p>活动地图一劳永逸式添加</p>
-              <p>负数疲劳修正</p>
-              <p>增加调试模式</p>
-            </li>
-            <li>
-              <b>版本：v1.1.3</b>
-              <p>疲劳49以下的bug修复</p>
-              <p>演练记录单独显示</p>
-              <p>演练后疲劳有误bug修复</p>
-              <p>敌刀及演练对手剧透</p>
-              <p>新活动地图及敌刀图片添加</p>
-              <p>UI调整</p>
-              <p>时间bug修正及格式调整</p>
-            </li>
-            <li>
-              <b>版本：v1.1.2</b>
-              <p>解决出战后马的状态显示bug</p>
-              <p>战斗中刀装损失后颜色改变</p>
-              <p>改变插件宽度时资源栏显示会改变（尽量缩在一行）</p>
-              <p>各种提醒以及剧透的开关</p>
-              <p>锻刀记录和战斗记录可清除（清除后需要重新加载刷新）</p>
-            </li>
-            <li>
-              <b>版本：v1.1.1</b>
-              <p>增加了联队战和演练的战况更新</p>
-              <p>增加了加速以及小判显示，物品列表显示，刀剑列表御守佩戴情况显示</p>
-              <p>添加了刀帐立绘收集不全列表（需要先点开刀账）</p>
-              <p>不用每次都重进结成了，战斗中关闭插件（理论上）也可以载入数据</p>
-              <p>（建议还是尽量进一次结成防止意外bug）</p>
-              <p>修正了战斗记录每次都重新记的bug</p>
-              <p>修改了战斗记录的形式，显示战斗点id和层数，取消获得刀剑刀帐号表示</p>
-              <p>远征不间断提醒bug（疑似）修复成功</p>
-            </li>
-            <li>
-              <b>之后版本希望添加的功能：</b>
-              <p>刀纹自动更新</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
   </script>
 
   <!-- Vue -->

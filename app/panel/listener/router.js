@@ -1,14 +1,19 @@
 define((require, exports, module) => {
+  const appRouter = require('app/panel/approuter')
   const store = require('app/data/index')
   const TRHMasterData = require('app/core/master')
   return class TRHRequestRouter {
     static route (action, content) {
       // Log
+      console.log(action)
+      //appRouter.push({path:'/battle'})
+      console.log(content)
       // Route
       if (_.isFunction(this[action])) {
         this[action](content)
       }
       // Common
+      //if(action!='party/list')
       this.common(content)
     }
 
@@ -113,6 +118,10 @@ define((require, exports, module) => {
     static ['party/list'](content){
       store.commit('swords/clear')
       store.commit('equip/clear')
+      appRouter.push({path:'/basic'})
+      store.commit('config/updateConfig',{
+        activityShow: 'default'
+      })
       //store.commit('item/clear')
     }
 
@@ -129,10 +138,24 @@ define((require, exports, module) => {
 
     static ['forge'](content){
       store.commit('forge/clear')
+      appRouter.push({path:'/basic'})
+      store.commit('config/updateConfig',{
+        activityShow: 'default'
+      })
     }
 
     static ['repair'](content){
       store.commit('repair/clear')
+      appRouter.push({path:'/basic'})
+      store.commit('config/updateConfig',{
+        activityShow: 'default'
+      })
+    }
+    static ['repair/repair'](content){
+      store.commit('swords/updateSword',{
+        serialId: content.repair[content.postData.slot_no].sword_serial_id,
+        updateData: {status: 1}
+      })
     }
 
     static ['practice/offer'](content){
@@ -148,7 +171,7 @@ define((require, exports, module) => {
           updateData: v
         })
         store.commit('practice_enemy/updatePracticeSword', {
-          serialId: k,
+          serialId: k, 
           updateData: {isEnemy: true}
         })
       })
@@ -207,18 +230,18 @@ define((require, exports, module) => {
         let mvp = _.get(content, ['result', 'mvp'])
         let leader = _.get(content, ['result', 'player', 'party', 'slot', '1', 'serial_id'])
         if(rank < 6){
-          // console.log("Rank Win")
+          console.log("Rank Win")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           if(v.serial_id == mvp) {
-            // console.log("mvp calculate")
+            console.log("mvp calculate")
             v.battleFatigue += 10
           }
         }
         if(v.battleFatigue >= 100) {
-          // console.log(">= 100")
+          console.log(">= 100")
           v.battleFatigue = 100
         }
         store.commit('swords/updateSword', {
@@ -289,7 +312,9 @@ define((require, exports, module) => {
     }
 
     static ['battle/battle'] (content) {
+
       store.commit('inBattle')
+      appRouter.push({path:'/battle'})
       store.commit('battle/updateBattleResult', {
         updateData: content.result
       })
@@ -301,6 +326,9 @@ define((require, exports, module) => {
       })
       store.commit('battle/updateBattleEnemy', {
         updateData: content.enemy
+      })
+      store.commit('battle/updateBattleEnemy', {
+        updateData: content.result.enemy.party.slot
       })
       store.commit('battle/updateBattle', {
         updateData: content
@@ -321,59 +349,59 @@ define((require, exports, module) => {
           }
         }
         if(rank == 1) {
-          // console.log("Rank ONE_ON_ONE")
+          console.log("Rank ONE_ON_ONE")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 1
         }
         else if(rank == 2) {
-          // console.log("Rank S")
+          console.log("Rank S")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 1
         }
         else if(rank == 3) {
-          // console.log("Rank A")
+          console.log("Rank A")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue += 0
         }
         else if(rank == 4) {
-          // console.log("Rank B")
+          console.log("Rank B")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue -= 1
         }
         else if(rank == 5) {
-          // console.log("Rank C")
+          console.log("Rank C")
           if(v.serial_id == leader) {
-            // console.log("leader calculate")
+            console.log("leader calculate")
             v.battleFatigue += 3
           }
           v.battleFatigue -= 2
         }
         else if(rank == 6) {
-          // console.log("Rank D")
+          console.log("Rank D")
           v.battleFatigue -= 3
         }
         if(v.serial_id == mvp) {
-          // console.log("mvp calculate")
+          console.log("mvp calculate")
           v.battleFatigue += 10
         }
         if(v.battleFatigue >= 100) {
-          // console.log(">= 100")
+          console.log(">= 100")
           v.battleFatigue = 100
         }
         if(v.battleFatigue <= 0) {
-          // console.log("<= 0")
+          console.log("<= 0")
           v.battleFatigue = 0
         }
         store.commit('swords/updateSword', {
@@ -413,10 +441,15 @@ define((require, exports, module) => {
 
     static ['home'] (content) {
       store.commit('notInBattle')
+      appRouter.push({path:'/basic'})
+      store.commit('config/updateConfig',{
+        activityShow: 'default'
+      })
     }
     
     static ['sally/sally'] (content) {
       store.commit('inBattle')
+      appRouter.push({path:'/battle'})
       store.commit('fatigueToVV')
       store.commit('sally/updateSally', {
         updateData: content.postData
@@ -439,13 +472,19 @@ define((require, exports, module) => {
           updateData: {soldier: v.hp_max}
         })
       })
+      store.commit('battle/clearBattleScout')
+      store.commit('battle/clearBattleEnemy')
+      if(content.postData.party_no){
+        store.commit('config/updateConfig',{
+          partySelected: content.postData.party_no
+        })
+      }
     }
     static ['sally/eventsally'] (content) {
       let eventContent = {
         episode_id: null,
         field_id: null,
-        layer_num: null,
-        select_event_layer_num: null,
+        layer_num: null
       }
       let eventType = _.get(TRHMasterData.getMasterData('Event'), [content.postData.event_id*(-1), 'type'], 0)
       eventContent.episode_id = content.postData.event_id*(-1)
@@ -485,7 +524,7 @@ define((require, exports, module) => {
           _.each(content.gimmick.result.effect, (v, k)=>{
             store.commit('swords/updateSword',{
               serialId: v.serial_id,
-              updateData: {hp: v.value[1] || 1}
+              updateData: {hp: v.value[1]}
             })
           })
         }
@@ -503,19 +542,31 @@ define((require, exports, module) => {
     static ['forge/start'] (content) {
       store.commit('forge/updateForge', {
         slotNo: content.slot_no,
-        updateData: _.extend(content, content.postData)
+        updateData: _.extend(content, content.postData, {status: 2})
+
       })
     }
-
-    static ['forge/fast'] (content) {
+    static ['forge/complete'] (content) {
       let forgeData = _.get(store, ['state', 'forge', 'slot', content.postData.slot_no], {})
-      
       store.commit('forge/updateForge', {
         slotNo: content.postData.slot_no,
         updateData: {
           slot_no: content.postData.slot_no,
           sword_id: content.sword_id,
-          finished_at: forgeData.finished_at
+          finished_at: forgeData.finished_at,
+          status: 1
+        }
+      })
+    }
+    static ['forge/fast'] (content) {
+      let forgeData = _.get(store, ['state', 'forge', 'slot', content.postData.slot_no], {})
+      store.commit('forge/updateForge', {
+        slotNo: content.postData.slot_no,
+        updateData: {
+          slot_no: content.postData.slot_no,
+          sword_id: content.sword_id,
+          finished_at: forgeData.finished_at,
+          status: 1
         }
       })
       store.commit('item/addItem', {
@@ -523,6 +574,37 @@ define((require, exports, module) => {
         updateData: {
           consumable_id: 8,
           num: -1
+        }
+      })
+    }
+
+    static ['repair/fast'] (content) {
+      let repairData = _.get(store, ['state', 'repair', 'slot', content.postData.slot_no], {})
+      store.commit('repair/updateRepair', {
+        slotNo: content.postData.slot_no,
+        updateData: {
+          slot_no: content.postData.slot_no,
+          finished_at: repairData.finished_at,
+          status: 1
+        }
+      })
+      store.commit('item/addItem', {
+        consumableId: 8, 
+        updateData: {
+          consumable_id: 8,
+          num: -1
+        }
+      })
+    }
+
+    static ['repair/complete'] (content) {
+      let repairData = _.get(store, ['state', 'repair', 'slot', content.postData.slot_no], {})
+      store.commit('repair/updateRepair', {
+        slotNo: content.postData.slot_no,
+        updateData: {
+          slot_no: content.postData.slot_no,
+          finished_at: repairData.finished_at,
+          status: 1
         }
       })
     }
@@ -599,12 +681,36 @@ define((require, exports, module) => {
           updateData: v
         })
       })
+      store.commit('config/updateConfig',{
+        activityShow: 'album'
+      })
+      appRouter.push({path:'/changes'})
     }
 
     static ['conquest/complete'](content) {
       store.commit('player/updatePlayer', {
         updateData: content.result
       })
+    }
+
+    static ['conquest'](content) {
+      let party_no = 1
+      if(store.state.party.parties[2].status==1){
+        party_no = 2
+      }else if(store.state.party.parties[3].status==1){
+        party_no = 3
+      }else if(store.state.party.parties[4].status==1){
+        party_no = 4
+      }
+      if(store.state.config.partySelected==1 || store.state.party.parties[store.state.config.partySelected].status!=1){
+        store.commit('config/updateConfig', {
+          partySelected: party_no
+        })
+      }
+    }
+
+    static ['conquest/start'](content) {
+      this['conquest'] (content)
     }
 
     static ['party/partyreplacement'](content){
@@ -641,6 +747,7 @@ define((require, exports, module) => {
         updateData: eventContent
       })
       store.commit('inBattle')
+      appRouter.push({path:'/battle'})
       store.commit('sally/updateSally', {
         updateData: content.postData
       })
@@ -740,7 +847,7 @@ define((require, exports, module) => {
         updateData: content.sword
       })
     }
-    
+
     static ['composition/union'] (content) {
       let serial_ids = _(content.postData.material_serial_id)
         .split('%2C')
@@ -755,11 +862,37 @@ define((require, exports, module) => {
         updateData: content.sword
       })
     }
+    
 
     static ['duty/complete'] (content) {
       let finished_at = _.get(store.state, ['duty', 'finished_at'], 0)
       store.commit('duty/updateDuty', {
         updateData: _.extend(content, {finished_at: finished_at})
+      })
+    }
+
+    static ['duty/start'] (content) {
+      let update_ids = {
+        horse_id1: '',
+        horse_id2: '',
+        field_id1: '',
+        field_id2: '',
+        bout_id1: '',
+        bout_id2: ''
+      }
+      _.each(content.postData, (v,k)=>{
+        if(k=='horse_id' || k=='field_id' || k=='bout_id'){
+          kk1=k.toString()+'1'
+          kk2=k.toString()+'2'
+          if(v.match('%2c')!=null){
+            let serial_ids = v.split('%2c')
+            update_ids[kk1]=serial_ids[0]
+            update_ids[kk1]=serial_ids[1]
+          }
+        }
+      })
+      store.commit('duty/updateDuty', {
+        updateData: _.extend(content, this.update_ids)
       })
     }
   }
