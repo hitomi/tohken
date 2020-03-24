@@ -58,7 +58,7 @@ define((require, exports, module) => {
             })
           }
         } else {
-          if(request.request.url.match(/https?:\/\/dovs9u514acja\.cloudfront\.net\/d\/(.*?)\.bin/)) {
+          if(request.request.url.match(/https?:\/\/dovs9u514acja\.cloudfront\.net\/d\/ja\/m_(.*?)\.bin/)) {
             request.getContent((content, encoding) => {
               TRHMasterData.init(content, store)
             })
