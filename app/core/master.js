@@ -56,6 +56,7 @@ define((require, exports, module) => {
       // Magic ?
       let jsonText = CryptoJS.enc.Utf8.stringify(decryptData)
       jsonText = jsonText.substr(0, jsonText.lastIndexOf('}') + 1)
+      jsonText = jsonText.replace(/\'/g,'')
       // To Object
       let dataObj = JSON.parse(jsonText)
       //console.log(dataObj);
